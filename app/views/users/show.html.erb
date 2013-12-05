@@ -46,9 +46,38 @@
         </p>
 
         <p>
-          <b>Organization:</b>
-          <%= @user.organization ? @user.organization.name : '' %>
+          <b>Role:</b>
+          <%= @user.roles.first.name %>
         </p>
+
+        <p>
+          <b>Address:</b>
+          <%= @user.address %>
+        </p>
+
+        <!--:apn_token => self.apn_token,-->
+        <!--:area_code => self.area_code,-->
+        <!--:avatar => self.avatar,-->
+        <!--:birthday => self.birthday,-->
+        <!--:city => self.city,-->
+        <!--:country => self.country,-->
+        <!--:cover => self.cover,-->
+        <!--:created_date => self.created_date,-->
+        <!--:email => self.email,-->
+        <!--:facebook_id  => self.facebook_id,-->
+        <!--:gcm_token  => self.gcm_token,-->
+        <!--:google_id => self.google_id,-->
+        <!--:language => self.language,-->
+        <!--:name => self.name,-->
+        <!--:note  => self.note,-->
+        <!--:phone  => self.phone,-->
+        <!--:sex   => self.sex,-->
+        <!--:twitter_id  => self.twitter_id,-->
+        <!--:user_type   => self.user_type,-->
+        <!--:avatar_thumb => self.avatar_thumb,-->
+        <!--:ubox_authentication_token => self.ubox_authentication_token,-->
+        <!--:authentication_token => self.authentication_token-->
+
 
         <%= link_to 'Edit', edit_user_path(@user), :class => 'btn btn-primary btn-small' %>
         <%= link_to 'Back', users_path, :class => 'btn btn-warning btn-small' %>

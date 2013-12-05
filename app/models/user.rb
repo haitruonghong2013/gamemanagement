@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
   end
 
   def self.search(search)
-    if search
+    if search  and search.strip != ''
       where('username LIKE ?', "%#{search}%")
     else
       scoped

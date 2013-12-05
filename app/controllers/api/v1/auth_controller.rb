@@ -29,6 +29,7 @@ class Api::V1::AuthController  < ApplicationController
            create_user.google_id = body["google_id"]
            create_user.language = body["language"]
            create_user.name = body["name"]
+           create_user.username = body["name"].delete(' ')
            create_user.first_name = first_name(body["name"])
            create_user.last_name =  last_name(body["name"])
            create_user.note  = body["note"]
@@ -38,6 +39,7 @@ class Api::V1::AuthController  < ApplicationController
            create_user.user_type   = body["type"]
            create_user.avatar_thumb = body["avatar_thumb"]
            create_user.ubox_authentication_token = body["authentication_token"]
+           create_user.add_role :normalUser
            if create_user.save(:validate => false)
 
              render :status => 200,
