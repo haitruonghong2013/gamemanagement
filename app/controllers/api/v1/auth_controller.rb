@@ -1,6 +1,7 @@
 class Api::V1::AuthController  < ApplicationController
    def auth_fb
-     found_users = User.find_all_by_facebook_id('100000198194432')
+     #TODO:check access_token
+     found_users = User.where('facebook_id = ?',params[:auth][:facebook_id])
      if found_users.nil? or found_users.length == 0
        response = load_user_ubox
 
@@ -8,9 +9,10 @@ class Api::V1::AuthController  < ApplicationController
          when 200
            puts "All good!"
            body = JSON.parse(response.body)
+
            create_user = User.new
-           create_user.password = '12345678'
-           create_user.password_confirmation = '12345678'
+           #create_user.password = '12345678'
+           #create_user.password_confirmation = '12345678'
            create_user.address  = body["address"]
            create_user.apn_token = body["apn_token"]
            create_user.area_code = body["area_code"]
@@ -32,12 +34,23 @@ class Api::V1::AuthController  < ApplicationController
            create_user.twitter_id  = body["twitter_id"]
            create_user.user_type   = body["type"]
            create_user.avatar_thumb = body["avatar_thumb"]
-           create_user.save(:validate => false)
+           create_user.ubox_authentication_token = body["authentication_token"]
+           if create_user.save(:validate => false)
 
-           render :status => 200,
-                  :json => { :success => true,
-                             :data => response.body
-                  }
+             render :status => 200,
+                    :json => { :success => true,
+                               :data => create_user.as_json
+                    }
+           else
+             render :status => 409,
+                    :json => {
+                        :success => false,
+                        :info => 'Create user fails!',
+                        :data => @contract.errors
+                    }
+           end
+
+
          when 404
            puts "not found!"
            render :status => 404,
@@ -51,6 +64,11 @@ class Api::V1::AuthController  < ApplicationController
                              :data => {}
                   }
        end
+     else
+       render :status => 200,
+              :json => { :success => true,
+                         :data => found_users.first.as_json
+              }
      end
 
 #     url = 'http://ws.uboxapp.com/oauth/facebook_normal.json/'
@@ -74,15 +92,16 @@ class Api::V1::AuthController  < ApplicationController
 
   private
   def load_user_ubox
-    @payload = {
-        "token"=> "CAAGZAvfspq08BANhzngSa2ZBPBwAq4MIZACYd47EZC74zXpQjATnNdZBbgoUdnMgkal52wke55pZBeRNZAwWTq55NcY9Gv8ZAbBb2L9wnrrnBXwLB17ScI7KBngkGFLd4QLlFcEBwr9oVj0iVf9xaGGFqRHYqpeaMQbeSALltWb7gTrXAbApPAtV",
-        "facebook_id"=> "100000198194432",
-        "name"=> "Anh Tung Hoang",
-        "email"=> "tungbeng2006@gmail.com",
-        "birthday"=> "06/20/1990",
-        "sex"=> "male",
-        "address"=> "Hanoi, Vietnam"
-    }
+    @payload = params[:auth]
+    #@payload = {
+    #    "token"=> "CAAGZAvfspq08BANhzngSa2ZBPBwAq4MIZACYd47EZC74zXpQjATnNdZBbgoUdnMgkal52wke55pZBeRNZAwWTq55NcY9Gv8ZAbBb2L9wnrrnBXwLB17ScI7KBngkGFLd4QLlFcEBwr9oVj0iVf9xaGGFqRHYqpeaMQbeSALltWb7gTrXAbApPAtV",
+    #    "facebook_id"=> "100000198194432",
+    #    "name"=> "Anh Tung Hoang",
+    #    "email"=> "tungbeng2006@gmail.com",
+    #    "birthday"=> "06/20/1990",
+    #    "sex"=> "male",
+    #    "address"=> "Hanoi, Vietnam"
+    #}
     response = HTTParty.post('http://ws.uboxapp.com/oauth/facebook_normal.json/', :body =>JSON.dump(@payload), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'} )
     return response
   end

@@ -36,16 +36,16 @@ class User < ActiveRecord::Base
   attr_accessor :current_password
   attr_accessible :role_ids, :current_password
   #accepts_nested_attributes_for :organization
-  attr_accessible :organization_attributes,:first_name,:last_name , :telephone ,:username, :email, :password,
+  attr_accessible :first_name,:last_name , :telephone ,:username, :email, :password,
                   :password_confirmation, :remember_me
   # attr_accessible :title, :body
-  #validates :first_name, :presence => {:message => "This field is required."}
-  #validates :last_name, :presence => {:message => "This field is required."}
-  #validates :telephone, :presence => {:message => "This field is required."}
-  #validates :username, :presence => {:message => "This field is required."}
-  #validates :email, :presence => {:message => "This field is required."}
-  #validates :password, :presence => {:message => "This field is required."}
-  #validates :password_confirmation, :presence => {:message => "This field is required."}
+  validates :first_name, :presence => {:message => "This field is required."}
+  validates :last_name, :presence => {:message => "This field is required."}
+  validates :telephone, :presence => {:message => "This field is required."}
+  validates :username, :presence => {:message => "This field is required."}
+  validates :email, :presence => {:message => "This field is required."}
+  validates :password, :presence => {:message => "This field is required."}
+  validates :password_confirmation, :presence => {:message => "This field is required."}
 
   validates :username, :presence => true, :uniqueness => {:case_sensitive => false,:message =>'user name is existing!'}
 
@@ -64,6 +64,34 @@ class User < ActiveRecord::Base
     else
       scoped
     end
+  end
+
+  def as_json(options = {})
+    {
+      :address  => self.address,
+      :apn_token => self.apn_token,
+      :area_code => self.area_code,
+      :avatar => self.avatar,
+      :birthday => self.birthday,
+      :city => self.city,
+      :country => self.country,
+      :cover => self.cover,
+      :created_date => self.created_date,
+      :email => self.email,
+      :facebook_id  => self.facebook_id,
+      :gcm_token  => self.gcm_token,
+      :google_id => self.google_id,
+      :language => self.language,
+      :name => self.name,
+      :note  => self.note,
+      :phone  => self.phone,
+      :sex   => self.sex,
+      :twitter_id  => self.twitter_id,
+      :user_type   => self.user_type,
+      :avatar_thumb => self.avatar_thumb,
+      :ubox_authentication_token => self.ubox_authentication_token,
+      :authentication_token => self.authentication_token
+    }
   end
 
 

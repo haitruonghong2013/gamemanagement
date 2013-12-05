@@ -1,0 +1,33 @@
+<h1>Listing posts</h1>
+<%= form_tag destroy_multiple_posts_path, :method=> :delete do %>
+<table>
+  <tr>
+    <th></th>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Create At</th>
+    <th>Update At</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @posts.each do |post| %>
+  <tr>
+    <td><%= check_box_tag 'blog_posts[]', post.id %></td>
+    <td><%= post.title %></td>
+    <td><%= post.content %></td>
+    <td><%= post.created_at %></td>
+    <td><%= post.updated_at %></td>
+    <td><%= link_to 'Show', post %></td>
+    <td><%= link_to 'Edit', edit_post_path(post) %></td>
+    <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= submit_tag "Delete selected"  %>
+    <% end %>
+<br />
+
+<%= link_to 'New Post', new_post_path %>
