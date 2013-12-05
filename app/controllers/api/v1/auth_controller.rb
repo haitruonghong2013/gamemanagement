@@ -1,4 +1,5 @@
 class Api::V1::AuthController  < ApplicationController
+  include UserHelper
    def auth_fb
      #TODO:check access_token
      found_users = User.where('facebook_id = ?',params[:auth][:facebook_id])
@@ -28,8 +29,10 @@ class Api::V1::AuthController  < ApplicationController
            create_user.google_id = body["google_id"]
            create_user.language = body["language"]
            create_user.name = body["name"]
+           create_user.first_name = first_name(body["name"])
+           create_user.last_name =  last_name(body["name"])
            create_user.note  = body["note"]
-           create_user.phone  = body["phone"]
+           create_user.telephone  = body["phone"]
            create_user.sex   = body["sex"]
            create_user.twitter_id  = body["twitter_id"]
            create_user.user_type   = body["type"]

@@ -8,8 +8,8 @@
     <th><%= sortable "username" %></th>
 
     <th>Email</th>
-    <!--<th>FirstName</th>-->
-    <!--<th>LastName</th>-->
+    <th>FirstName</th>
+    <th>LastName</th>
     <th>Phone</th>
     <th>Role</th>
     <th>TimeZone</th>
@@ -20,10 +20,10 @@
   <% @users.each do |user| %>
       <tr>
 
-        <td><%=  link_to user.username, user %></td>
+        <td><%= user.username ?  link_to(user.username, user) : '' %></td>
         <td><%= user.email %></td>
-        <!-- <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td> -->
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
         <td><%= user.telephone %></td>
         <td><%= user.roles and user.roles.first ? user.roles.first.name : '' %></td>
         <td><%= user.time_zone %></td>
