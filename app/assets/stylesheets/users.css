@@ -1,0 +1,35 @@
+table.pretty {
+    /*border-collapse: collapse;*/
+    /*margin-bottom: 10px;*/
+}
+
+/*.pretty td, .pretty th {*/
+    /*padding: 4px 10px;*/
+    /*border: solid 1px #AAA;*/
+/*}*/
+
+/*.pretty .price {*/
+    /*text-align: right;*/
+/*}*/
+
+.pretty th .current {
+    padding-right: 12px;
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.pretty th .asc {
+    background-image: url(/assets/up_arrow.gif);
+}
+
+.pretty th .desc {
+    background-image: url(/assets/down_arrow.gif);
+}
+
+.pretty th a{
+   color: #707070;
+}
+.pretty th a:hover{
+    color: #000000;
+    text-decoration: none;
+}

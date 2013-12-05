@@ -1,0 +1,7 @@
+<% breadcrumb :home %>
+<h1>Home</h1>
+<% if user_signed_in? %>
+ Show some Information about logined user
+<% else %>
+    Show general information
+<% end %>

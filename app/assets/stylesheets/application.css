@@ -1,0 +1,47 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *require_self
+ *require jquery-ui/smoothness
+ *require_tree .
+ *
+ *= require_self
+ * Basic style
+ *= require bootstrap.min
+ *= require bootstrap-responsive.min
+ *= require datepicker
+ *= require bootstrap-timepicker
+ *= require font-awesome.min
+ *= require pagination
+
+ *
+ *ACE style
+ *= require ace.min
+ *= require ace-responsive.min
+ *= require ace-skins.min
+ */
+
+/*asterisk problems with simple form bootstrap*/
+/*try adding !important  after 0px if doesn't work*/
+abbr, accronym{ border-bottom: 0px !important; }
+span.active{
+    background-color: #50a725 !important;
+}
+
+span.neutral{
+    background-color: #666666 !important;
+}
+
+span.followup{
+    background-color: #db9d07 !important;
+}
+
+span.inactive{
+    background-color: #f34646 !important;
+}

@@ -1,0 +1,177 @@
+<style>
+    .form-horizontal .control-label {
+        float: left;
+        padding-top: 5px;
+        text-align: right;
+        width: 200px;
+    }
+
+    .form-horizontal .controls {
+        margin-left: 220px;
+    }
+</style>
+
+<% content_for :stylesheets do %>
+    <%= stylesheet_link_tag 'clients' %>
+<% end %>
+<% content_for :javascripts do %>
+    <%= javascript_include_tag 'clients' %>
+<% end %>
+<!--<form class="form-horizontal">-->
+  <!--<div class="control-group">-->
+    <!--<label for="form-field-1" class="control-label">Text Field</label>-->
+
+    <!--<div class="controls">-->
+      <!--<input type="text" placeholder="Username" id="form-field-1">-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</form>-->
+  <%= simple_form_for @user,  html:{:id => 'add_new_user',:class => 'form-horizontal'} do |f| %>
+  <% if @user.errors.any? %>
+        <%= display_base_errors @user %>
+  <% end %>
+
+    <% if @user.organization and @user.organization.errors.any? %>
+        <%= display_base_errors @user.organization %>
+    <% end %>
+
+    <%= f.input :first_name,:required => true, :autofocus => true %>
+    <%= f.input :last_name,:required => true %>
+    <%= f.input :username,:required => true %>
+    <%= f.input :email, :required => true %>
+    <% if action_name == 'edit' or action_name == 'update' %>
+        <%= f.input :password %>
+        <%= f.input :password_confirmation %>
+    <% else %>
+        <%= f.input :password, :required => true %>
+        <%= f.input :password_confirmation, :required => true %>
+    <% end %>
+
+    <%= f.input :telephone %>
+    <!-- this field only display for admin -->
+    <% if current_user.has_role? :admin  %>
+        <% user_roles = Role.all %>
+
+        <!-- f.simple_fields_for :organization do |organization|-->
+            <%= f.input :organization_id, :label=>'Organization' do %>
+                <%= f.select :organization_id, @organization_collections.map { |r| [r.name, r.id] }, include_blank: false, selected: @selected_organization_id.to_i %>
+            <% end %>
+        <!--  end -->
+        <%= f.simple_fields_for :organization, @user.organization do |organization|%>
+            <div id="new_org_div" class="hidden">
+             <%= organization.input :name,:label=>'Organization',:required => true %>
+              <!--,:input_html=>{:value=>''}-->
+            </div>
+            <!--<div id="new_org_div" class="control-group string required user_organization_name hidden"><label for="user_organization_attributes_name" class="string required control-label"><abbr title="required">*</abbr> Organization</label><div class="controls"><input type="text" size="50" name="user[organization_attributes][name]" id="user_organization_attributes_name" class="string required"></div></div>-->
+        <% end %>
+
+            <!--<div id="new_org_div" class="control-group string required user_organization_name hidden">-->
+              <!--<label for="user_organization_attributes_name" class="string required control-label">-->
+                <!--<abbr title="required">*</abbr> New Organization-->
+              <!--</label>-->
+              <!--<div class="controls">-->
+                <!--<input type="text" size="50" name="new_organization_name" id="user_organization_attributes_name" class="string required">-->
+              <!--</div>-->
+            <!--</div>-->
+
+     <% elsif current_user.has_role? :businessOwner  %>
+     <% user_roles = Role.where('name not in (?)',['admin','businessOwner']) %>
+    <% elsif current_user.has_role? :saleLeader  %>
+        <% user_roles = Role.where('name not in (?)',['admin','businessOwner','saleLeader']) %>
+    <% end %>
+
+    <%= f.input :time_zone, :collection => ActiveSupport::TimeZone.all, :label_method => :to_s, :value_method => :name, :include_blank => false %>
+
+
+    <%= f.label :select_role %><br />
+
+    <%= f.input :role_ids, :collection => user_roles, :as => :radio_buttons,
+                :label_method => lambda {|t| "<span class='lbl'>".html_safe + t.name.titleize + "</span>".html_safe}, :label => false,
+                #:item_wrapper_class => 'inline',
+                checked: (@user.roles and @user.roles.first) ? @user.roles.first.id : Role.find_by_name(:saleStaff).id
+    %>
+    <!-- combobox
+    <%= f.input :role_ids do %>
+        <%= f.select :role_ids, Role.all.map { |r| [r.name, r.id] }, include_blank: true %>
+    <% end %>
+    -->
+
+    <%= f.button :submit, :class => 'btn-primary' %>
+<% end %>
+
+<script>
+    $(function(){
+
+        if ($('#user_organization_id').find('option:selected').val() == -1){
+//                alert("Select Other Organization");
+            $('#new_org_div').removeClass('hidden');
+        }
+        else{
+            $('#new_org_div').addClass('hidden');
+        }
+        //        $('[data-rel=tooltip]').tooltip();
+
+        //documentation : http://docs.jquery.com/Plugins/Validation/validate
+        $('#user_organization_id').change(function(){
+//            alert("combobox oraganization select "+$(this).find('option:selected').val());
+            if ($(this).find('option:selected').val() == -1){
+//                alert("Select Other Organization");
+                $('#new_org_div').removeClass('hidden');
+            }
+            else{
+                $('#new_org_div').addClass('hidden');
+            }
+        });
+
+        $.mask.definitions['~'] = '[+-]';
+        $('#user_telephone').mask('(999) 999-9999');
+
+        jQuery.validator.addMethod("phone", function (value, element) {
+            return this.optional(element) || /^\(\d{3}\) \d{3}\-\d{4}( x\d{1,6})?$/.test(value);
+        }, "Enter a valid phone number.");
+        $('#add_new_user').validate({
+            errorElement: 'span',
+            errorClass: 'help-inline',
+            focusInvalid: false,
+            rules: {
+            },
+
+            messages: {
+            },
+//
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-error', $('.login-form')).show();
+            },
+
+            highlight: function (e) {
+                $(e).closest('.control-group').removeClass('info').addClass('error');
+            },
+
+            success: function (e) {
+                $(e).closest('.control-group').removeClass('error').addClass('info');
+                $(e).remove();
+            },
+
+            errorPlacement: function (error, element) {
+                if (element.is(':checkbox') || element.is(':radio')) {
+                    var controls = element.closest('.controls');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+                else if (element.is('.chzn-select')) {
+                    error.insertAfter(element.siblings('[class*="chzn-container"]:eq(0)'));
+                }
+                else error.insertAfter(element);
+            },
+
+//              submitHandler: function (form) {
+//              },
+            invalidHandler: function (form) {
+            }
+        });
+    });
+
+</script>

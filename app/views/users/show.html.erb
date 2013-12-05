@@ -1,0 +1,65 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>User Details</h1>
+  </div>
+  <!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+
+      <div class="row-fluid">
+        <p id="notice"><%= notice %></p>
+        <% breadcrumb :user, @user %>
+
+
+        <p id="notice"><%= notice %></p>
+
+        <p>
+          <b>User name:</b>
+          <%= @user.username %>
+        </p>
+
+        <p>
+          <b>Email:</b>
+          <%= @user.email %>
+        </p>
+
+        <p>
+          <b>First name:</b>
+          <%= @user.first_name %>
+        </p>
+
+        <p>
+          <b>Last name:</b>
+          <%= @user.last_name %>
+        </p>
+
+        <p>
+          <b>Telephone:</b>
+          <%= @user.telephone %>
+        </p>
+
+        <p>
+          <b>Role:</b>
+          <%= @user.roles.first.name %>
+        </p>
+
+        <p>
+          <b>Organization:</b>
+          <%= @user.organization ? @user.organization.name : '' %>
+        </p>
+
+        <%= link_to 'Edit', edit_user_path(@user), :class => 'btn btn-primary btn-small' %>
+        <%= link_to 'Back', users_path, :class => 'btn btn-warning btn-small' %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

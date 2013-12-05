@@ -1,0 +1,49 @@
+// Place all the styles related to the Clients controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#panel {
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+}
+/*Fix bug Twitter Bootstrap CSS affecting Google Maps*/
+#map-canvas img {
+  max-width: none;
+}
+
+table.pretty {
+  /*border-collapse: collapse;*/
+  /*margin-bottom: 10px;*/
+}
+
+/*.pretty td, .pretty th {*/
+/*padding: 4px 10px;*/
+/*border: solid 1px #AAA;*/
+/*}*/
+
+/*.pretty .price {*/
+/*text-align: right;*/
+/*}*/
+
+.pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(/assets/up_arrow.gif);
+}
+
+.pretty th .desc {
+  background-image: url(/assets/down_arrow.gif);
+}
+
+.pretty th a{
+  color: #707070;
+}
+.pretty th a:hover{
+  color: #000000;
+  text-decoration: none;
+}

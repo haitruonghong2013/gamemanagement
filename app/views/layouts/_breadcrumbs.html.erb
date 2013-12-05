@@ -1,0 +1,24 @@
+<ul class="breadcrumb">
+
+  <% breadcrumbs do |links| %>
+      <% if links.any? %>
+          <% links.each do |link| %>
+              <li>
+                <%  if link.url == root_path %>
+                    <i  class="icon-home home-icon"></i>
+                <% end %>
+
+                <%= link_to link.text, link.url %>
+
+                <%  if link != links.last %>
+                              <span class="divider">
+								<i class="icon-angle-right arrow-icon"></i>
+							</span>
+                <% end %>
+
+
+              </li>
+          <% end %>
+      <% end %>
+  <% end %>
+</ul>

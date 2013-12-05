@@ -1,0 +1,6 @@
+# Ignore ruby mine editor file
+/.idea
+
+# Ignore all logfiles and tempfiles.
+/log/*.log
+/tmp/cache

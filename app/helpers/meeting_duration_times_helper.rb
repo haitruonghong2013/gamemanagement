@@ -1,0 +1,2 @@
+module MeetingDurationTimesHelper
+end

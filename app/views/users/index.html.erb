@@ -1,0 +1,56 @@
+<% content_for :stylesheets do %>
+    <%= stylesheet_link_tag 'users' %>
+<% end %>
+
+<% breadcrumb :users %>
+
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>Listing users</h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+
+      <div class="row-fluid">
+        <%= form_tag users_path ,remote: true, :method => 'get',:id => "users_search" do %>
+            <p class="form-inline"><%= text_field_tag :search, params[:search],:placeholder=>"Search ..." %>
+              <%= submit_tag "Search", :name => nil,:class => 'btn btn-primary' %>
+            </p>
+            <div id="user_table">
+              <%= render 'users' %>
+            </div>
+        <% end %>
+
+        <!--<table class="table table-hover table-condensed">-->
+
+        <%= link_to 'New User', new_user_path, :class => 'btn btn-primary btn-small' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(function () {
+//        // Sorting and pagination links.
+//        $('#products th a, #products .pagination a').live('click',
+//                function () {
+//                    $.getScript(this.href);
+//                    return false;
+//                }
+//        );
+
+        // Search form.
+        $('#users_search').submit(function () {
+            $.get(this.action, $(this).serialize(), null, 'script');
+            return false;
+        });
+
+//        $(".pagination a").on("click", function() {
+//            $(".pagination").html("Page is loading...");
+//            $.getScript(this.href);
+//            return false;
+//        });
+    });
+</script>
