@@ -1,5 +1,18 @@
 class Api::V1::AuthController  < ApplicationController
   include UserHelper
+
+  def register_user
+
+  end
+
+  def login_user
+
+  end
+
+  def logout_user
+
+  end
+
    def auth_fb
      #TODO:check access_token
      found_users = User.where('facebook_id = ?',params[:auth][:facebook_id])

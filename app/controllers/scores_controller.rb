@@ -1,6 +1,7 @@
 class ScoresController < ApplicationController
   # GET /scores
   # GET /scores.json
+  before_filter :authenticate_user!
   def index
     @scores = Score.all
 

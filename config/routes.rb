@@ -1,11 +1,4 @@
 Ipadapp::Application.routes.draw do
-
-  resources :scores
-
-
-  resources :characters
-
-
   resources :static_page_configures do
     collection do
 
@@ -27,97 +20,97 @@ Ipadapp::Application.routes.draw do
   match '/introduction'=> 'static_page_configures#introduction_show'
   match '/about_us'=> 'static_page_configures#about_us_show'
   match '/package_payment'=> 'static_page_configures#package_payment_show'
+  #
+  #                                                       s
+  #resources :client_notes
+  #
+  #resources :meeting_duration_times do
+  #  collection do
+  #    post 'add_tracking_meeting'=>'meeting_duration_times#create'
+  #  end
+  #end
+  #
+  #
+  #
+  #resources :travel_times do
+  #  collection do
+  #    post 'add_time_traveling'=>'travel_times#create'
+  #  end
+  #end
+  #
+  #
+  #resources :staff_tracking_positions do
+  #  collection do
+  #    post 'track_staff_position'=>'staff_tracking_positions#create'
+  #  end
+  #end
+  #
+  #
+  #resources :major_variance_logs do
+  #  collection do
+  #    post 'add_track_late'=>'major_variance_logs#create'
+  #  end
+  #end
+  #
+  #
+  #resources :client_answers
+  #
+  #
+  #resources :user_questions
+  #
+  #
+  #resources :questions
+  #
+  #
+  #resources :industries
+  #
+  #
+  #resources :push_notifications do
+  #  collection do
+  #    post :register_device
+  #    #post :update_notif
+  #    post :remove_device
+  #  end
+  #end
 
 
-  resources :client_notes
-
-  resources :meeting_duration_times do
-    collection do
-      post 'add_tracking_meeting'=>'meeting_duration_times#create'
-    end
-  end
-
-
-
-  resources :travel_times do
-    collection do
-      post 'add_time_traveling'=>'travel_times#create'
-    end
-  end
-
-
-  resources :staff_tracking_positions do
-    collection do
-      post 'track_staff_position'=>'staff_tracking_positions#create'
-    end
-  end
+  #resources :locations
+  #
+  #
+  #resources :schedules do
+  #  collection do
+  #    get '/view_assign_staff/:id' =>:view_assign_staff,:as=>'view_assign_staff'
+  #    post :do_assign_staff,:as=>'do_assign_staff'
+  #  end
+  #end
+  #
+  #
+  #resources :meetings do
+  #  collection do
+  #    get 'my_meetings'=> :get_my_meetings
+  #    get 'meetings_by_staff' => :get_meetings_by_staff
+  #    get :start_meeting
+  #  end
+  #end
 
 
-  resources :major_variance_logs do
-    collection do
-      post 'add_track_late'=>'major_variance_logs#create'
-    end
-  end
-
-
-  resources :client_answers
-
-
-  resources :user_questions
-
-
-  resources :questions
-
-
-  resources :industries
-
-
-  resources :push_notifications do
-    collection do
-      post :register_device
-      #post :update_notif
-      post :remove_device
-    end
-  end
-
-
-  resources :locations
-
-
-  resources :schedules do
-    collection do
-      get '/view_assign_staff/:id' =>:view_assign_staff,:as=>'view_assign_staff'
-      post :do_assign_staff,:as=>'do_assign_staff'
-    end
-  end
-
-
-  resources :meetings do
-    collection do
-      get 'my_meetings'=> :get_my_meetings
-      get 'meetings_by_staff' => :get_meetings_by_staff
-      get :start_meeting
-    end
-  end
-
-
-  resources :clients do
-    collection do
-      post 'new_client'=>'clients#create'
-      get 'my_client'=>'clients#get_my_client'
-      get 'clients_by_staff' => :get_all_clients_by_user
-      get 'search_clients' => :search_all_clients
-      get 'search_myclients' => :search_my_clients
-      get 'search_clients_by_staff' =>:search_clients_by_staff
-      post :create_note
-      post :update_client_answer
-      post :create_client_answer
-      get :get_notes_by_client
-      get 'get_client_answers' =>:get_client_answers_by_client_and_question
-      get '/client_validation/:id' =>:client_validation, :as=>'client_validation'
-      post '/do_validate_client/:id' =>:do_validate_client, :as=>'do_validate_client'
-    end
-  end
+  #resources :clients do
+  #  collection do
+  #    post 'new_client'=>'clients#create'
+  #    get 'my_client'=>'clients#get_my_client'
+  #    get 'clients_by_staff' => :get_all_clients_by_user
+  #    get 'search_clients' => :search_all_clients
+  #    get 'search_myclients' => :search_my_clients
+  #    get 'search_clients_by_staff' =>:search_clients_by_staff
+  #    post :create_note
+  #    post :update_client_answer
+  #    post :create_client_answer
+  #    get :get_notes_by_client
+  #    get 'get_client_answers' =>:get_client_answers_by_client_and_question
+  #    get '/client_validation/:id' =>:client_validation, :as=>'client_validation'
+  #    post '/do_validate_client/:id' =>:do_validate_client, :as=>'do_validate_client'
+  #  end
+  #end
 
 
   resources :posts do
@@ -142,10 +135,31 @@ Ipadapp::Application.routes.draw do
   end
 
   resources :users
+  resources :scores
+  resources :characters
+
+
   root :to => "home#index"
 
   namespace :api do
     namespace :v1  do
+      resources :game do
+        collection do
+          get :list_all_user
+          get :list_user_random
+          get :list_user_around_level
+          get :set_win_lose_game
+          get :submit_score
+          get :get_top_score_by_time
+          get :get_my_score
+          get :get_my_rank_by_time
+          get :update_character
+          get :new_character
+          get :delete_character
+          get :get_character
+        end
+      end
+
       resources :auth do
         collection do
           post :auth_fb

@@ -1,6 +1,7 @@
 class CharactersController < ApplicationController
   # GET /characters
   # GET /characters.json
+  before_filter :authenticate_user!
   def index
     @characters = Character.all
 

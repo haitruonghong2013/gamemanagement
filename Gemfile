@@ -66,5 +66,6 @@ gem 'apns'
 gem 'whenever'
 gem 'tinymce-rails'
 gem "activeuuid"
+gem 'redis-rails'
 
 
