@@ -1,5 +1,11 @@
 Ipadapp::Application.routes.draw do
 
+  resources :scores
+
+
+  resources :characters
+
+
   resources :static_page_configures do
     collection do
 

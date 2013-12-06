@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @character.user_id %>
+</p>
+
+<p>
+  <b>Char name:</b>
+  <%= @character.char_name %>
+</p>
+
+<p>
+  <b>Gold:</b>
+  <%= @character.gold %>
+</p>
+
+<p>
+  <b>Lv:</b>
+  <%= @character.lv %>
+</p>
+
+<p>
+  <b>Atk1:</b>
+  <%= @character.atk1 %>
+</p>
+
+<p>
+  <b>Atk2:</b>
+  <%= @character.atk2 %>
+</p>
+
+<p>
+  <b>Atk3:</b>
+  <%= @character.atk3 %>
+</p>
+
+<p>
+  <b>Def:</b>
+  <%= @character.def %>
+</p>
+
+<p>
+  <b>Hp:</b>
+  <%= @character.hp %>
+</p>
+
+<p>
+  <b>Mp:</b>
+  <%= @character.mp %>
+</p>
+
+<p>
+  <b>Medal:</b>
+  <%= @character.medal %>
+</p>
+
+<p>
+  <b>Char gender:</b>
+  <%= @character.char_gender %>
+</p>
+
+<p>
+  <b>Char race:</b>
+  <%= @character.char_race %>
+</p>
+
+<p>
+  <b>Online:</b>
+  <%= @character.online %>
+</p>
+
+<p>
+  <b>Ban:</b>
+  <%= @character.ban %>
+</p>
+
+<p>
+  <b>Win number:</b>
+  <%= @character.win_number %>
+</p>
+
+<p>
+  <b>Lose number:</b>
+  <%= @character.lose_number %>
+</p>
+
+
+<%= link_to 'Edit', edit_character_path(@character) %> |
+<%= link_to 'Back', characters_path %>

@@ -8,7 +8,8 @@ class Ability
        if user.has_role? :admin
          #can :manage, :all
          can :manage, User
-         #can :manage, StaffTrackingPosition
+         can :manage, Character
+         can :manage, Score
 
        #else
        #  can :read, :all

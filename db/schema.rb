@@ -11,7 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205091532) do
+ActiveRecord::Schema.define(:version => 20131206043208) do
+
+  create_table "characters", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "char_name"
+    t.integer  "gold"
+    t.integer  "lv"
+    t.integer  "atk1"
+    t.integer  "atk2"
+    t.integer  "atk3"
+    t.integer  "def"
+    t.integer  "hp"
+    t.integer  "mp"
+    t.integer  "medal"
+    t.boolean  "char_gender"
+    t.integer  "char_race"
+    t.boolean  "online"
+    t.boolean  "ban"
+    t.integer  "win_number"
+    t.integer  "lose_number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "characters", ["id"], :name => "index_characters_on_id"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -30,6 +54,15 @@ ActiveRecord::Schema.define(:version => 20131205091532) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "scores", :force => true do |t|
+    t.integer  "user_id"
+    t.uuid     "character_id"
+    t.datetime "time_stamp"
+    t.float    "score"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                     :default => "",    :null => false

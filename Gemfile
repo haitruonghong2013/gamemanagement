@@ -65,5 +65,6 @@ gem "geocoder"
 gem 'apns'
 gem 'whenever'
 gem 'tinymce-rails'
+gem "activeuuid"
 
 

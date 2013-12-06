@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   rolify
   before_save :ensure_authentication_token
+  has_one :character
+  has_many :scores
 
   #has_many :clients, :through => :client_notes
   #has_many :meetings

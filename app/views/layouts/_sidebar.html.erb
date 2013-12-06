@@ -43,214 +43,48 @@
 
 
             <li>
-              <a href="#"  class="dropdown-toggle">
-                <i class="icon-group"></i>
-                <span class="menu-text"> Client </span>
-                <b class="arrow icon-angle-down"></b>
-              </a>
-              <ul class="submenu">
-                <li>
-                  <a href="<%= new_client_path %>">
-                    <i class="icon-double-angle-right"></i>
-                    Add client
-                  </a>
-                </li>
-                <li>
-                  <a href="<%= clients_path %>">
-                    <i class="icon-double-angle-right"></i>
-                    List clients
-                  </a>
-                </li>
-                <!--<li>-->
-                  <!--<a href="#">-->
-                    <!--<i class="icon-double-angle-right"></i>-->
-                    <!--Add Note-->
-                  <!--</a>-->
-                <!--</li>-->
-
-                <li>
-                  <a href="#">
-                    <i class="icon-double-angle-right"></i>
-                    Client Answers
-                  </a>
-                </li>
-                <li>
-                  <a href="<%= industries_path %>">
-                    <i class="icon-double-angle-right"></i>
-                    List Industry
-                  </a>
-                </li>
-              </ul>
-            </li>
-
-            <li>
-              <a href="<%= meetings_path %>">
+              <a href="<%= characters_path %>">
                 <i class="icon-calendar"></i>
 
 							<span class="menu-text">
-								Meeting
+								Character
 							</span>
               </a>
             </li>
 
-            <li>
-              <a href="#" class="dropdown-toggle">
-                <i class="icon-file"></i>
-                <span class="menu-text"> Schedule </span>
+            <!--<li>-->
+              <!--<a href="#" class="dropdown-toggle">-->
+                <!--<i class="icon-file"></i>-->
+                <!--<span class="menu-text"> Schedule </span>-->
 
-                <b class="arrow icon-angle-down"></b>
-              </a>
+                <!--<b class="arrow icon-angle-down"></b>-->
+              <!--</a>-->
 
-              <ul class="submenu">
-                <li>
-                  <a href="<%= new_schedule_path %>">
-                    <i class="icon-double-angle-right"></i>
-                    Make Schedule
-                  </a>
-                </li>
-
-                <li>
-                  <a href="<%= schedules_path %>">
-                    <i class="icon-double-angle-right"></i>
-                    List Schedules
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <a href="#" class="dropdown-toggle">
-                <i class="icon-file"></i>
-                <span class="menu-text"> Question </span>
-
-                <b class="arrow icon-angle-down"></b>
-              </a>
-
-              <ul class="submenu">
+              <!--<ul class="submenu">-->
                 <!--<li>-->
-                  <!--<a href="<%= industries_path %>">-->
+                  <!--<a href="<%= new_schedule_path %>">-->
                     <!--<i class="icon-double-angle-right"></i>-->
-                    <!--List Industry-->
+                    <!--Make Schedule-->
                   <!--</a>-->
                 <!--</li>-->
 
-                <li>
-                  <a href="<%= questions_path %>">
-                    <i class="icon-double-angle-right"></i>
-                    List Question
-                  </a>
-                </li>
-              </ul>
-            </li>
+                <!--<li>-->
+                  <!--<a href="<%= schedules_path %>">-->
+                    <!--<i class="icon-double-angle-right"></i>-->
+                    <!--List Schedules-->
+                  <!--</a>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</li>-->
 
             <li>
-              <a href="#">
+              <a href="<%= scores_path %>">
                 <i class="icon-bar-chart"></i>
-                <span class="menu-text"> Statistic </span>
+                <span class="menu-text"> Score </span>
               </a>
             </li>
          <% elsif current_user.has_role? :saleStaff %>
-          <!--<li>-->
-            <!--<a href="<%= users_path %>">-->
-              <!--<i class="icon-user"></i>-->
-              <!--<span class="menu-text"> User </span>-->
-            <!--</a>-->
-          <!--</li>-->
 
-
-          <li>
-            <a href="#"  class="dropdown-toggle">
-              <i class="icon-group"></i>
-              <span class="menu-text"> Client </span>
-              <b class="arrow icon-angle-down"></b>
-            </a>
-            <ul class="submenu">
-              <li>
-                <a href="<%= my_client_clients_path %>">
-                  <i class="icon-double-angle-right"></i>
-                  My clients
-                </a>
-              </li>
-              <!--<li>-->
-                <!--<a href="#">-->
-                  <!--<i class="icon-double-angle-right"></i>-->
-                  <!--Add Note-->
-                <!--</a>-->
-              <!--</li>-->
-
-              <!--<li>-->
-                <!--<a href="#">-->
-                  <!--<i class="icon-double-angle-right"></i>-->
-                  <!--Client Answers-->
-                <!--</a>-->
-              <!--</li>-->
-            </ul>
-          </li>
-
-          <li>
-            <a href="<%= meetings_path %>">
-              <i class="icon-calendar"></i>
-
-							<span class="menu-text">
-								Meeting
-							</span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="dropdown-toggle">
-              <i class="icon-file"></i>
-              <span class="menu-text"> Schedule </span>
-
-              <b class="arrow icon-angle-down"></b>
-            </a>
-
-            <ul class="submenu">
-              <li>
-                <a href="<%= new_schedule_path %>">
-                  <i class="icon-double-angle-right"></i>
-                  Make Schedule
-                </a>
-              </li>
-
-              <li>
-                <a href="<%= schedules_path %>">
-                  <i class="icon-double-angle-right"></i>
-                  List Schedules
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href="#" class="dropdown-toggle">
-              <i class="icon-file"></i>
-              <span class="menu-text"> Question </span>
-
-              <b class="arrow icon-angle-down"></b>
-            </a>
-
-            <ul class="submenu">
-              <li>
-                <a href="<%= industries_path %>">
-                  <i class="icon-double-angle-right"></i>
-                  List Industry
-                </a>
-              </li>
-
-              <li>
-                <a href="<%= questions_path %>">
-                  <i class="icon-double-angle-right"></i>
-                  List Question
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="#">
-              <i class="icon-bar-chart"></i>
-              <span class="menu-text"> Statistic </span>
-            </a>
-          </li>
         <% end %>
 
     <% end %>
@@ -266,12 +100,6 @@
       <a href="<%= about_us_path %>">
         <i class="icon-info"></i>
         <span class="menu-text"> About Us </span>
-      </a>
-    </li>
-    <li>
-      <a href="<%= package_payment_path %>">
-        <i class="icon-dollar"></i>
-        <span class="menu-text"> Package Payment </span>
       </a>
     </li>
     <li>
