@@ -1,16 +1,11 @@
 class Api::V1::AuthController  < ApplicationController
   include UserHelper
-
-  def register_user
-
-  end
-
-  def login_user
-
-  end
-
-  def logout_user
-
+  def is_login
+    if current_user
+      render :json => {:is_login=>true}
+    else
+      render :json => {:is_login=>false}
+    end
   end
 
    def auth_fb

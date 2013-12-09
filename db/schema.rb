@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131206043208) do
+ActiveRecord::Schema.define(:version => 20131209100609) do
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20131206043208) do
     t.float    "score"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "score_type"
   end
 
   create_table "users", :force => true do |t|
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20131206043208) do
     t.integer  "user_type"
     t.string   "avatar_thumb"
     t.string   "ubox_authentication_token"
+    t.boolean  "is_login"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

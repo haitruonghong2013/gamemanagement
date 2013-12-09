@@ -20,7 +20,10 @@ class SessionsController < Devise::SessionsController
       resource = User.find_first_by_auth_conditions(:login => params[:user][:login])
       if (!resource.nil?) && (resource.valid_password?(params[:user][:password]))
         resource.reset_authentication_token!
-        sign_in(resource)
+        sign_in(resource,  store: false)
+        current_user.update_column(:is_login, true)
+        #resource.save
+        #TODO: set isOnline = true
         render :status => 200,
                :json => { :success => true,
                           :info => "Logged in",
@@ -52,6 +55,8 @@ end
   def destroy
     warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#failure")
     current_user.update_column(:authentication_token, nil)
+    current_user.update_column(:is_login, false)
+    #TODO: set isOnline = false
     render :status => 200,
            :json => { :success => true,
                       :info => "Logged out",

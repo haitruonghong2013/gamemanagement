@@ -33,6 +33,19 @@ class Api::V1::GameController  < ApplicationController
   #--------------------------------Score API -------------------
 
   def submit_score
+    score = Score.new(params[:score])
+    character = Character.find(params[:score][:character_id])
+    if character and current_user.character.id == character.id
+      respond_to do |format|
+        if score.save
+          format.json { render json: score, status: :created, location: score }
+        else
+          format.json { render json: score.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      render_json_error("404","User don't have this character!")
+    end
 
   end
 
@@ -42,7 +55,16 @@ class Api::V1::GameController  < ApplicationController
 
   #highest score
   def get_my_score
-
+    character = current_user.character
+    if character
+      score = Score.where('character_id = ?',character.id).maximum('score')
+      render :status => 200,
+             :json => { :success => true,
+                        :score => score
+             }
+    else
+      render_json_error("404","User don't have this character!")
+    end
   end
 
   def get_my_rank_by_time

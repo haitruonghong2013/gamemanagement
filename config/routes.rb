@@ -133,6 +133,8 @@ Ipadapp::Application.routes.draw do
   devise_scope :user do
     post 'login' => 'sessions#create', :as => 'login'
     delete 'logout' => 'sessions#destroy', :as => 'logout'
+    post '/api/v1/login' => 'sessions#create', :as => 'login'
+    delete '/api/v1/logout' => 'sessions#destroy', :as => 'logout'
     post '/api/v1/registration' => 'registrations#register', :as => 'api_registration', :defaults => {:format => 'json'}
   end
 
@@ -151,7 +153,7 @@ Ipadapp::Application.routes.draw do
           get :list_user_random
           get :list_user_around_level
           get :set_win_lose_game
-          get :submit_score
+          post :submit_score
           get :get_top_score_by_time
           get :get_my_score
           get :get_my_rank_by_time

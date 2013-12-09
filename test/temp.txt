@@ -19,3 +19,11 @@
         "lose_number":"1"
     }
 }
+
+{
+    "score":{
+        "user_id":"22",
+        "character_id":"77281360-b95a-488a-aa61-f5c803833f85",
+        "score":"45"
+    }
+}
