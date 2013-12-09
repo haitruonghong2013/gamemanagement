@@ -1,39 +1,39 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  user_id: 1
-  char_name: MyString
-  gold: 1
-  lv: 1
-  atk1: 1
-  atk2: 1
-  atk3: 1
-  def: 1
-  hp: 1
-  mp: 1
-  medal: 1
-  char_gender: false
-  char_race: 1
-  online: false
-  ban: false
-  win_number: 1
-  lose_number: 1
-
-two:
-  user_id: 1
-  char_name: MyString
-  gold: 1
-  lv: 1
-  atk1: 1
-  atk2: 1
-  atk3: 1
-  def: 1
-  hp: 1
-  mp: 1
-  medal: 1
-  char_gender: false
-  char_race: 1
-  online: false
-  ban: false
-  win_number: 1
-  lose_number: 1
+#one:
+#  user_id: 1
+#  char_name: MyString
+#  gold: 1
+#  lv: 1
+#  atk1: 1
+#  atk2: 1
+#  atk3: 1
+#  def: 1
+#  hp: 1
+#  mp: 1
+#  medal: 1
+#  char_gender: false
+#  char_race: 1
+#  online: false
+#  ban: false
+#  win_number: 1
+#  lose_number: 1
+#
+#two:
+#  user_id: 1
+#  char_name: MyString
+#  gold: 1
+#  lv: 1
+#  atk1: 1
+#  atk2: 1
+#  atk3: 1
+#  def: 1
+#  hp: 1
+#  mp: 1
+#  medal: 1
+#  char_gender: false
+#  char_race: 1
+#  online: false
+#  ban: false
+#  win_number: 1
+#  lose_number: 1

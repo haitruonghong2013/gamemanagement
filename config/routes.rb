@@ -156,7 +156,7 @@ Ipadapp::Application.routes.draw do
           get :get_my_score
           get :get_my_rank_by_time
           get :update_character
-          get :new_character
+          post :new_character
           get :delete_character
           get :get_character
         end

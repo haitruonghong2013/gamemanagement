@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  user_id: 1
-  character_id: MyString
-  time_stamp: 2013-12-06 11:32:08
-  score: 1.5
-
-two:
-  user_id: 1
-  character_id: MyString
-  time_stamp: 2013-12-06 11:32:08
-  score: 1.5
+#one:
+#  user_id: 1
+#  character_id: MyString
+#  time_stamp: 2013-12-06 11:32:08
+#  score: 1.5
+#
+#two:
+#  user_id: 1
+#  character_id: MyString
+#  time_stamp: 2013-12-06 11:32:08
+#  score: 1.5

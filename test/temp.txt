@@ -1,0 +1,21 @@
+{
+    "character":{
+        "user_id":"22",
+        "char_name":"1",
+        "gold":"1",
+        "lv":"1",
+        "atk1":"1",
+        "atk2":"1",
+        "atk3":"1",
+        "def":"1",
+        "hp":"1",
+        "mp":"1",
+        "medal":"1",
+        "char_gender":"0",
+        "char_race":"1",
+        "online":"1",
+        "ban":"0",
+        "win_number":"1",
+        "lose_number":"1"
+    }
+}
