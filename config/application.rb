@@ -66,7 +66,7 @@ module Ipadapp
     # Heroku requires this to be false
     config.assets.initialize_on_precompile=false
 
-    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+    #config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
 
   end
 end

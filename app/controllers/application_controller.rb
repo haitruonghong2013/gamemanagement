@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def render_json_error_with_error_code(status, error_code, message)
+  def render_json_error_with_error_code(status, error_code, message='')
     respond_to do |format|
       format.json {
         render :status => status,
