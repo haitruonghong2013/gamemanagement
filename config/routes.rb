@@ -22,7 +22,7 @@ Ipadapp::Application.routes.draw do
   match '/package_payment'=> 'static_page_configures#package_payment_show'
   #match '/api/v1/registration'=> 'registrations#register'
   #
-  #                                                       s
+  #
   #resources :client_notes
   #
   #resources :meeting_duration_times do
@@ -133,7 +133,7 @@ Ipadapp::Application.routes.draw do
   devise_scope :user do
     post 'login' => 'sessions#create', :as => 'login'
     delete 'logout' => 'sessions#destroy', :as => 'logout'
-    post 'api_registration' => 'registrations#register', :as => 'api_registration', :defaults => {:format => 'json'}
+    post '/api/v1/registration' => 'registrations#register', :as => 'api_registration', :defaults => {:format => 'json'}
   end
 
   resources :users

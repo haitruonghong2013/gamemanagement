@@ -22,11 +22,12 @@ class RegistrationsController < Devise::RegistrationsController
     tmp =  validate_register_param
 
     if tmp[:result] == false
-      render_json_error_with_error_code(tmp[:status_code], tmp[:error_code])
+      render_json_error_with_error_code(tmp[:status_code], tmp[:error_code], tmp[:message])
       return
     end
 
     @user = User.new(params[:user])
+    @user.email = @user.username + 'example.com'
     @user.add_role :normalUser
     respond_to do |format|
       if @user.save(:validate => false)
@@ -73,7 +74,7 @@ class RegistrationsController < Devise::RegistrationsController
     #  return { :result => false, :error_code => 13, :status_code => 409 }
     #end
     if User.find_by_username(params[:user][:username])
-      return { :result => false, :error_code => 14, :status_code => 409 }
+      return { :result => false, :error_code => 14, :status_code => 409, :message=>"username exists!" }
     end
     return {:result => true}
   end

@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   attr_accessor :current_password
   attr_accessible :role_ids, :current_password
   #accepts_nested_attributes_for :organization
-  attr_accessible :first_name,:last_name , :telephone ,:username, :email, :password,
+  attr_accessible :first_name,:last_name , :telephone ,:username, :email, :password, :sex,
                   :password_confirmation, :remember_me, :time_zone
   # attr_accessible :title, :body
   validates :first_name, :presence => {:message => "This field is required."}
