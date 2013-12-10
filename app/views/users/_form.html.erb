@@ -46,8 +46,6 @@
         <% user_roles = Role.where('name not in (?)',['admin','businessOwner','saleLeader']) %>
     <% end %>
 
-    <%= f.input :time_zone, :collection => ActiveSupport::TimeZone.all, :label_method => :to_s, :value_method => :name, :include_blank => false %>
-
     <%= f.label :select_role %><br />
 
     <%= f.input :role_ids, :collection => user_roles, :as => :radio_buttons,

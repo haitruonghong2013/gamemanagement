@@ -12,7 +12,6 @@
     <th>LastName</th>
     <th>Phone</th>
     <th>Role</th>
-    <th>TimeZone</th>
     <th style="width: 150px !important;"></th>
   </tr>
   </thead>
@@ -26,7 +25,6 @@
         <td><%= user.last_name %></td>
         <td><%= user.telephone %></td>
         <td><%= user.roles and user.roles.first ? user.roles.first.name : '' %></td>
-        <td><%= user.time_zone %></td>
         <!--<td><%= link_to 'Show', user %></td>-->
         <!--<td><%= link_to 'Edit', edit_user_path(user) %></td>-->
         <!--<td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
