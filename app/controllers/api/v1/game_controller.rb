@@ -9,10 +9,8 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def list_user_random
-     #random_users = User.where
     if current_user.character
-      character_lv = current_user.character.lv
-      random_characters = Character.where('lv <= ? and lv >= ?',character_lv + 5, character_lv - 5).limit(10).order("RAND()")
+      random_characters = Character.where('lv <= ? and lv >= ?',current_user.character.lv + 5, current_user.character.lv - 5).limit(10).order("RAND()")
       render :status => 200,
              :json => { :success => true,
                         :data => random_characters.as_json
@@ -20,11 +18,6 @@ class Api::V1::GameController  < ApplicationController
     else
       render_json_error("404","User don't have a character!")
     end
-
-  end
-
-  def list_user_around_level
-
   end
 
   def set_win_lose_game
@@ -34,8 +27,10 @@ class Api::V1::GameController  < ApplicationController
 
   def submit_score
     score = Score.new(params[:score])
-    character = Character.find(params[:score][:character_id])
-    if character and current_user.character.id == character.id
+    character = Character.find_all_by_char_name(params[:score][:char_name]).first
+    if character and current_user.character and current_user.character.id == character.id
+    #score.character_id = current_user.character.id
+    #if true
       respond_to do |format|
         if score.save
           format.json { render json: score, status: :created, location: score }
@@ -50,25 +45,55 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def get_top_score_by_time
+     top_scores = Score.where('created_at >=  ?', params[:after_time]).order(:score).reverse_order.limit(10)
 
+     top_scores.map! {
+         |top_score|
+       {
+           :score => top_score.score,:char_name => (top_score.character ? top_score.character.char_name : '')
+       }
+     }
+
+     render :status => 200,
+            :json => { :success => true,
+                       :top_scores => top_scores
+            }
   end
 
   #highest score
   def get_my_score
-    character = current_user.character
-    if character
+    #character = current_user.character
+    if current_user.character.char_name == params[:char_name]
       score = Score.where('character_id = ?',character.id).maximum('score')
+        render :status => 200,
+               :json => { :success => true,
+                          :score => score
+               }
+    else
+      render_json_error("404","User don't have this character!")
+    end
+    #if character
+    #  score = Score.where('character_id = ?',character.id).maximum('score')
+    #  render :status => 200,
+    #         :json => { :success => true,
+    #                    :score => score
+    #         }
+    #else
+    #  render_json_error("404","User don't have this character!")
+    #end
+  end
+
+  def get_my_rank_by_time
+    if current_user.character and current_user.character.char_name == params[:char_name]
+      max_score = Score.maximum_score(current_user.character.id, params[:after_time])
+      rank_score = max_score.ranking(params[:after_time])
       render :status => 200,
              :json => { :success => true,
-                        :score => score
+                        :rank_score => rank_score+1
              }
     else
       render_json_error("404","User don't have this character!")
     end
-  end
-
-  def get_my_rank_by_time
-
   end
 
   #--------------------------------Character API -------------------
