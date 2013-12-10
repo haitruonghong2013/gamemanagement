@@ -41,11 +41,11 @@ class User < ActiveRecord::Base
   attr_accessible :first_name,:last_name , :telephone ,:username, :email, :password, :sex,
                   :password_confirmation, :remember_me, :time_zonem, :device_id
   # attr_accessible :title, :body
-  validates :first_name, :presence => {:message => "This field is required."}
-  validates :last_name, :presence => {:message => "This field is required."}
-  validates :telephone, :presence => {:message => "This field is required."}
-  validates :username, :presence => {:message => "This field is required."}
-  validates :email, :presence => {:message => "This field is required."}
+  #validates :first_name, :presence => {:message => "This field is required."}
+  #validates :last_name, :presence => {:message => "This field is required."}
+  #validates :telephone, :presence => {:message => "This field is required."}
+  #validates :username, :presence => {:message => "This field is required."}
+  #validates :email, :presence => {:message => "This field is required."}
   #validates :password, :presence => {:message => "This field is required."}
   #validates :password_confirmation, :presence => {:message => "This field is required."}
 
