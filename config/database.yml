@@ -48,7 +48,7 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: ipadapp_development1
+  database: lop_db_production
   pool: 5
   username: root
   password: root
