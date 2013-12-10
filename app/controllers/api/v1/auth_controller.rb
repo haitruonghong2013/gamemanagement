@@ -1,10 +1,15 @@
 class Api::V1::AuthController  < ApplicationController
   include UserHelper
   def is_login
-    if current_user
-      render :json => {:is_login=>true}
+    user = User.find_all_by_authentication_token(params[:auth_token]).first
+    if user and user.is_login == true
+      render :json => { :success => true,
+                 :online => true
+      }
     else
-      render :json => {:is_login=>false}
+      render :json => { :success => true,
+                        :online => false
+      }
     end
   end
 

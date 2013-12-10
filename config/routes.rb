@@ -134,6 +134,8 @@ Ipadapp::Application.routes.draw do
     post 'login' => 'sessions#create', :as => 'login'
     delete 'logout' => 'sessions#destroy', :as => 'logout'
     post '/api/v1/login' => 'sessions#create', :as => 'login'
+    post '/api/v1/login_by_device' => 'sessions#login_by_device_id', :as => 'login_by_device'
+
     delete '/api/v1/logout' => 'sessions#destroy', :as => 'logout'
     post '/api/v1/registration' => 'registrations#register', :as => 'api_registration', :defaults => {:format => 'json'}
   end
@@ -157,6 +159,7 @@ Ipadapp::Application.routes.draw do
           get :get_top_score_by_time
           get :get_my_score
           get :get_my_rank_by_time
+          get :check_charname
           get :update_character
           post :new_character
           get :delete_character
@@ -167,6 +170,7 @@ Ipadapp::Application.routes.draw do
       resources :auth do
         collection do
           post :auth_fb
+          get :is_login
         end
       end
     end

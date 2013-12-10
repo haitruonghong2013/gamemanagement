@@ -38,7 +38,6 @@ class RegistrationsController < Devise::RegistrationsController
                      :info => 'Created',
                      :data => {
                          :username => @user.username,
-                         :email => @user.email,
                          :auth_token => @user.authentication_token
                      }
                  }

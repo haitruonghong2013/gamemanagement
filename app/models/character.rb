@@ -19,4 +19,6 @@ class Character < ActiveRecord::Base
                   :online,                #user online or not
                   :user_id,               #belong to an user
                   :win_number             #win batle game number
+
+  validates :char_name, :presence => true, :uniqueness => {:case_sensitive => false,:message =>'char_name is existing!'}
 end

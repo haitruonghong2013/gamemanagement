@@ -97,6 +97,20 @@ class Api::V1::GameController  < ApplicationController
   end
 
   #--------------------------------Character API -------------------
+  def check_charname
+    exist_character = Character.find_all_by_char_name(params[:char_name]).first
+    if exist_character
+      render :status => 200,
+             :json => { :success => true,
+                        :existing => true
+             }
+    else
+      render :status => 200,
+             :json => { :success => true,
+                        :existing => false
+             }
+    end
+  end
 
   def update_character
     character = current_user.character
@@ -116,13 +130,22 @@ class Api::V1::GameController  < ApplicationController
 
   def new_character
        character = Character.new(params[:character])
-       respond_to do |format|
+       character.user = current_user
+
          if character.save
-           format.json { render json: character, status: :created, location: character }
+           render :status => 200,
+                  :json => { :success => true,
+                             :character => character.as_json
+                  }
+           #respond_to do |format|
+           # format.json { render json: character, status: :created, location: character }
+           #end
          else
-           format.json { render json: character.errors, status: :unprocessable_entity }
+           #puts character.errors.messages
+           render_json_error("422",character.errors)
+           #format.json { render json: character.errors, status: :unprocessable_entity }
          end
-       end
+
   end
 
   def delete_character
