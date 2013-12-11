@@ -1,0 +1,26 @@
+<%= simple_form_for(@character_bot) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :char_name %>
+    <%= f.input :gold %>
+    <%= f.input :lv %>
+    <%= f.input :atk1 %>
+    <%= f.input :atk2 %>
+    <%= f.input :atk3 %>
+    <%= f.input :def %>
+    <%= f.input :hp %>
+    <%= f.input :mp %>
+    <%= f.input :medal %>
+    <%= f.input :char_gender %>
+    <%= f.input :char_race %>
+    <%= f.input :online %>
+    <%= f.input :ban %>
+    <%= f.input :win_number %>
+    <%= f.input :lose_number %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -10,7 +10,13 @@ class Api::V1::GameController  < ApplicationController
 
   def list_user_random
     if current_user.character
-      random_characters = Character.where('lv <= ? and lv >= ?',current_user.character.lv + 5, current_user.character.lv - 5).limit(10).order("RAND()")
+      random_characters = Character.joins(:user).where('lv <= ? and lv >= ? and is_login = ?',current_user.character.lv + 5, current_user.character.lv - 5, true).limit(10).order("RAND()")
+      if random_characters.nil? or random_characters.size == 0
+        #random_characters = CharacterBot.where('lv <= ? and lv >= ?',current_user.character.lv + 5, current_user.character.lv - 5).limit(10).order("RAND()")
+        #with mysql: RAND()
+        #with postgre: RANDOM()
+        random_characters = CharacterBot.order("RAND()").limit(10)
+      end
       render :status => 200,
              :json => { :success => true,
                         :data => random_characters.as_json
@@ -21,8 +27,41 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def set_win_lose_game
+    character = current_user.character
+    lose_number = params[:character][:lose_number] ? params[:character][:lose_number] : '0'
+    win_number = params[:character][:win_number] ? params[:character][:win_number] : '0'
 
+    if character
+      character.lose_number += lose_number.to_i
+      character.win_number += win_number.to_i
+      if character.save
+        render :status => 200,
+               :json => { :success => true,
+                          :data => "Set win lose success!"
+               }
+      else
+        render_json_error("422",character.errors)
+      end
+      #if params[:score][:score]
+      #  new_score = Score.new
+      #  new_score.score = params[:score][:score]
+      #  new_score.character = current_user.character
+      #  if new_score.save
+      #    render :status => 200,
+      #           :json => { :success => true,
+      #                      :data => "Create success!"
+      #           }
+      #  else
+      #    render_json_error("422",new_score.errors)
+      #  end
+      #else
+      #  render_json_error("400","Bad request!")
+      #end
+    else
+      render_json_error("404","User don't have a character!")
+    end
   end
+
   #--------------------------------Score API -------------------
 
   def submit_score
@@ -130,35 +169,39 @@ class Api::V1::GameController  < ApplicationController
 
   def new_character
        character = Character.new(params[:character])
-       character.user = current_user
 
-       #Use  Character default attributes
-       character.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
-       character.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
-       character.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
-       character.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
-       character.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
-       character.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
+       if current_user.character
+          render_json_error("409","user already have a character.")
+       else
+         character.user = current_user
 
-       if params[:character][:char_race]
-         select_race = Race.find_all_by_char_race(params[:character][:char_race]).first
-         if select_race
-           character.atk1 = select_race.atk1
-           character.atk2 = select_race.atk2
-           character.atk3 = select_race.atk3
-           character.def = select_race.def
-           character.hp =  select_race.hp
-           character.mp =  select_race.mp
-         else
-           #Use  Race default attributes
-           character.atk1 = Race::DEFAULT_ATTRS_VALUES[:atk1]
-           character.atk2 = Race::DEFAULT_ATTRS_VALUES[:atk2]
-           character.atk3 = Race::DEFAULT_ATTRS_VALUES[:atk3]
-           character.def = Race::DEFAULT_ATTRS_VALUES[:def]
-           character.hp =  Race::DEFAULT_ATTRS_VALUES[:hp]
-           character.mp =  Race::DEFAULT_ATTRS_VALUES[:mp]
+         #Use  Character default attributes
+         character.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
+         character.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
+         character.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
+         character.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
+         character.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
+         character.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
+
+         if params[:character][:char_race]
+           select_race = Race.find_all_by_char_race(params[:character][:char_race]).first
+           if select_race
+             character.atk1 = select_race.atk1
+             character.atk2 = select_race.atk2
+             character.atk3 = select_race.atk3
+             character.def = select_race.def
+             character.hp =  select_race.hp
+             character.mp =  select_race.mp
+           else
+             #Use  Race default attributes
+             character.atk1 = Race::DEFAULT_ATTRS_VALUES[:atk1]
+             character.atk2 = Race::DEFAULT_ATTRS_VALUES[:atk2]
+             character.atk3 = Race::DEFAULT_ATTRS_VALUES[:atk3]
+             character.def = Race::DEFAULT_ATTRS_VALUES[:def]
+             character.hp =  Race::DEFAULT_ATTRS_VALUES[:hp]
+             character.mp =  Race::DEFAULT_ATTRS_VALUES[:mp]
+           end
          end
-       end
 
          if character.save
            render :status => 200,
@@ -174,6 +217,7 @@ class Api::V1::GameController  < ApplicationController
            #format.json { render json: character.errors, status: :unprocessable_entity }
          end
 
+       end
   end
 
   def delete_character
@@ -201,4 +245,34 @@ class Api::V1::GameController  < ApplicationController
     end
   end
 
+  #use for update character if user play offline
+  def check_character_change
+    character = current_user.character
+    if character
+      if params[:character]
+        is_change = character.atk1 != params[:character][:atk1].to_i or
+                    character.atk2 != params[:character][:atk2].to_i or
+                    character.atk3 != params[:character][:atk3].to_i or
+                    character.def != params[:character][:def].to_i or
+                    character.gold != params[:character][:gold].to_i or
+                    character.hp != params[:character][:hp].to_i or
+                    character.lv != params[:character][:lv].to_i or
+                    character.medal != params[:character][:medal].to_i or
+                    character.lose_number != params[:character][:lose_number].to_i or
+                    character.win_number != params[:character][:win_number].to_i
+        render :status => 200,
+               :json => { :success => true,
+                          :change => is_change
+               }
+
+      else
+        render :status => 200,
+               :json => { :success => true,
+                          :change => false
+               }
+      end
+    else
+      render_json_error("404","User don't have a character!")
+    end
+  end
 end

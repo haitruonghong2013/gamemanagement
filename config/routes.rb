@@ -1,4 +1,7 @@
 Ipadapp::Application.routes.draw do
+  resources :character_bots
+
+
   resources :races
 
 
@@ -157,7 +160,7 @@ Ipadapp::Application.routes.draw do
           get :list_all_user
           get :list_user_random
           get :list_user_around_level
-          get :set_win_lose_game
+          post :set_win_lose_game
           post :submit_score
           get :get_top_score_by_time
           get :get_my_score
@@ -167,6 +170,7 @@ Ipadapp::Application.routes.draw do
           post :new_character
           get :delete_character
           get :get_character
+          post :check_character_change
         end
       end
 

@@ -11,7 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131211042606) do
+ActiveRecord::Schema.define(:version => 20131211072655) do
+
+  create_table "character_bots", :force => true do |t|
+    t.string   "char_name"
+    t.integer  "gold"
+    t.integer  "lv"
+    t.integer  "atk1"
+    t.integer  "atk2"
+    t.integer  "atk3"
+    t.integer  "def"
+    t.integer  "hp"
+    t.integer  "mp"
+    t.integer  "medal"
+    t.boolean  "char_gender"
+    t.integer  "char_race"
+    t.boolean  "online"
+    t.boolean  "ban"
+    t.integer  "win_number"
+    t.integer  "lose_number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "characters", :force => true do |t|
     t.integer  "user_id"

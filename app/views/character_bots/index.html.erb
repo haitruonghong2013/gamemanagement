@@ -1,0 +1,53 @@
+<h1>Listing character_bots</h1>
+
+<table>
+  <tr>
+    <th>Char name</th>
+    <th>Gold</th>
+    <th>Lv</th>
+    <th>Atk1</th>
+    <th>Atk2</th>
+    <th>Atk3</th>
+    <th>Def</th>
+    <th>Hp</th>
+    <th>Mp</th>
+    <th>Medal</th>
+    <th>Char gender</th>
+    <th>Char race</th>
+    <th>Online</th>
+    <th>Ban</th>
+    <th>Win number</th>
+    <th>Lose number</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @character_bots.each do |character_bot| %>
+  <tr>
+    <td><%= character_bot.char_name %></td>
+    <td><%= character_bot.gold %></td>
+    <td><%= character_bot.lv %></td>
+    <td><%= character_bot.atk1 %></td>
+    <td><%= character_bot.atk2 %></td>
+    <td><%= character_bot.atk3 %></td>
+    <td><%= character_bot.def %></td>
+    <td><%= character_bot.hp %></td>
+    <td><%= character_bot.mp %></td>
+    <td><%= character_bot.medal %></td>
+    <td><%= character_bot.char_gender %></td>
+    <td><%= character_bot.char_race %></td>
+    <td><%= character_bot.online %></td>
+    <td><%= character_bot.ban %></td>
+    <td><%= character_bot.win_number %></td>
+    <td><%= character_bot.lose_number %></td>
+    <td><%= link_to 'Show', character_bot %></td>
+    <td><%= link_to 'Edit', edit_character_bot_path(character_bot) %></td>
+    <td><%= link_to 'Destroy', character_bot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Character bot', new_character_bot_path %>
