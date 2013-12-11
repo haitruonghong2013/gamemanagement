@@ -3,9 +3,9 @@
 
   <div class="form-inputs">
 
-    <%= f.input :user do %>
-        <%= f.select :user_id, User.all.map { |r| [r.username, r.id] }, include_blank: false %>
-    <% end %>
+    <!-- f.input :user do %>
+         f.select :user_id, User.all.map { |r| [r.username, r.id] }, include_blank: false %>
+     end -->
     <%= f.input :character do %>
         <%= f.select :character_id, Character.all.map { |r| [r.char_name, r.id] }, include_blank: false %>
     <% end %>

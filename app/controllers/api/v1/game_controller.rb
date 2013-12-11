@@ -63,7 +63,7 @@ class Api::V1::GameController  < ApplicationController
   #highest score
   def get_my_score
     #character = current_user.character
-    if current_user.character.char_name == params[:char_name]
+    if current_user.character and current_user.character.char_name == params[:char_name]
       score = Score.where('character_id = ?',character.id).maximum('score')
         render :status => 200,
                :json => { :success => true,
