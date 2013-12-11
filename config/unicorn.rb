@@ -1,5 +1,5 @@
-APP_PATH = "/home/gamemanagement"
-#APP_PATH = "/home/administrator/rails_projects/gamemanagement"
+#APP_PATH = "/home/gamemanagement"
+APP_PATH = "/home/administrator/rails_projects/gamemanagement"
 
 worker_processes 8
 
