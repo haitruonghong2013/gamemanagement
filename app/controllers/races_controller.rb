@@ -1,12 +1,13 @@
 class RacesController < ApplicationController
   # GET /races
   # GET /races.json
+  before_filter :authenticate_user!
   def index
-    @races = Race.all
+    @races = Race.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @races }
+      #format.json { render json: @races }
     end
   end
 
@@ -17,7 +18,7 @@ class RacesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @race }
+      #format.json { render json: @race }
     end
   end
 
@@ -28,7 +29,7 @@ class RacesController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @race }
+      #format.json { render json: @race }
     end
   end
 
@@ -45,10 +46,10 @@ class RacesController < ApplicationController
     respond_to do |format|
       if @race.save
         format.html { redirect_to @race, notice: 'Race was successfully created.' }
-        format.json { render json: @race, status: :created, location: @race }
+        #format.json { render json: @race, status: :created, location: @race }
       else
         format.html { render action: "new" }
-        format.json { render json: @race.errors, status: :unprocessable_entity }
+        #format.json { render json: @race.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,10 +62,10 @@ class RacesController < ApplicationController
     respond_to do |format|
       if @race.update_attributes(params[:race])
         format.html { redirect_to @race, notice: 'Race was successfully updated.' }
-        format.json { head :no_content }
+        #format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @race.errors, status: :unprocessable_entity }
+        #format.json { render json: @race.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -77,7 +78,7 @@ class RacesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to races_url }
-      format.json { head :no_content }
+      #format.json { head :no_content }
     end
   end
 end

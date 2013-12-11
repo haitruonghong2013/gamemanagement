@@ -64,6 +64,7 @@ Ipadapp::Application.configure do
 
   config.assets.precompile += %w(application.css application.js
                                 login.css login.js
+                                clients.css clients.js
                                 users.css
                                 )
 
@@ -82,18 +83,21 @@ Ipadapp::Application.configure do
   #config.assets.digest = true
   #config.i18n.fallbacks = true
   #config.active_support.deprecation = :notify
-  require 'tlsmail'
-  Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
 
-  config.action_mailer.default_url_options = { :host => 'www.ipadapp.com' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      :address              => 'smtp.gmail.com',
-      :port                 => 587,
-      :domain               => 'gmail.com',
-      :user_name            => ENV['GMAIL_USERNAME'],
-      :password             => ENV['GMAIL_PASSWORD'],
-      :authentication       => 'plain',
-      :enable_starttls_auto => true
-  }
+
+
+  #require 'tlsmail'
+  #Net::SMTP.enable_tls(OpenSSL::SSL::VERIFY_NONE)
+  #
+  #config.action_mailer.default_url_options = { :host => 'www.ipadapp.com' }
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {
+  #    :address              => 'smtp.gmail.com',
+  #    :port                 => 587,
+  #    :domain               => 'gmail.com',
+  #    :user_name            => ENV['GMAIL_USERNAME'],
+  #    :password             => ENV['GMAIL_PASSWORD'],
+  #    :authentication       => 'plain',
+  #    :enable_starttls_auto => true
+  #}
 end

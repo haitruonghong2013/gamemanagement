@@ -1,12 +1,13 @@
 class CharacterBotsController < ApplicationController
   # GET /character_bots
   # GET /character_bots.json
+  before_filter :authenticate_user!
   def index
     @character_bots = CharacterBot.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @character_bots }
+      #format.json { render json: @character_bots }
     end
   end
 
@@ -17,7 +18,7 @@ class CharacterBotsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @character_bot }
+      #format.json { render json: @character_bot }
     end
   end
 
@@ -28,7 +29,7 @@ class CharacterBotsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @character_bot }
+      #format.json { render json: @character_bot }
     end
   end
 
@@ -45,10 +46,10 @@ class CharacterBotsController < ApplicationController
     respond_to do |format|
       if @character_bot.save
         format.html { redirect_to @character_bot, notice: 'Character bot was successfully created.' }
-        format.json { render json: @character_bot, status: :created, location: @character_bot }
+        #format.json { render json: @character_bot, status: :created, location: @character_bot }
       else
         format.html { render action: "new" }
-        format.json { render json: @character_bot.errors, status: :unprocessable_entity }
+        #format.json { render json: @character_bot.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,10 +62,10 @@ class CharacterBotsController < ApplicationController
     respond_to do |format|
       if @character_bot.update_attributes(params[:character_bot])
         format.html { redirect_to @character_bot, notice: 'Character bot was successfully updated.' }
-        format.json { head :no_content }
+        #format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @character_bot.errors, status: :unprocessable_entity }
+        #format.json { render json: @character_bot.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -77,7 +78,7 @@ class CharacterBotsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to character_bots_url }
-      format.json { head :no_content }
+      #format.json { head :no_content }
     end
   end
 end

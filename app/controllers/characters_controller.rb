@@ -3,11 +3,11 @@ class CharactersController < ApplicationController
   # GET /characters.json
   before_filter :authenticate_user!
   def index
-    @characters = Character.all
+    @characters = Character.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @characters }
+      #format.json { render json: @characters }
     end
   end
 
@@ -18,7 +18,7 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @character }
+      #format.json { render json: @character }
     end
   end
 
@@ -29,7 +29,7 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @character }
+      #format.json { render json: @character }
     end
   end
 
@@ -46,10 +46,10 @@ class CharactersController < ApplicationController
     respond_to do |format|
       if @character.save
         format.html { redirect_to @character, notice: 'Character was successfully created.' }
-        format.json { render json: @character, status: :created, location: @character }
+        #format.json { render json: @character, status: :created, location: @character }
       else
         format.html { render action: "new" }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
+        #format.json { render json: @character.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,10 +62,10 @@ class CharactersController < ApplicationController
     respond_to do |format|
       if @character.update_attributes(params[:character])
         format.html { redirect_to @character, notice: 'Character was successfully updated.' }
-        format.json { head :no_content }
+        #format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @character.errors, status: :unprocessable_entity }
+        #format.json { render json: @character.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -78,7 +78,7 @@ class CharactersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to characters_url }
-      format.json { head :no_content }
+      #format.json { head :no_content }
     end
   end
 end

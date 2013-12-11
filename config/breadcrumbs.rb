@@ -7,18 +7,23 @@ crumb :users do
   parent :home
 end
 
-crumb :clients do
-  link "Clients", clients_path
+crumb :scores do
+  link "Scores", scores_path
   parent :home
 end
 
-crumb :meetings do
-  link "Meetings", meetings_path
+crumb :characters do
+  link "Characters", characters_path
   parent :home
 end
 
-crumb :schedules do
-  link "Schedules", schedules_path
+crumb :character_bots do
+  link "Character_bots", character_bots_path
+  parent :home
+end
+
+crumb :races do
+  link "Races", races_path
   parent :home
 end
 

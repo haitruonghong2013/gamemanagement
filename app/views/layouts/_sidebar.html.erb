@@ -33,7 +33,7 @@
 
   <ul class="nav nav-list">
     <% if user_signed_in? %>
-        <% if current_user.has_role? :admin or current_user.has_role? :businessOwner or current_user.has_role? :saleLeader %>
+        <% if current_user.has_role? :admin %>
             <li>
               <a href="<%= users_path %>">
                 <i class="icon-user"></i>
@@ -48,6 +48,25 @@
 
 							<span class="menu-text">
 								Character
+							</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="<%= character_bots_path %>">
+                <i class="icon-calendar"></i>
+
+							<span class="menu-text">
+								Character Bot
+							</span>
+              </a>
+            </li>
+            <li>
+              <a href="<%= races_path %>">
+                <i class="icon-calendar"></i>
+
+							<span class="menu-text">
+								Race
 							</span>
               </a>
             </li>
