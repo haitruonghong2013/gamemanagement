@@ -3,7 +3,7 @@ class CharacterBotsController < ApplicationController
   # GET /character_bots.json
   before_filter :authenticate_user!
   def index
-    @character_bots = CharacterBot.all
+    @character_bots = CharacterBot.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb

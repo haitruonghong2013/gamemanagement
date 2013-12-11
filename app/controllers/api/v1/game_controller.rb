@@ -158,13 +158,14 @@ class Api::V1::GameController  < ApplicationController
   def update_character
     character = current_user.character
     if character
-      respond_to do |format|
         if character.update_attributes(params[:character])
-          format.json { head :no_content }
+          render :status => 200,
+                 :json => { :success => true,
+                            :data => 'update success!'
+                 }
         else
-          format.json { render json: character.errors, status: :unprocessable_entity }
+          render_json_error("422",character.errors)
         end
-      end
     else
       render_json_error("404","User don't have a character!")
     end
@@ -229,7 +230,10 @@ class Api::V1::GameController  < ApplicationController
     character = current_user.character
     if character
       character.destroy
-      render :json =>{}
+      render :status => 200,
+             :json => { :success => true,
+                        :data => 'delete success!'
+             }
     else
       render_json_error("404","User don't have a character!")
     end

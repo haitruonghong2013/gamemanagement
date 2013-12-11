@@ -1,6 +1,13 @@
-<h1>Listing character_bots</h1>
+<% breadcrumb :character_bots %>
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>Listing character bots</h1>
+  </div><!--/.page-header-->
 
-<table>
+  <div class="row-fluid">
+    <div class="span12">
+      <table class="table table-striped table-bordered table-hover pretty">
+        <thead>
   <tr>
     <th>Char name</th>
     <th>Gold</th>
@@ -10,18 +17,15 @@
     <th>Atk3</th>
     <th>Def</th>
     <th>Hp</th>
-    <th>Mp</th>
     <th>Medal</th>
     <th>Char gender</th>
     <th>Char race</th>
-    <th>Online</th>
-    <th>Ban</th>
-    <th>Win number</th>
-    <th>Lose number</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
+  </thead>
+        <tbody>
 
 <% @character_bots.each do |character_bot| %>
   <tr>
@@ -33,21 +37,25 @@
     <td><%= character_bot.atk3 %></td>
     <td><%= character_bot.def %></td>
     <td><%= character_bot.hp %></td>
-    <td><%= character_bot.mp %></td>
     <td><%= character_bot.medal %></td>
     <td><%= character_bot.char_gender %></td>
     <td><%= character_bot.char_race %></td>
-    <td><%= character_bot.online %></td>
-    <td><%= character_bot.ban %></td>
-    <td><%= character_bot.win_number %></td>
-    <td><%= character_bot.lose_number %></td>
     <td><%= link_to 'Show', character_bot %></td>
     <td><%= link_to 'Edit', edit_character_bot_path(character_bot) %></td>
     <td><%= link_to 'Destroy', character_bot, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
+        </tbody>
 </table>
 
-<br />
+      <div class="digg_pagination" style="background: transparent;">
+        <%= will_paginate @character_bots %>
+      </div>
 
-<%= link_to 'New Character bot', new_character_bot_path %>
+      <div class="space-4"></div>
+      <%= link_to 'New Character bot', new_character_bot_path, :class => 'btn btn-primary btn-small' %>
+    </div>
+  </div>
+</div>
+
+
