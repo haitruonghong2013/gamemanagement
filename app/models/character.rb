@@ -1,4 +1,14 @@
 class Character < ActiveRecord::Base
+
+  DEFAULT_ATTRS_VALUES = {
+      :gold => 100,
+      :medal => 0,
+      :lv => 1,
+      :lose_number => 0,
+      :win_number => 0,
+      :ban =>false
+  }
+
   include ActiveUUID::UUID
   has_many :scores
   belongs_to :user

@@ -1,0 +1,35 @@
+<h1>Listing races</h1>
+
+<table>
+  <tr>
+    <th>Char race</th>
+    <th>Atk1</th>
+    <th>Atk2</th>
+    <th>Atk3</th>
+    <th>Def</th>
+    <th>Hp</th>
+    <th>Mp</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @races.each do |race| %>
+  <tr>
+    <td><%= race.char_race %></td>
+    <td><%= race.atk1 %></td>
+    <td><%= race.atk2 %></td>
+    <td><%= race.atk3 %></td>
+    <td><%= race.def %></td>
+    <td><%= race.hp %></td>
+    <td><%= race.mp %></td>
+    <td><%= link_to 'Show', race %></td>
+    <td><%= link_to 'Edit', edit_race_path(race) %></td>
+    <td><%= link_to 'Destroy', race, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Race', new_race_path %>

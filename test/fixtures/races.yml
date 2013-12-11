@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  gold: 1
+  atk1: 1
+  atk2: 1
+  atk3: 1
+  def: 1
+  hp: 1
+  mp: 1
+  medal: 1
+  char_race: 1
+
+two:
+  gold: 1
+  atk1: 1
+  atk2: 1
+  atk3: 1
+  def: 1
+  hp: 1
+  mp: 1
+  medal: 1
+  char_race: 1

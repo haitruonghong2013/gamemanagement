@@ -1,4 +1,7 @@
 Ipadapp::Application.routes.draw do
+  resources :races
+
+
   resources :static_page_configures do
     collection do
 

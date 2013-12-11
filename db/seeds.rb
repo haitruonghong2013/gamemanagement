@@ -18,3 +18,5 @@ user = User.find_or_initialize_by_email :username => ENV['ADMIN_NAME'].dup, :ema
 user.save(:validate => false)
 puts 'user: ' << user.username
 user.add_role :admin
+
+#race = Race.find_or_initialize_by_char_race
