@@ -2,6 +2,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   before_filter :authenticate_user!
+  caches_action :index, :show
   def index
     #authorize! :index, Post, :message => 'Not authorized as an administrator.'
     @posts = Post.all
@@ -23,7 +24,6 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-
     @post = Post.find(params[:id])
     #authorize! :update, @post, :message => 'Not authorized as an administrator.'
     respond_to do |format|
@@ -54,6 +54,7 @@ class PostsController < ApplicationController
     #authorize! :create, @post, :message => 'Not authorized as an administrator.'
     respond_to do |format|
       if @post.save
+        expire_action action:[:index] #expire the cache whenever a new article is posted
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render json: @post, status: :created, location: @post }
       else
@@ -70,6 +71,7 @@ class PostsController < ApplicationController
     #authorize! :update, @post, :message => 'Not authorized as an administrator.'
     respond_to do |format|
       if @post.update_attributes(params[:post])
+        expire_action action:[:index,:show] #expire the cache whenever a new article is posted
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
@@ -83,6 +85,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1.json
   def destroy
     @post = Post.find(params[:id])
+    expire_action action:[:index,:show] #expire the cache whenever a new article is posted
     #authorize! :destroy, @post, :message => 'Not authorized as an administrator.'
     @post.destroy
 
@@ -94,6 +97,7 @@ class PostsController < ApplicationController
 
   def destroy_multiple
     Post.destroy(params[:blog_posts])
+    expire_action action:[:index,:show] #expire the cache whenever a new article is posted
     respond_to do |format|
       format.html { redirect_to posts_url }
       format.json { head :no_content }

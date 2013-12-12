@@ -70,13 +70,15 @@ class Api::V1::GameController  < ApplicationController
     if character and current_user.character and current_user.character.id == character.id
     #score.character_id = current_user.character.id
     #if true
-      respond_to do |format|
         if score.save
-          format.json { render json: score, status: :created, location: score }
+          #format.json { render json: score, status: :created, location: score }
+          render :status => 201,
+                 :json => { :success => true,
+                            :score => score.as_json
+                 }
         else
           format.json { render json: score.errors, status: :unprocessable_entity }
         end
-      end
     else
       render_json_error("404","User don't have this character!")
     end
@@ -127,13 +129,18 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def get_my_rank_by_time
-    if current_user.character and current_user.character.char_name == params[:char_name]
+    #if current_user.character and current_user.character.char_name == params[:char_name]
+    if current_user.character
       max_score = Score.maximum_score(current_user.character.id, params[:after_time])
-      rank_score = max_score.ranking(params[:after_time])
-      render :status => 200,
-             :json => { :success => true,
-                        :rank_score => rank_score+1
-             }
+      if max_score
+        rank_score = max_score.ranking(params[:after_time])
+        render :status => 200,
+               :json => { :success => true,
+                          :rank_score => rank_score+1
+               }
+      else
+        render_json_error("404","User don't have a score!")
+      end
     else
       render_json_error("404","User don't have this character!")
     end
@@ -161,7 +168,11 @@ class Api::V1::GameController  < ApplicationController
         if character.update_attributes(params[:character])
           render :status => 200,
                  :json => { :success => true,
-                            :data => 'update success!'
+                            :data => 'update success!',
+                            :character=>{
+                                :update_at => character.updated_at.to_time.to_i
+                            }
+
                  }
         else
           render_json_error("422",character.errors)
@@ -187,6 +198,7 @@ class Api::V1::GameController  < ApplicationController
          character.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
          character.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
          character.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
+         character.life = Character::DEFAULT_ATTRS_VALUES[:life]
 
          if params[:character][:char_race]
            select_race = Race.find_all_by_char_race(params[:character][:char_race]).first
@@ -245,9 +257,10 @@ class Api::V1::GameController  < ApplicationController
   def get_character
     character = current_user.character
     if character
-      respond_to do |format|
-        format.json { render json: character }
-      end
+      render :status => 200,
+             :json => { :success => true,
+                        :character => character.as_json
+             }
     else
       render_json_error("404","User don't have a character!")
     end
