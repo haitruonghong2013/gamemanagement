@@ -1,7 +1,14 @@
 class Api::V1::GameController  < ApplicationController
   before_filter :authenticate_user!
+  #caches_action :list_all_user
+
+  #def expire_list_all_user_cache
+  #  cache_key = "views/#{request.host_with_port}/api/v1/game/list_all_user.json"
+  #  Rails.cache.delete(cache_key)
+  #end
 #--------------------------------User API -------------------
   def list_all_user
+
       all_users = User.joins(:roles).where('roles.name != ?',:admin)
       respond_to do |format|
         format.json { render json: all_users }
@@ -9,6 +16,8 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def list_user_random
+    #expire_list_all_user_cache
+    expire_action(:controller => '/api/v1/game', :action => 'list_all_user',:format=>:json)
     if current_user.character
       random_characters = Character.joins(:user).where('lv <= ? and lv >= ? and is_login = ?',current_user.character.lv + 5, current_user.character.lv - 5, true).limit(10).order("RAND()")
       if random_characters.nil? or random_characters.size == 0

@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
       :gcm_token  => self.gcm_token,
       :google_id => self.google_id,
       :language => self.language,
-      :name => self.name,
+      :username => self.username,
       :note  => self.note,
       :phone  => self.phone,
       :sex   => self.sex,

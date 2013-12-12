@@ -35,6 +35,7 @@ class Character < ActiveRecord::Base
 
   def as_json(options = {})
     {
+        :id =>self.id,
         :atk1 => self.atk1,                  #Skill 1
         :atk2 => self.atk2,                  #Skill 2
         :atk3 => self.atk3,                  #Skill 3
