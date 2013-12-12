@@ -22,6 +22,6 @@ class CreateCharacters < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :characters,:id
+    #add_index :characters,:id
   end
 end
