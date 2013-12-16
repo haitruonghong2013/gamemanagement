@@ -42,14 +42,48 @@ class CharactersController < ApplicationController
   # POST /characters.json
   def create
     @character = Character.new(params[:character])
+    user = User.find(params[:character][:user_id])
+    if user and user.character
+      #render_json_error("409","user already have a character.")
+    else
+      @character.user = user
+      #Use  Character default attributes
+      @character.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
+      @character.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
+      @character.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
+      @character.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
+      @character.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
+      @character.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
+      @character.life = Character::DEFAULT_ATTRS_VALUES[:life]
 
-    respond_to do |format|
-      if @character.save
-        format.html { redirect_to @character, notice: 'Character was successfully created.' }
-        #format.json { render json: @character, status: :created, location: @character }
-      else
-        format.html { render action: "new" }
-        #format.json { render json: @character.errors, status: :unprocessable_entity }
+      if params[:character][:char_race]
+        select_race = Race.find_all_by_char_race(params[:character][:char_race]).first
+        if select_race
+          @character.atk1 = select_race.atk1
+          @character.atk2 = select_race.atk2
+          @character.atk3 = select_race.atk3
+          @character.def = select_race.def
+          @character.hp =  select_race.hp
+          @character.mp =  select_race.mp
+        else
+          #Use  Race default attributes
+          @character.atk1 = Race::DEFAULT_ATTRS_VALUES[:atk1]
+          @character.atk2 = Race::DEFAULT_ATTRS_VALUES[:atk2]
+          @character.atk3 = Race::DEFAULT_ATTRS_VALUES[:atk3]
+          @character.def = Race::DEFAULT_ATTRS_VALUES[:def]
+          @character.hp =  Race::DEFAULT_ATTRS_VALUES[:hp]
+          @character.mp =  Race::DEFAULT_ATTRS_VALUES[:mp]
+        end
+      end
+
+      respond_to do |format|
+        if @character.save
+          format.html { redirect_to @character, notice: 'Character was successfully created.' }
+          #format.json { render json: @character, status: :created, location: @character }
+        else
+          format.html { render action: "new" }
+          #format.json { render json: @character.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

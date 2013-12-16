@@ -75,10 +75,13 @@ class Api::V1::GameController  < ApplicationController
 
   def submit_score
     score = Score.new(params[:score])
-    character = Character.find_all_by_char_name(params[:score][:char_name]).first
-    if character and current_user.character and current_user.character.id == character.id
+    #character = currrent_user.character
+    begin
+    character = Character.find(params[:score][:character_id])
+    #if character and current_user.character and current_user.character.id == character.id
     #score.character_id = current_user.character.id
     #if true
+    if character and current_user.character.id == character.id
         if score.save
           #format.json { render json: score, status: :created, location: score }
           render :status => 201,
@@ -91,7 +94,10 @@ class Api::V1::GameController  < ApplicationController
     else
       render_json_error("404","User don't have this character!")
     end
-
+    rescue ActiveRecord::RecordNotFound => e
+      #render_json_error 417,e.message
+      render_json_error("404","User don't have this character!")
+    end
   end
 
   def get_top_score_by_time

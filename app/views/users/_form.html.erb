@@ -39,11 +39,6 @@
     <!-- this field only display for admin -->
     <% if current_user.has_role? :admin  %>
         <% user_roles = Role.all %>
-
-     <% elsif current_user.has_role? :businessOwner  %>
-     <% user_roles = Role.where('name not in (?)',['admin','businessOwner']) %>
-    <% elsif current_user.has_role? :saleLeader  %>
-        <% user_roles = Role.where('name not in (?)',['admin','businessOwner','saleLeader']) %>
     <% end %>
 
     <%= f.label :select_role %><br />
