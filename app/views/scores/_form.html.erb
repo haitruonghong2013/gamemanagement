@@ -1,8 +1,7 @@
-<%= simple_form_for(@score) do |f| %>
+<%= simple_form_for @score,  html:{:id => 'add_new_score',:class => 'form-horizontal'} do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-
     <!-- f.input :user do %>
          f.select :user_id, User.all.map { |r| [r.username, r.id] }, include_blank: false %>
      end -->

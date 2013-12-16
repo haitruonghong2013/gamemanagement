@@ -32,10 +32,31 @@ crumb :statics do
   parent :home
 end
 
-# Issue
+# user detail
 crumb :user do |user|
   link user.username, user
   parent :users
+end
+
+# Character detail
+crumb :character do |character|
+  link character.char_name, character
+  parent :characters
+end
+
+crumb :character_bot do |character_bot|
+  link character_bot.char_name, character_bot
+  parent :character_bots
+end
+
+crumb :race do |race|
+  link race.char_race, race
+  parent :races
+end
+
+crumb :score do |score|
+  link score.created_at, score
+  parent :scores
 end
 # crumb :projects do
 #   link "Projects", projects_path

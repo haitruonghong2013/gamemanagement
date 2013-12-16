@@ -1,8 +1,20 @@
-<p id="notice"><%= notice %></p>
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>Character Details</h1>
+  </div>
+  <!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+
+      <div class="row-fluid">
+        <% breadcrumb :character, @character %>
+        <p id="notice"><%= notice %></p>
 
 <p>
   <b>User:</b>
-  <%= @character.user_id %>
+  <%= @character.user ? @character.user.username : '' %>
 </p>
 
 <p>
@@ -85,6 +97,9 @@
   <%= @character.lose_number %>
 </p>
 
-
-<%= link_to 'Edit', edit_character_path(@character) %> |
-<%= link_to 'Back', characters_path %>
+        <%= link_to 'Edit', edit_character_path(@character), :class => 'btn btn-primary btn-small' %>
+        <%= link_to 'Back', characters_path, :class => 'btn btn-warning btn-small' %>
+      </div>
+    </div>
+  </div>
+</div>

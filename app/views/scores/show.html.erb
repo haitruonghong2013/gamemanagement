@@ -1,18 +1,31 @@
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>Score Details</h1>
+  </div>
+  <!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <!--PAGE CONTENT BEGINS-->
+
+      <div class="row-fluid">
+        <% breadcrumb :score, @score %>
+        <p id="notice"><%= notice %></p>
 <p id="notice"><%= notice %></p>
 
 <p>
   <b>User:</b>
-  <%= @score.user_id %>
+  <%= @score.character and  @score.character.user ? @score.character.user.username : ''  %>
 </p>
 
 <p>
   <b>Character:</b>
-  <%= @score.character_id %>
+  <%= @score.character ? @score.character.char_name : '' %>
 </p>
 
 <p>
   <b>Time stamp:</b>
-  <%= @score.time_stamp %>
+  <%= @score.created_at %>
 </p>
 
 <p>
@@ -20,6 +33,9 @@
   <%= @score.score %>
 </p>
 
-
-<%= link_to 'Edit', edit_score_path(@score) %> |
-<%= link_to 'Back', scores_path %>
+        <%= link_to 'Edit', edit_score_path(@score), :class => 'btn btn-primary btn-small' %>
+        <%= link_to 'Back', scores_path, :class => 'btn btn-warning btn-small' %>
+      </div>
+    </div>
+  </div>
+</div>
