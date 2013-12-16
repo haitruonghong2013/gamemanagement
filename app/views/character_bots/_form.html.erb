@@ -1,4 +1,4 @@
-<%= simple_form_for(@character_bot) do |f| %>
+<%= simple_form_for @character_bot,  html:{:id => 'add_new_character_bot',:class => 'form-horizontal'} do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -10,17 +10,14 @@
     <%= f.input :atk3 %>
     <%= f.input :def %>
     <%= f.input :hp %>
-    <%= f.input :mp %>
     <%= f.input :medal %>
-    <%= f.input :char_gender %>
+    <%= f.label :char_gender %>
+    <%= f.input :char_gender, :collection => [['Male',0],['Female',1]], :as => :radio_buttons,
+                :label_method => lambda {|t| "<span class='lbl'>".html_safe + t[0].titleize + "</span>".html_safe}, :label => false,
+                #:item_wrapper_class => 'inline',
+                checked: @character_bot.char_gender == true ? 1 : 0
+    %>
     <%= f.input :char_race %>
-    <%= f.input :online %>
-    <%= f.input :ban %>
-    <%= f.input :win_number %>
-    <%= f.input :lose_number %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+    <%= f.button :submit, :class =>'btn-primary' %>
 <% end %>

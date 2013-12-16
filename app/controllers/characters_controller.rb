@@ -4,7 +4,6 @@ class CharactersController < ApplicationController
   before_filter :authenticate_user!
   def index
     @characters = Character.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
-
     respond_to do |format|
       format.html # index.html.erb
       #format.json { render json: @characters }
@@ -26,7 +25,7 @@ class CharactersController < ApplicationController
   # GET /characters/new.json
   def new
     @character = Character.new
-
+    #@races = Race.all
     respond_to do |format|
       format.html # new.html.erb
       #format.json { render json: @character }
@@ -45,6 +44,14 @@ class CharactersController < ApplicationController
     user = User.find(params[:character][:user_id])
     if user and user.character
       #render_json_error("409","user already have a character.")
+      respond_to do |format|
+        format.html {
+          flash[:error] = 'User had a characters. Please choose another user!'
+          render action: "new"
+        }
+      end
+
+      #render :html=>{action: "new"}
     else
       @character.user = user
       #Use  Character default attributes
