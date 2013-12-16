@@ -1,5 +1,4 @@
 module UserAPI
-
   def list_all_user
 
     all_users = User.joins(:roles).where('roles.name != ?',:admin)

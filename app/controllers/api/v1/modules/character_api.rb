@@ -1,5 +1,4 @@
 module CharacterAPI
-
   def check_charname
     exist_character = Character.find_all_by_char_name(params[:char_name]).first
     if exist_character

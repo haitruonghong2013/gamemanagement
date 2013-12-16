@@ -3,7 +3,7 @@ class ScoresController < ApplicationController
   # GET /scores.json
   before_filter :authenticate_user!
   def index
-    @scores = Score.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
+    @scores = Score.order('created_at DESC').paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb
