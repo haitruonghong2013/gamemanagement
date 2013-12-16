@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131216035058) do
+ActiveRecord::Schema.define(:version => 20131216042133) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(:version => 20131216035058) do
   end
 
   create_table "races", :force => true do |t|
-    t.integer  "atk1"
-    t.integer  "atk2"
-    t.integer  "atk3"
-    t.integer  "def"
+    t.float    "atk1"
+    t.float    "atk2"
+    t.float    "atk3"
+    t.float    "def"
     t.integer  "hp"
     t.integer  "mp"
     t.integer  "char_race"

@@ -1,7 +1,7 @@
 APP_PATH = "/home/gamemanagement"
 #APP_PATH = "/home/administrator/rails_projects/gamemanagement"
 
-worker_processes 8
+worker_processes 2
 
 timeout 90
 
