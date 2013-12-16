@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212065919) do
+ActiveRecord::Schema.define(:version => 20131216035058) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -39,10 +39,10 @@ ActiveRecord::Schema.define(:version => 20131212065919) do
     t.string   "char_name"
     t.integer  "gold"
     t.integer  "lv"
-    t.integer  "atk1"
-    t.integer  "atk2"
-    t.integer  "atk3"
-    t.integer  "def"
+    t.float    "atk1"
+    t.float    "atk2"
+    t.float    "atk3"
+    t.float    "def"
     t.integer  "hp"
     t.integer  "mp"
     t.integer  "medal"
@@ -56,6 +56,8 @@ ActiveRecord::Schema.define(:version => 20131212065919) do
     t.datetime "updated_at",  :null => false
     t.integer  "life"
   end
+
+  add_index "characters", ["id"], :name => "index_characters_on_id"
 
   create_table "posts", :force => true do |t|
     t.string   "title"
@@ -98,23 +100,25 @@ ActiveRecord::Schema.define(:version => 20131212065919) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                     :default => "", :null => false
-    t.string   "encrypted_password",        :default => "", :null => false
+    t.string   "email",                     :default => "",    :null => false
+    t.string   "encrypted_password",        :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",             :default => 0,  :null => false
+    t.integer  "sign_in_count",             :default => 0,     :null => false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",                                   :null => false
+    t.datetime "updated_at",                                   :null => false
     t.string   "authentication_token"
+    t.integer  "organization_id"
     t.string   "username"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "telephone"
+    t.string   "time_zone",                 :default => "UTC"
     t.string   "address"
     t.string   "apn_token"
     t.string   "area_code"
