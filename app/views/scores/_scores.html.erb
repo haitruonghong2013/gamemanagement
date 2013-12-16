@@ -1,0 +1,32 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<table class="table table-striped table-bordered table-hover pretty">
+  <thead>
+  <tr>
+    <!--<th>Time stamp</th>-->
+    <th><%= sortable "created_at" %></th>
+    <th>User</th>
+    <th>Character</th>
+    <th>Score</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @scores.each do |score| %>
+      <tr>
+        <td><%= score.created_at %></td>
+        <td><%= score.character and score.character.user ? score.character.user.username : "" %></td>
+        <td><%= score.character ? score.character.char_name : "" %></td>
+        <td><%= score.score %></td>
+        <td><%= link_to 'Show', score %></td>
+        <td><%= link_to 'Edit', edit_score_path(score) %></td>
+        <td><%= link_to 'Destroy', score, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<div class="digg_pagination" style="background: transparent;">
+  <%= will_paginate @scores %>
+</div>

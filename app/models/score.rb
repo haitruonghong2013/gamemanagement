@@ -4,6 +4,14 @@ class Score < ActiveRecord::Base
   belongs_to :user
   attr_accessible :character_id, :score, :time_stamp,:score_type
 
+  def self.search(search)
+    if search  and search.strip != ''
+      joins(:character).where('characters.char_name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
+
   def ranking(after_time)
     if after_time  and after_time.strip != ''
       Score.count(:conditions => ['score > ? and created_at >= ?', self.score, after_time])

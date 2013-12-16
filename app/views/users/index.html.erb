@@ -15,7 +15,7 @@
 
       <div class="row-fluid">
         <%= form_tag users_path ,remote: true, :method => 'get',:id => "users_search" do %>
-            <p class="form-inline"><%= text_field_tag :search, params[:search],:placeholder=>"Search ..." %>
+            <p class="form-inline"><%= text_field_tag :search, params[:search],:placeholder=>"Search username..." %>
               <%= submit_tag "Search", :name => nil,:class => 'btn btn-primary' %>
             </p>
             <div id="user_table">
