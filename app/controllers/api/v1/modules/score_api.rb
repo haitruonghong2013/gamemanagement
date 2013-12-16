@@ -28,12 +28,14 @@ module ScoreAPI
   end
 
   def get_top_score_by_time
-    top_scores = Score.where('created_at >=  ?', params[:after_time]).order(:score).reverse_order.limit(10)
+    top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).order(:score).reverse_order.limit(10).includes(:character)
 
     top_scores.map! {
         |top_score|
       {
-          :score => top_score.score,:char_name => (top_score.character ? top_score.character.char_name : '')
+          :score => top_score.score,
+          :char_name => (top_score.character ? top_score.character.char_name : ''),
+          :level => (top_score.character ? top_score.character.lv : ''),
       }
     }
 
