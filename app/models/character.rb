@@ -33,6 +33,14 @@ class Character < ActiveRecord::Base
 
   validates :char_name, :presence => true, :uniqueness => {:case_sensitive => false,:message =>'char_name is existing!'}
 
+  def self.search(search)
+    if search  and search.strip != ''
+      where('char_name LIKE ?', "%#{search}%")
+    else
+      scoped
+    end
+  end
+
   def as_json(options = {})
     {
         :id =>self.id,

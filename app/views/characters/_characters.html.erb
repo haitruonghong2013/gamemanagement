@@ -1,0 +1,53 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<table class="table table-striped table-bordered table-hover pretty">
+  <thead>
+  <tr>
+    <th><%= sortable "char_name" %></th>
+    <th>User</th>
+    <th>Gold</th>
+    <th>Lv</th>
+    <th>Atk1</th>
+    <th>Atk2</th>
+    <th>Atk3</th>
+    <th>Def</th>
+    <th>Hp</th>
+    <th>Char gender</th>
+    <th>Char race</th>
+    <th>Online</th>
+    <th>Ban</th>
+    <th>Win</th>
+    <th>Loose</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <thead>
+  <tbody>
+  <% @characters.each do |character| %>
+      <tr>
+        <td><%= character.char_name %></td>
+        <td><%= character.user ? character.user.username : "" %></td>
+        <td><%= character.gold %></td>
+        <td><%= character.lv %></td>
+        <td><%= character.atk1 %></td>
+        <td><%= character.atk2 %></td>
+        <td><%= character.atk3 %></td>
+        <td><%= character.def %></td>
+        <td><%= character.hp %></td>
+        <td><%= character.char_gender %></td>
+        <td><%= character.char_race %></td>
+        <td><%= character.user ? (character.user.is_login ? character.user.is_login : false): false %></td>
+        <td><%= character.ban %></td>
+        <td><%= character.win_number %></td>
+        <td><%= character.lose_number %></td>
+        <td><%= link_to 'Show', character %></td>
+        <td><%= link_to 'Edit', edit_character_path(character) %></td>
+        <td><%= link_to 'Destroy', character, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<div class="digg_pagination" style="background: transparent;">
+  <%= will_paginate @characters %>
+</div>

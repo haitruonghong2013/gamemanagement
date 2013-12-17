@@ -2,11 +2,13 @@ class CharactersController < ApplicationController
   # GET /characters
   # GET /characters.json
   before_filter :authenticate_user!
+  helper_method :sort_column, :sort_direction
   def index
-    @characters = Character.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
+    @characters = Character.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
     respond_to do |format|
       format.html # index.html.erb
-      #format.json { render json: @characters }
+      format.json { render json: @characters }
+      format.js
     end
   end
 
@@ -121,5 +123,13 @@ class CharactersController < ApplicationController
       format.html { redirect_to characters_url }
       #format.json { head :no_content }
     end
+  end
+
+  def sort_column
+    Character.column_names.include?(params[:sort]) ? params[:sort] : "char_name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end
