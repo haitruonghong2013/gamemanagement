@@ -171,6 +171,7 @@ Ipadapp::Application.routes.draw do
           delete :delete_character
           get :get_character
           post :check_character_change
+          get :list_random_character_bots
         end
       end
 

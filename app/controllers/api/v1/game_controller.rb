@@ -39,6 +39,15 @@ class Api::V1::GameController  < ApplicationController
     end
   end
 
+
+  def list_random_character_bots
+      random_character_bots = CharacterBot.order("RAND()").limit(10)
+      render :status => 200,
+             :json => { :success => true,
+                        :data => random_character_bots.as_json
+             }
+  end
+
   def set_win_lose_game
     character = current_user.character
     lose_number = params[:character][:lose_number] ? params[:character][:lose_number] : '0'

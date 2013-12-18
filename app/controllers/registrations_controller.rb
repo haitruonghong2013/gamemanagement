@@ -28,6 +28,7 @@ class RegistrationsController < Devise::RegistrationsController
 
     @user = User.new(params[:user])
     @user.email = @user.username + 'example.com'
+    @user.is_login = true
     @user.add_role :normalUser
     respond_to do |format|
       if @user.save(:validate => false)
