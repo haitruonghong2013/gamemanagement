@@ -12,8 +12,9 @@
     <th>Atk3</th>
     <th>Def</th>
     <th>Hp</th>
-    <th>Char gender</th>
-    <th>Char race</th>
+    <th>Life</th>
+    <th>Gender</th>
+    <th>Race</th>
     <th>Online</th>
     <th>Ban</th>
     <th>Win</th>
@@ -35,6 +36,7 @@
         <td><%= character.atk3 %></td>
         <td><%= character.def %></td>
         <td><%= character.hp %></td>
+        <td><%= character.life %></td>
         <td><%= character.char_gender %></td>
         <td><%= character.char_race %></td>
         <td><%= character.user ? (character.user.is_login ? character.user.is_login : false): false %></td>
