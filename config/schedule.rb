@@ -19,8 +19,8 @@ rails_root = File.dirname(__FILE__) + '/..'
 
 # Learn more: http://github.com/javan/whenever
 
-#set :environment, 'development'
-set :environment, 'production'
+set :environment, 'development'
+#set :environment, 'production'
 set :output, {
     :error    => "#{rails_root}/log/error.log",
     :standard => "#{rails_root}/log/cron.log"
@@ -39,6 +39,7 @@ set :output, {
 #  #command "echo 'you can use raw cron syntax too'"
 #end
 
+#script/rails runner -e production 'BackgroundJob.reset_character_life' >> config/../log/cron.log 2>> config/../log/error.log
 every 1.day, :at => '12:00 am' do
   runner "BackgroundJob.reset_character_life"
 end
