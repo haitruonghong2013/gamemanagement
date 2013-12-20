@@ -19,8 +19,8 @@ rails_root = File.dirname(__FILE__) + '/..'
 
 # Learn more: http://github.com/javan/whenever
 
-set :environment, 'development'
-#set :environment, 'production'
+#set :environment, 'development'
+set :environment, 'production'
 set :output, {
     :error    => "#{rails_root}/log/error.log",
     :standard => "#{rails_root}/log/cron.log"
