@@ -9,6 +9,8 @@ class CreateUserItems < ActiveRecord::Migration
       t.float :atk
       t.float :def
       t.integer :user_id
+      t.uuid :item_group_id
+      t.uuid :item_type_id
       t.uuid :character_id
       t.timestamps
     end

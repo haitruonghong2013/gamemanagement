@@ -10,7 +10,7 @@ class Api::V1::ShopController < ApplicationController
   end
 
   def list_items_by_group
-    items = Item.joins(:item_groups).where('item_groups.name = ?', params[:group_name])
+    items = Item.joins(:item_group).where('item_groups.name = ?', params[:group_name])
     render :status => 200,
            :json => {:success => true,
                      :data => items.as_json
@@ -20,9 +20,13 @@ class Api::V1::ShopController < ApplicationController
   def buy_item
     item = Item.find(params[:buy_item][:item_id])
     if params[:buy_item][:method] == 'gold'
-      if current_user.gold >= item.gold
+      if current_user.character.gold >= item.gold
         user_item = UserItem.new
 
+        user_item.name = item.name
+        user_item.description = item.description
+        user_item.user = current_user
+        user_item.character = current_user.character
         user_item.atk = item.atk
         user_item.def = item.def
         user_item.health = item.health
@@ -31,8 +35,8 @@ class Api::V1::ShopController < ApplicationController
         UserItem.transaction do
           begin
             if user_item.save
-              current_user.gold = current_user.gold - item.gold
-              current_user.save
+              current_user.character.gold = current_user.character.gold - item.gold
+              current_user.character.save
               render :status => 200,
                      :json => {:success => true,
                                :data => "Buy item success!"
@@ -47,12 +51,13 @@ class Api::V1::ShopController < ApplicationController
       else
         render_json_error("404", "User don't have enough gold to buy this item!")
       end
-    end
-
-    if params[:buy_item][:method] == 'gem'
-      if current_user.gem >= item.gem
+    elsif params[:buy_item][:method] == 'gem'
+      if current_user.character.gem >= item.gem
         user_item = UserItem.new
-
+        user_item.name = item.name
+        user_item.description = item.description
+        user_item.user = current_user
+        user_item.character = current_user.character
         user_item.atk = item.atk
         user_item.def = item.def
         user_item.health = item.health
@@ -72,11 +77,14 @@ class Api::V1::ShopController < ApplicationController
             end
           rescue Exception => e
             raise ActiveRecord::Rollback
+            #render_json_error("404", "System error: "+e.messages)
           end
         end
       else
         render_json_error("404", "User don't have enough gem to buy this item!")
       end
+    else
+      render_json_error("422", "Action not complete!")
     end
   end
 end
