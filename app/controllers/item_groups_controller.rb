@@ -2,7 +2,7 @@ class ItemGroupsController < ApplicationController
   # GET /item_groups
   # GET /item_groups.json
   def index
-    @item_groups = ItemGroup.all
+    @item_groups = ItemGroup.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb

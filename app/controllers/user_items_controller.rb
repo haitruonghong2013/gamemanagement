@@ -2,7 +2,7 @@ class UserItemsController < ApplicationController
   # GET /user_items
   # GET /user_items.json
   def index
-    @user_items = UserItem.all
+    @user_items = UserItem.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb

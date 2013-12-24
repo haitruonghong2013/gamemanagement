@@ -27,6 +27,23 @@ crumb :races do
   parent :home
 end
 
+crumb :items do
+  link "Items", items_path
+  parent :home
+end
+
+crumb :item_groups do
+  link "Item Groups", item_groups_path
+  parent :home
+end
+
+crumb :user_items do
+  link "User Items", user_items_path
+  parent :home
+end
+
+
+
 crumb :statics do
   link "statics", '#'
   parent :home
