@@ -1,4 +1,5 @@
 class Character < ActiveRecord::Base
+  has_many :user_items
 
   DEFAULT_ATTRS_VALUES = {
       :gold => 100,

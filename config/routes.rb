@@ -1,4 +1,13 @@
 Ipadapp::Application.routes.draw do
+  resources :user_items
+
+
+  resources :items
+
+
+  resources :item_groups
+
+
   resources :character_bots
 
 

@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @user_item.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @user_item.description %>
+</p>
+
+<p>
+  <b>Level:</b>
+  <%= @user_item.level %>
+</p>
+
+<p>
+  <b>Health:</b>
+  <%= @user_item.health %>
+</p>
+
+<p>
+  <b>Atk:</b>
+  <%= @user_item.atk %>
+</p>
+
+<p>
+  <b>Def:</b>
+  <%= @user_item.def %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @user_item.user_id %>
+</p>
+
+<p>
+  <b>Character:</b>
+  <%= @user_item.character_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_item_path(@user_item) %> |
+<%= link_to 'Back', user_items_path %>
