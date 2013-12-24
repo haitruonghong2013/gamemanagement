@@ -40,8 +40,9 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    @item = Item.new(params[:item])
 
+    @item = Item.new(params[:item])
+    @item.item_group = ItemType.find(params[:item][:item_type_id]).item_group
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }

@@ -1,18 +1,12 @@
 Ipadapp::Application.routes.draw do
+  resources :item_types
+
+
   resources :user_items
-
-
   resources :items
-
-
   resources :item_groups
-
-
   resources :character_bots
-
-
   resources :races
-
 
   resources :static_page_configures do
     collection do
@@ -188,6 +182,13 @@ Ipadapp::Application.routes.draw do
         collection do
           post :auth_fb
           get :is_login
+        end
+      end
+
+      resources :shop do
+        collection do
+          get :list_items_by_group
+          post :buy_item
         end
       end
     end

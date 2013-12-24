@@ -37,6 +37,11 @@ crumb :item_groups do
   parent :home
 end
 
+crumb :item_types do
+  link "Item Types", item_types_path
+  parent :home
+end
+
 crumb :user_items do
   link "User Items", user_items_path
   parent :home

@@ -9,6 +9,7 @@ class CreateItems < ActiveRecord::Migration
       t.float :atk
       t.float :def
       t.uuid :item_group_id
+      t.uuid :item_type_id
 
       t.timestamps
     end

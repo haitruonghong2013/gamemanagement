@@ -11,11 +11,14 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
+    <th>Item type</th>
+    <th>Item group</th>
     <th>Level</th>
     <th>Health</th>
     <th>Atk</th>
     <th>Def</th>
-    <th>Item group</th>
+    <th>Gold</th>
+    <th>Gem</th>
     <th></th>
     <th></th>
     <th></th>
@@ -27,11 +30,15 @@
   <tr>
     <td><%= item.name %></td>
     <td><%= item.description %></td>
+    <td><%= item.item_type ? item.item_type.name : '' %></td>
+    <td><%= item.item_group ? item.item_group.name : '' %></td>
     <td><%= item.level %></td>
     <td><%= item.health %></td>
     <td><%= item.atk %></td>
     <td><%= item.def %></td>
-    <td><%= item.item_group ? item.item_group.name : '' %></td>
+    <td><%= item.gold %></td>
+    <td><%= item.gem %></td>
+
     <td><%= link_to 'Show', item %></td>
     <td><%= link_to 'Edit', edit_item_path(item) %></td>
     <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
