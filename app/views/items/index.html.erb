@@ -6,53 +6,31 @@
 
   <div class="row-fluid">
     <div class="span12">
-      <table class="table table-striped table-bordered table-hover pretty">
-        <thead>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Item type</th>
-    <th>Item group</th>
-    <th>Level</th>
-    <th>Health</th>
-    <th>Atk</th>
-    <th>Def</th>
-    <th>Gold</th>
-    <th>Gem</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-  </thead>
-        <tbody>
-
-<% @items.each do |item| %>
-  <tr>
-    <td><%= item.name %></td>
-    <td><%= item.description %></td>
-    <td><%= item.item_type ? item.item_type.name : '' %></td>
-    <td><%= item.item_group ? item.item_group.name : '' %></td>
-    <td><%= item.level %></td>
-    <td><%= item.health %></td>
-    <td><%= item.atk %></td>
-    <td><%= item.def %></td>
-    <td><%= item.gold %></td>
-    <td><%= item.gem %></td>
-
-    <td><%= link_to 'Show', item %></td>
-    <td><%= link_to 'Edit', edit_item_path(item) %></td>
-    <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-        </tbody>
-      </table>
-      <div class="digg_pagination" style="background: transparent;">
-        <%= will_paginate @items %>
-      </div>
+      <%= form_tag items_path ,remote: true, :method => 'get',:id => "items_search" do %>
+          <p class="form-inline">
+            <%= select_tag 'item_group', options_from_collection_for_select(ItemGroup.all,'id', 'name'),:prompt=>"Choose Group" %>
+            <%= select_tag 'item_type', options_from_collection_for_select(ItemType.all,'id', 'name'),:prompt=>"Choose Type" %>
+            <%= text_field_tag :search, params[:search],:placeholder=>"Search char name..." %>
+            <%= submit_tag "Search", :name => nil,:class => 'btn btn-primary' %>
+          </p>
+          <div id="item_table">
+            <%= render 'items' %>
+          </div>
+      <% end %>
 
       <div class="space-4"></div>
       <%= link_to 'New Item', new_item_path, :class => 'btn btn-primary btn-small' %>
     </div>
   </div>
 </div>
+
+<script>
+    $(function () {
+        // Search form.
+        $('#items_search').submit(function () {
+            $.get(this.action, $(this).serialize(), null, 'script');
+            return false;
+        });
+    });
+</script>
 

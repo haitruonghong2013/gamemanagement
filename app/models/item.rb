@@ -4,4 +4,27 @@ class Item < ActiveRecord::Base
 
   include ActiveUUID::UUID
   attr_accessible :atk, :def, :description, :health, :item_group_id, :level, :name, :gold, :gem,:item_type_id
+
+  def self.search(search, item_group, item_type)
+    result = self
+    if item_group and item_group.strip != ''
+      item_group = UUIDTools::UUID.parse(item_group)
+      result = result.where('item_group_id = ?', item_group)
+
+    end
+
+    if item_type and item_type.strip != ''
+      item_type = UUIDTools::UUID.parse(item_type)
+      result = result.where('item_type_id = ?', item_type)
+    end
+
+    if search  and search.strip != ''
+      result = result.where('items.name LIKE ?', "%#{search}%")
+    end
+
+    if item_group.blank? and item_type.blank? and search.blank?
+      result = scoped
+    end
+    return result
+  end
 end
