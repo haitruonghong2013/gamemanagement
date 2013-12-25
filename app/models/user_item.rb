@@ -6,9 +6,11 @@ class UserItem < ActiveRecord::Base
 
 
   include ActiveUUID::UUID
-  attr_accessible :atk, :character_id, :def, :description, :health, :level, :name, :user_id,:item_group_id, :item_type_id
+  attr_accessible :character_id,:user_id,:item_group_id, :item_type_id ,
+                  :def, :description, :health, :level, :name,:atk, :dam, :pc_atk, :pc_dam
 
-  def self.search(search)
+
+      def self.search(search)
     if search  and search.strip != ''
       joins(:character).where('characters.char_name LIKE ?', "%#{search}%")
     else

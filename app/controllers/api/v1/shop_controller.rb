@@ -21,7 +21,7 @@ class Api::V1::ShopController < ApplicationController
   def buy_items
     item_ids_array =[]
     params[:buy_item][:item_ids].each do |item_id|
-      item_ids_array.push(UUIDTools::UUID.parse(item_id).raw)
+      item_ids_array.push(UUIDTools::UUID.parse(item_id))
     end
 
     #UUIDTools::UUID.parse_hexdigest(params[:buy_item][:item_ids][0])
@@ -29,7 +29,7 @@ class Api::V1::ShopController < ApplicationController
 
     if items and items.size != 0
       if params[:buy_item][:method] == 'gold'
-        total_gold = Item.where('id in (?)',params[:buy_item][:item_ids].to_s).sum(:gold)
+        total_gold = Item.where('items.id in (?)',item_ids_array).sum(:gold)
         if current_user.character.gold >= total_gold
 
           UserItem.transaction do
@@ -44,6 +44,9 @@ class Api::V1::ShopController < ApplicationController
                 user_item.def = item.def
                 user_item.health = item.health
                 user_item.level = item.level
+                user_item.dam = item.dam
+                user_item.pc_dam = item.pc_dam
+                user_item.pc_atk = item.pc_atk
                 user_item.save
               end
 
@@ -90,6 +93,9 @@ class Api::V1::ShopController < ApplicationController
         user_item.def = item.def
         user_item.health = item.health
         user_item.level = item.level
+        user_item.dam = item.dam
+        user_item.pc_dam = item.pc_dam
+        user_item.pc_atk = item.pc_atk
 
         UserItem.transaction do
           begin
@@ -121,6 +127,9 @@ class Api::V1::ShopController < ApplicationController
         user_item.def = item.def
         user_item.health = item.health
         user_item.level = item.level
+        user_item.dam = item.dam
+        user_item.pc_dam = item.pc_dam
+        user_item.pc_atk = item.pc_atk
 
         UserItem.transaction do
           begin

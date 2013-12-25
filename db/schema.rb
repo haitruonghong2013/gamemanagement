@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224093354) do
+ActiveRecord::Schema.define(:version => 20131225095525) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -87,6 +87,9 @@ ActiveRecord::Schema.define(:version => 20131224093354) do
     t.datetime "updated_at",    :null => false
     t.float    "gold"
     t.float    "gem"
+    t.float    "dam"
+    t.float    "pc_dam"
+    t.float    "pc_atk"
   end
 
   create_table "posts", :force => true do |t|
@@ -142,6 +145,9 @@ ActiveRecord::Schema.define(:version => 20131224093354) do
     t.uuid     "character_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.float    "dam"
+    t.float    "pc_dam"
+    t.float    "pc_atk"
   end
 
   create_table "users", :force => true do |t|
