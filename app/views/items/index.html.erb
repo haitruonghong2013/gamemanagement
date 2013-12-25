@@ -1,3 +1,7 @@
+<% content_for :stylesheets do %>
+    <%= stylesheet_link_tag 'users' %>
+<% end %>
+
 <% breadcrumb :items %>
 <div class="page-content">
   <div class="page-header position-relative">
@@ -8,9 +12,9 @@
     <div class="span12">
       <%= form_tag items_path ,remote: true, :method => 'get',:id => "items_search" do %>
           <p class="form-inline">
-            <%= select_tag 'item_group', options_from_collection_for_select(ItemGroup.all,'id', 'name'),:prompt=>"Choose Group" %>
-            <%= select_tag 'item_type', options_from_collection_for_select(ItemType.all,'id', 'name'),:prompt=>"Choose Type" %>
-            <%= text_field_tag :search, params[:search],:placeholder=>"Search char name..." %>
+            <%= select_tag 'item_group', options_from_collection_for_select(ItemGroup.all,'id', 'name',@selected_item_group),:prompt=>"Choose Group" %>
+            <%= select_tag 'item_type', options_from_collection_for_select(ItemType.all,'id', 'name',@selected_item_type),:prompt=>"Choose Type" %>
+            <%= text_field_tag :search, params[:search],:placeholder=>"Search item name..." %>
             <%= submit_tag "Search", :name => nil,:class => 'btn btn-primary' %>
           </p>
           <div id="item_table">

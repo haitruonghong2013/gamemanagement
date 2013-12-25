@@ -84,7 +84,7 @@ class UserItemsController < ApplicationController
   end
 
   def sort_column
-    Score.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    UserItem.column_names.include?(params[:sort]) ? params[:sort] : "name"
   end
 
   def sort_direction
