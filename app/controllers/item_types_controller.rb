@@ -2,7 +2,7 @@ class ItemTypesController < ApplicationController
   # GET /item_types
   # GET /item_types.json
   def index
-    @item_types = ItemType.all
+    @item_types = ItemType.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
     respond_to do |format|
       format.html # index.html.erb

@@ -189,6 +189,7 @@ Ipadapp::Application.routes.draw do
         collection do
           get :list_items_by_group
           post :buy_item
+          post :buy_items
         end
       end
     end
