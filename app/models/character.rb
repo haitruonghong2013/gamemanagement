@@ -51,6 +51,7 @@ class Character < ActiveRecord::Base
     self.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
     self.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
     self.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
+    self.gem = Character::DEFAULT_ATTRS_VALUES[:gem]
     self.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
     self.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
     self.ban = Character::DEFAULT_ATTRS_VALUES[:ban]

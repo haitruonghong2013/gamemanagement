@@ -3,10 +3,12 @@ class Api::V1::ShopController < ApplicationController
   include UUIDTools
 #--------------------------------Item API -------------------
   def list_user_item
-    item_groups = ItemGroup.joins(:item_types).joins(:items).where('items.character_id = ?', params[:character_id])
+    #item_groups = ItemGroup.joins(:item_types).joins(:items).where('items.character_id = ?', params[:character_id])
+    #item_groups = ItemGroup.joins(:item_types).joins(:user_items).where('user_items.character_id = ?', current_user.character.id)
+    user_items = UserItem.where('user_items.character_id = ?', current_user.character.id)
     render :status => 200,
            :json => {:success => true,
-                     :data => item_groups.as_json
+                     :data => user_items.as_json
            }
   end
 
@@ -47,6 +49,8 @@ class Api::V1::ShopController < ApplicationController
                 user_item.dam = item.dam
                 user_item.pc_dam = item.pc_dam
                 user_item.pc_atk = item.pc_atk
+                user_item.item_group = item.item_group
+                user_item.item_type = item.item_type
                 user_item.save
               end
 
@@ -80,11 +84,19 @@ class Api::V1::ShopController < ApplicationController
   end
 
   def buy_item
+    if current_user.character.gem.nil? or current_user.character.gem.blank?
+      current_user.character.gem = 0
+    end
+    if current_user.character.gold.nil? or current_user.character.gold.blank?
+      current_user.character.gold = 0
+    end
+
     item = Item.find(params[:buy_item][:item_id])
 
-    if (params[:buy_item][:method] == 'gold' and current_user.character.gold < item.gold) or
-       (params[:buy_item][:method] == 'gem' and current_user.character.gem < item.gem)
+    if (params[:buy_item][:method] == 'gold' and  current_user.character.gold < item.gold) or
+       (params[:buy_item][:method] == 'gem' and  current_user.character.gem < item.gem)
       render_json_error("404", "User don't have enough #{params[:buy_item][:method]} to buy this item!")
+      return;
     end
 
     if item.permanent == true
@@ -101,6 +113,9 @@ class Api::V1::ShopController < ApplicationController
       user_item.dam = item.dam
       user_item.pc_dam = item.pc_dam
       user_item.pc_atk = item.pc_atk
+      user_item.item_group = item.item_group
+      user_item.item_type = item.item_type
+
 
       UserItem.transaction do
         begin
@@ -129,8 +144,14 @@ class Api::V1::ShopController < ApplicationController
       if params[:buy_item][:method] == 'gold'
         current_user.character.gold = current_user.character.gold - item.gold
       elsif params[:buy_item][:method] == 'gem'
-        current_user.character.gem = current_user.character.gem - item.gem
+        if current_user.character.gem
+          current_user.character.gem = current_user.character.gem - item.gem
+        else
+          current_user.character.gem = 0
+        end
+
       end
+
       if current_user.character.save
         render :status => 200,
                :json => {:success => true,

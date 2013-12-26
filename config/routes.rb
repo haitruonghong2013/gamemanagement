@@ -190,6 +190,7 @@ Ipadapp::Application.routes.draw do
           get :list_items_by_group
           post :buy_item
           post :buy_items
+          get :list_user_item
         end
       end
     end

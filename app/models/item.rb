@@ -1,4 +1,9 @@
 class Item < ActiveRecord::Base
+  DEFAULT_ATTRS_VALUES = {
+      :gem => 0,
+      :gold => 0
+  }
+  before_create :apply_some_default_values
   belongs_to :item_group
   belongs_to :item_type
 
@@ -28,5 +33,14 @@ class Item < ActiveRecord::Base
       result = scoped
     end
     return result
+  end
+
+  def apply_some_default_values
+    if self.gem.nil? or self.gem.blank?
+      self.gem = Item::DEFAULT_ATTRS_VALUES[:gem]
+    end
+    if self.gold.nil? or self.gold.blank?
+      self.gold = Item::DEFAULT_ATTRS_VALUES[:gold]
+    end
   end
 end
