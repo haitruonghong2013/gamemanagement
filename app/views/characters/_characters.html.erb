@@ -5,6 +5,7 @@
   <tr>
     <th><%= sortable "char_name" %></th>
     <th>User</th>
+    <th>Gem</th>
     <th>Gold</th>
     <th>Lv</th>
     <th>Atk1</th>
@@ -29,6 +30,7 @@
       <tr>
         <td><%= character.char_name %></td>
         <td><%= character.user ? character.user.username : "" %></td>
+        <td><%= character.gem %></td>
         <td><%= character.gold %></td>
         <td><%= character.lv %></td>
         <td><%= character.atk1 %></td>

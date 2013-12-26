@@ -8,7 +8,6 @@
     <th>Gold</th>
     <th>Gem</th>
     <th>Item type</th>
-    <th>Item group</th>
     <th>Level</th>
     <th>Health</th>
     <th>Atk</th>
@@ -16,6 +15,7 @@
     <th>Dam</th>
     <th>%Dam</th>
     <th>%Atk</th>
+    <th>Permanent</th>
 
     <th></th>
     <th></th>
@@ -31,7 +31,6 @@
         <td><%= item.gold %></td>
         <td><%= item.gem %></td>
         <td><%= item.item_type ? item.item_type.name : '' %></td>
-        <td><%= item.item_group ? item.item_group.name : '' %></td>
         <td><%= item.level %></td>
         <td><%= item.health %></td>
         <td><%= item.atk %></td>
@@ -39,6 +38,7 @@
         <td><%= item.dam %></td>
         <td><%= item.pc_dam %></td>
         <td><%= item.pc_atk %></td>
+        <td><%= item.permanent %></td>
 
 
         <td><%= link_to 'Show', item %></td>

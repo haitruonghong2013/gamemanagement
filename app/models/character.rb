@@ -1,7 +1,9 @@
 class Character < ActiveRecord::Base
+  before_create :apply_some_default_values
   has_many :user_items
 
   DEFAULT_ATTRS_VALUES = {
+      :gem => 0,
       :gold => 100,
       :medal => 0,
       :lv => 1,
@@ -30,7 +32,8 @@ class Character < ActiveRecord::Base
                   :life,                    #
                   :online,                #user online or not
                   :user_id,               #belong to an user
-                  :win_number             #win batle game number
+                  :win_number,             #win batle game number
+                  :gem
 
   validates :char_name, :presence => true, :uniqueness => {:case_sensitive => false,:message =>'char_name is existing!'}
 
@@ -39,6 +42,38 @@ class Character < ActiveRecord::Base
       where('char_name LIKE ?', "%#{search}%")
     else
       scoped
+    end
+  end
+
+
+  def apply_some_default_values
+    #Use  Character default attributes
+    self.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
+    self.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
+    self.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
+    self.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
+    self.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
+    self.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
+    self.life = Character::DEFAULT_ATTRS_VALUES[:life]
+
+    if self.char_race
+      select_race = Race.find_all_by_char_race(self.char_race).first
+      if select_race
+        self.atk1 = select_race.atk1
+        self.atk2 = select_race.atk2
+        self.atk3 = select_race.atk3
+        self.def = select_race.def
+        self.hp =  select_race.hp
+        self.mp =  select_race.mp
+      else
+        #Use  Race default attributes
+        self.atk1 = Race::DEFAULT_ATTRS_VALUES[:atk1]
+        self.atk2 = Race::DEFAULT_ATTRS_VALUES[:atk2]
+        self.atk3 = Race::DEFAULT_ATTRS_VALUES[:atk3]
+        self.def = Race::DEFAULT_ATTRS_VALUES[:def]
+        self.hp =  Race::DEFAULT_ATTRS_VALUES[:hp]
+        self.mp =  Race::DEFAULT_ATTRS_VALUES[:mp]
+      end
     end
   end
 

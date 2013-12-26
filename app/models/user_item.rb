@@ -7,7 +7,7 @@ class UserItem < ActiveRecord::Base
 
   include ActiveUUID::UUID
   attr_accessible :character_id,:user_id,:item_group_id, :item_type_id ,
-                  :def, :description, :health, :level, :name,:atk, :dam, :pc_atk, :pc_dam
+                  :def, :description, :health, :level, :name,:atk, :dam, :pc_atk, :pc_dam, :permanent
 
 
       def self.search(search)

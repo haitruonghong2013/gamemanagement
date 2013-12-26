@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131225095525) do
+ActiveRecord::Schema.define(:version => 20131226045047) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20131225095525) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "life"
+    t.float    "gem"
   end
 
   add_index "characters", ["id"], :name => "index_characters_on_id"
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20131225095525) do
     t.float    "dam"
     t.float    "pc_dam"
     t.float    "pc_atk"
+    t.boolean  "permanent"
   end
 
   create_table "posts", :force => true do |t|
@@ -148,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20131225095525) do
     t.float    "dam"
     t.float    "pc_dam"
     t.float    "pc_atk"
+    t.boolean  "permanent"
   end
 
   create_table "users", :force => true do |t|

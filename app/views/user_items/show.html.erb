@@ -31,13 +31,13 @@
 </p>
 
 <p>
-  <b>User:</b>
-  <%= @user_item.user_id %>
+  <b>Owner User:</b>
+  <%= @user_item.user ? @user_item.user.username : ''%>
 </p>
 
 <p>
   <b>Character:</b>
-  <%= @user_item.character_id %>
+  <%= @user_item.character ? @user_item.character.char_name: '' %>
 </p>
 
 

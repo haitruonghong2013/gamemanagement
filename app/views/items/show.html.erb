@@ -31,8 +31,33 @@
 </p>
 
 <p>
+  <b>Dam:</b>
+  <%= @item.dam %>
+</p>
+
+<p>
+  <b>Percent Dam:</b>
+  <%= @item.pc_dam %>
+</p>
+
+<p>
+  <b>Percent Attack:</b>
+  <%= @item.pc_atk %>
+</p>
+<p>
+  <b>Permanent:</b>
+  <%= @item.permanent %>
+</p>
+
+
+<p>
   <b>Item group:</b>
-  <%= @item.item_group_id %>
+  <%= @item.item_group ? @item.item_group.name : '' %>
+</p>
+
+<p>
+  <b>Item Type:</b>
+  <%= @item.item_type ? @item.item_type.name : '' %>
 </p>
 
 

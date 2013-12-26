@@ -221,33 +221,33 @@ class Api::V1::GameController  < ApplicationController
       character.user = current_user
 
       #Use  Character default attributes
-      character.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
-      character.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
-      character.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
-      character.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
-      character.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
-      character.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
-      character.life = Character::DEFAULT_ATTRS_VALUES[:life]
+      #character.medal = Character::DEFAULT_ATTRS_VALUES[:medal]
+      #character.lv = Character::DEFAULT_ATTRS_VALUES[:lv]
+      #character.gold = Character::DEFAULT_ATTRS_VALUES[:gold]
+      #character.lose_number = Character::DEFAULT_ATTRS_VALUES[:lose_number]
+      #character.win_number = Character::DEFAULT_ATTRS_VALUES[:win_number]
+      #character.ban = Character::DEFAULT_ATTRS_VALUES[:ban]
+      #character.life = Character::DEFAULT_ATTRS_VALUES[:life]
 
-      if params[:character][:char_race]
-        select_race = Race.find_all_by_char_race(params[:character][:char_race]).first
-        if select_race
-          character.atk1 = select_race.atk1
-          character.atk2 = select_race.atk2
-          character.atk3 = select_race.atk3
-          character.def = select_race.def
-          character.hp =  select_race.hp
-          character.mp =  select_race.mp
-        else
-          #Use  Race default attributes
-          character.atk1 = Race::DEFAULT_ATTRS_VALUES[:atk1]
-          character.atk2 = Race::DEFAULT_ATTRS_VALUES[:atk2]
-          character.atk3 = Race::DEFAULT_ATTRS_VALUES[:atk3]
-          character.def = Race::DEFAULT_ATTRS_VALUES[:def]
-          character.hp =  Race::DEFAULT_ATTRS_VALUES[:hp]
-          character.mp =  Race::DEFAULT_ATTRS_VALUES[:mp]
-        end
-      end
+      #if params[:character][:char_race]
+      #  select_race = Race.find_all_by_char_race(params[:character][:char_race]).first
+      #  if select_race
+      #    character.atk1 = select_race.atk1
+      #    character.atk2 = select_race.atk2
+      #    character.atk3 = select_race.atk3
+      #    character.def = select_race.def
+      #    character.hp =  select_race.hp
+      #    character.mp =  select_race.mp
+      #  else
+      #    #Use  Race default attributes
+      #    character.atk1 = Race::DEFAULT_ATTRS_VALUES[:atk1]
+      #    character.atk2 = Race::DEFAULT_ATTRS_VALUES[:atk2]
+      #    character.atk3 = Race::DEFAULT_ATTRS_VALUES[:atk3]
+      #    character.def = Race::DEFAULT_ATTRS_VALUES[:def]
+      #    character.hp =  Race::DEFAULT_ATTRS_VALUES[:hp]
+      #    character.mp =  Race::DEFAULT_ATTRS_VALUES[:mp]
+      #  end
+      #end
 
       if character.save
         render :status => 200,

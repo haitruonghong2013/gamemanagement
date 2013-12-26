@@ -12,6 +12,7 @@
     <th>Dam</th>
     <th>%Dam</th>
     <th>%Atk</th>
+    <th>Permanent</th>
     <th>Owner User</th>
     <th>Character</th>
     <th></th>
@@ -32,6 +33,7 @@
         <td><%= user_item.dam %></td>
         <td><%= user_item.pc_dam %></td>
         <td><%= user_item.pc_atk %></td>
+        <td><%= user_item.permanent %></td>
         <td><%= (user_item.character and user_item.character.user) ? user_item.character.user.username : '' %></td>
         <td><%= user_item.character ? user_item.character.char_name : '' %></td>
         <td><%= link_to 'Show', user_item %></td>

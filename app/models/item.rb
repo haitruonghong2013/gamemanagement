@@ -5,7 +5,7 @@ class Item < ActiveRecord::Base
   include ActiveUUID::UUID
   attr_accessible :item_group_id,:item_type_id,
                   :atk, :def, :description, :health,
-                  :level, :name, :gold, :gem, :dam, :pc_atk, :pc_dam
+                  :level, :name, :gold, :gem, :dam, :pc_atk, :pc_dam, :permanent
 
   def self.search(search, item_group, item_type)
     result = self
