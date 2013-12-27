@@ -45,6 +45,11 @@ class ImageUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [25, 25]
   end
 
+  version :thumb_128x128 do
+    process resize_to_fill: [128, 128]
+  end
+
+
   def get_file_name
     File.basename(path)
   end

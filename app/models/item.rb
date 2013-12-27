@@ -56,6 +56,7 @@ class Item < ActiveRecord::Base
         :description => self.description,
         :gem =>self.gem,
         :gold =>self.gold,
+        :thumb_path => (self.image_name.path ? options[:root_path].sub(/\/$/, '')+self.image_name.url(:thumb_128x128) : ''),
         :image_path => (self.image_name.path ? options[:root_path].sub(/\/$/, '')+self.image_name_url : ''),
         :def => self.def,
         :health => self.health,
