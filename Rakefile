@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Ipadapp::Application.load_tasks
+GameManagement::Application.load_tasks
