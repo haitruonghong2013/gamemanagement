@@ -73,7 +73,7 @@ class ItemsController < ApplicationController
   # PUT /items/1.json
   def update
     @item = Item.find(params[:id])
-
+    @item.item_group = ItemType.find(params[:item][:item_type_id]).item_group
     respond_to do |format|
       if @item.update_attributes(params[:item])
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }

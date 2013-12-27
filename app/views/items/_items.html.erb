@@ -4,10 +4,11 @@
   <thead>
   <tr>
     <th><%= sortable "name" %></th>
-    <th>Description</th>
+    <th>Image</th>
+    <th>Item type</th>
     <th>Gold</th>
     <th>Gem</th>
-    <th>Item type</th>
+
     <th>Level</th>
     <th>Health</th>
     <th>Atk</th>
@@ -27,10 +28,10 @@
   <% @items.each do |item| %>
       <tr>
         <td><%= item.name %></td>
-        <td><%= item.description %></td>
+        <td class="center"><%= item.image_name.current_path ? link_to(image_tag(item.image_name.url(:thumb)),item) : '' %></td>
+        <td><%= item.item_type ? item.item_type.name : '' %></td>
         <td><%= item.gold %></td>
         <td><%= item.gem %></td>
-        <td><%= item.item_type ? item.item_type.name : '' %></td>
         <td><%= item.level %></td>
         <td><%= item.health %></td>
         <td><%= item.atk %></td>

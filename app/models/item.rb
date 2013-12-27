@@ -8,9 +8,12 @@ class Item < ActiveRecord::Base
   belongs_to :item_type
 
   include ActiveUUID::UUID
-  attr_accessible :item_group_id,:item_type_id,
-                  :atk, :def, :description, :health,
+
+  mount_uploader :image_name, ImageUploader
+  attr_accessible :item_group_id,:item_type_id,:image_name_cache,
+                  :atk, :def, :description, :health,:image_name,
                   :level, :name, :gold, :gem, :dam, :pc_atk, :pc_dam, :permanent
+
 
   def self.search(search, item_group, item_type)
     result = self

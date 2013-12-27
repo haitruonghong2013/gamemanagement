@@ -67,6 +67,9 @@ gem 'whenever'
 gem 'tinymce-rails'
 gem "activeuuid"
 gem 'redis-rails'
+
+gem 'carrierwave'
+gem 'rmagick'
 #gem "factory_girl_rails", "~> 4.0"
 #group :development, :test do
 #  gem 'rspec-rails', '~> 3.0.0.beta'

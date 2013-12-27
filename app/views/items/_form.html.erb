@@ -4,6 +4,14 @@
     <%= f.input :item_type do %>
         <%= f.select :item_type_id, ItemType.all.map { |r| [r.name, r.id] }, include_blank: false %>
     <% end %>
+    <div class="control-group string optional item_item_type">
+      <label for="item_item_type" class="string optional control-label">Image</label>
+      <div class="controls">
+        <%= f.file_field :image_name, :accept => 'image/png,image/gif,image/jpeg' %>
+        <%= f.hidden_field :image_name_cache %>
+      </div>
+    </div>
+
     <%= f.input :name %>
     <%= f.input :description %>
     <%= f.input :level %>

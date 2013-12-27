@@ -1,8 +1,14 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <b>Name:</b>
   <%= @item.name %>
+</p>
+
+<p>
+  <b>Image:</b>
+</p>
+<p>
+
+  <%= @item.image_name.path ? image_tag(@item.image_name.url()) : '' %>
 </p>
 
 <p>
