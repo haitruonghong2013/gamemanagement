@@ -1,7 +1,18 @@
 class Item < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
   DEFAULT_ATTRS_VALUES = {
-      :gem => 0,
-      :gold => 0
+      :name  => '',
+      :atk => 0,
+      :description => '',
+      :gem =>0,
+      :gold =>0,
+      :image_path => '',
+      :def => 0,
+      :health => 0,
+      :level => 1,
+      :dam => 0,
+      :pc_atk => 0,
+      :pc_dam => 0
   }
   before_create :apply_some_default_values
   belongs_to :item_group
@@ -38,12 +49,53 @@ class Item < ActiveRecord::Base
     return result
   end
 
+  def as_json(options = {})
+    {
+        :name  => self.name,
+        :atk => self.atk,
+        :description => self.description,
+        :gem =>self.gem,
+        :gold =>self.gold,
+        :image_path => (self.image_name.path ? options[:root_path].sub(/\/$/, '')+self.image_name_url : ''),
+        :def => self.def,
+        :health => self.health,
+        :level => self.level,
+        :dam => self.dam,
+        :pc_atk => self.pc_atk,
+        :pc_dam => self.pc_dam,
+        :permanent => self.permanent,
+        :updated_at => self.updated_at,
+        :created_at => self.created_at
+    }
+  end
+
   def apply_some_default_values
     if self.gem.nil? or self.gem.blank?
       self.gem = Item::DEFAULT_ATTRS_VALUES[:gem]
     end
     if self.gold.nil? or self.gold.blank?
       self.gold = Item::DEFAULT_ATTRS_VALUES[:gold]
+    end
+    if self.atk.nil? or self.atk.blank?
+      self.atk = Item::DEFAULT_ATTRS_VALUES[:atk]
+    end
+    if self.def.nil? or self.def.blank?
+      self.def = Item::DEFAULT_ATTRS_VALUES[:def]
+    end
+    if self.health.nil? or self.health.blank?
+      self.health = Item::DEFAULT_ATTRS_VALUES[:health]
+    end
+    if self.level.nil? or self.level.blank?
+      self.level = Item::DEFAULT_ATTRS_VALUES[:level]
+    end
+    if self.dam.nil? or self.dam.blank?
+      self.dam = Item::DEFAULT_ATTRS_VALUES[:dam]
+    end
+    if self.pc_atk.nil? or self.pc_atk.blank?
+      self.pc_atk = Item::DEFAULT_ATTRS_VALUES[:pc_atk]
+    end
+    if self.pc_dam.nil? or self.pc_dam.blank?
+      self.pc_dam = Item::DEFAULT_ATTRS_VALUES[:pc_dam]
     end
   end
 end

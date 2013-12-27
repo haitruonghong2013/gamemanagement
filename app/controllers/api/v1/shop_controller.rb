@@ -16,7 +16,7 @@ class Api::V1::ShopController < ApplicationController
     items = Item.joins(:item_type).where('item_types.name = ?', params[:item_type_name])
     render :status => 200,
            :json => {:success => true,
-                     :data => items.as_json
+                     :data => items.as_json({:root_path => root_url})
            }
   end
 

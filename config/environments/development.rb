@@ -1,4 +1,4 @@
-Ipadapp::Application.configure do
+GameManagement::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -49,4 +49,5 @@ Ipadapp::Application.configure do
   #    :authentication       => 'plain',
   #    :enable_starttls_auto => true
   #}
+  #Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 end

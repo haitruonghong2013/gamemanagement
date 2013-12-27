@@ -17,10 +17,10 @@ class UserItem < ActiveRecord::Base
         :def => self.def,
         :health => self.health,
         :level => self.level,
-        :dam => self.country,
-        :pc_atk => self.cover,
-        :pc_dam => self.created_date,
-        :permanent => self.email,
+        :dam => self.dam,
+        :pc_atk => self.pc_atk,
+        :pc_dam => self.pc_dam,
+        :permanent => self.permanent,
         :updated_at => self.updated_at,
         :created_at => self.created_at
     }

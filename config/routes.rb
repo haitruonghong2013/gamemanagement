@@ -1,4 +1,5 @@
-Ipadapp::Application.routes.draw do
+GameManagement::Application.routes.draw do
+  #Rails.application.routes.default_url_options[:host] = 'sdfsdf:3000'
   resources :item_types
 
 
