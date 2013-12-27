@@ -26,7 +26,7 @@ GameManagement::Application.routes.draw do
 
     end
   end
-
+  match '/game_play'=> 'posts#list_game_play'
   match '/introduction'=> 'static_page_configures#introduction_show'
   match '/about_us'=> 'static_page_configures#about_us_show'
   match '/package_payment'=> 'static_page_configures#package_payment_show'

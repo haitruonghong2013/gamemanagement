@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
-  before_filter :authenticate_user!
+  #before_filter :authenticate_user!
   caches_action :index, :show
   def index
     #authorize! :index, Post, :message => 'Not authorized as an administrator.'
@@ -102,5 +102,9 @@ class PostsController < ApplicationController
       format.html { redirect_to posts_url }
       format.json { head :no_content }
     end
+  end
+
+  def list_game_play
+
   end
 end
