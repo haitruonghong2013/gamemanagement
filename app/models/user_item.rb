@@ -7,10 +7,12 @@ class UserItem < ActiveRecord::Base
 
   include ActiveUUID::UUID
   attr_accessible :character_id, :user_id, :item_group_id, :item_type_id,
-                  :def, :description, :health, :level, :name, :atk, :dam, :pc_atk, :pc_dam, :permanent
+                  :def, :description, :health, :level, :name,
+                  :atk, :dam, :pc_atk, :pc_dam, :permanent, :cur_health
 
   def as_json(options = {})
     {
+        :id =>self.id,
         :name  => self.name,
         :atk => self.atk,
         :description => self.description,

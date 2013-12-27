@@ -4,7 +4,6 @@
   <thead>
   <tr>
     <th><%= sortable "char_name" %></th>
-    <th>User</th>
     <th>Gem</th>
     <th>Gold</th>
     <th>Lv</th>
@@ -18,18 +17,13 @@
     <th>Race</th>
     <th>Online</th>
     <th>Ban</th>
-    <th>Win</th>
-    <th>Loose</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
   <thead>
   <tbody>
   <% @characters.each do |character| %>
       <tr>
-        <td><%= character.char_name %></td>
-        <td><%= character.user ? character.user.username : "" %></td>
+        <td><%=  link_to character.char_name, character %></td>
         <td><%= character.gem %></td>
         <td><%= character.gold %></td>
         <td><%= character.lv %></td>
@@ -43,11 +37,18 @@
         <td><%= character.char_race %></td>
         <td><%= character.user ? (character.user.is_login ? character.user.is_login : false): false %></td>
         <td><%= character.ban %></td>
-        <td><%= character.win_number %></td>
-        <td><%= character.lose_number %></td>
-        <td><%= link_to 'Show', character %></td>
-        <td><%= link_to 'Edit', edit_character_path(character) %></td>
-        <td><%= link_to 'Destroy', character, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+        <td class="badge-right right">
+          <div class="align-center">
+            <a class="btn btn-mini btn-info" href="<%= edit_character_path(character) %>">
+              <i class="icon-edit bigger-120"></i>
+            </a>
+            <a class="btn btn-mini btn-danger"
+               rel="nofollow"  data-method="delete" data-confirm="Are you sure?" href="<%= character_path(character) %>">
+              <i class="icon-trash bigger-120"></i>
+            </a>
+          </div>
+        </td>
       </tr>
   <% end %>
   </tbody>

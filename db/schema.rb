@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131227024500) do
+ActiveRecord::Schema.define(:version => 20131227081951) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(:version => 20131227024500) do
     t.float    "pc_atk"
     t.boolean  "permanent"
     t.string   "image_name"
+    t.float    "up_gem"
+    t.float    "up_gold"
   end
 
   create_table "posts", :force => true do |t|
@@ -152,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20131227024500) do
     t.float    "pc_dam"
     t.float    "pc_atk"
     t.boolean  "permanent"
+    t.float    "cur_health"
   end
 
   create_table "users", :force => true do |t|

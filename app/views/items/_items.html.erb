@@ -8,7 +8,8 @@
     <th>Item type</th>
     <th>Gold</th>
     <th>Gem</th>
-
+    <th>Up Gold</th>
+    <th>Up Gem</th>
     <th>Level</th>
     <th>Health</th>
     <th>Atk</th>
@@ -17,9 +18,6 @@
     <th>%Dam</th>
     <th>%Atk</th>
     <th>Permanent</th>
-
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
   </thead>
@@ -27,11 +25,13 @@
 
   <% @items.each do |item| %>
       <tr>
-        <td><%= item.name %></td>
+        <td><%= link_to item.name, item  %></td>
         <td class="center"><%= item.image_name.current_path ? link_to(image_tag(item.image_name.url(:thumb)),item) : '' %></td>
         <td><%= item.item_type ? item.item_type.name : '' %></td>
         <td><%= item.gold %></td>
         <td><%= item.gem %></td>
+        <td><%= item.up_gem %></td>
+        <td><%= item.up_gold %></td>
         <td><%= item.level %></td>
         <td><%= item.health %></td>
         <td><%= item.atk %></td>
@@ -40,11 +40,17 @@
         <td><%= item.pc_dam %></td>
         <td><%= item.pc_atk %></td>
         <td><%= item.permanent %></td>
-
-
-        <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="badge-right right">
+          <div class="align-center">
+            <a class="btn btn-mini btn-info" href="<%= edit_item_path(item) %>">
+              <i class="icon-edit bigger-120"></i>
+            </a>
+            <a class="btn btn-mini btn-danger"
+               rel="nofollow"  data-method="delete" data-confirm="Are you sure?" href="<%= item_path(item) %>">
+              <i class="icon-trash bigger-120"></i>
+            </a>
+          </div>
+        </td>
       </tr>
   <% end %>
   </tbody>

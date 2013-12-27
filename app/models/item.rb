@@ -12,7 +12,9 @@ class Item < ActiveRecord::Base
       :level => 1,
       :dam => 0,
       :pc_atk => 0,
-      :pc_dam => 0
+      :pc_dam => 0,
+      :up_gem => 0,
+      :up_gold => 0
   }
   before_create :apply_some_default_values
   belongs_to :item_group
@@ -23,8 +25,11 @@ class Item < ActiveRecord::Base
   mount_uploader :image_name, ImageUploader
   attr_accessible :item_group_id,:item_type_id,:image_name_cache,
                   :atk, :def, :description, :health,:image_name,
-                  :level, :name, :gold, :gem, :dam, :pc_atk, :pc_dam, :permanent
+                  :level, :name, :gold, :gem, :dam, :pc_atk,
+                  :pc_dam, :permanent, :up_gem, :up_gold
 
+  validates :name, :presence => {:message => "This field is required."}
+  #validates :image_name, :presence => {:message => "This field is required."}
 
   def self.search(search, item_group, item_type)
     result = self
@@ -51,6 +56,7 @@ class Item < ActiveRecord::Base
 
   def as_json(options = {})
     {
+        :id =>self.id,
         :name  => self.name,
         :atk => self.atk,
         :description => self.description,
@@ -97,6 +103,12 @@ class Item < ActiveRecord::Base
     end
     if self.pc_dam.nil? or self.pc_dam.blank?
       self.pc_dam = Item::DEFAULT_ATTRS_VALUES[:pc_dam]
+    end
+    if self.up_gem.nil? or self.up_gem.blank?
+      self.up_gem = Item::DEFAULT_ATTRS_VALUES[:up_gem]
+    end
+    if self.up_gold.nil? or self.up_gold.blank?
+      self.up_gold = Item::DEFAULT_ATTRS_VALUES[:up_gold]
     end
   end
 end
