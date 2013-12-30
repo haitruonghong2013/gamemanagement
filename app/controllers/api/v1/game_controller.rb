@@ -120,6 +120,7 @@ class Api::V1::GameController  < ApplicationController
       {
           :score => top_score.score,
           :char_name => (top_score.character ? top_score.character.char_name : ''),
+          :character_id => (top_score.character ? top_score.character.id : ''),
           :level => (top_score.character ? top_score.character.lv : ''),
       }
     }
@@ -127,6 +128,45 @@ class Api::V1::GameController  < ApplicationController
     render :status => 200,
            :json => { :success => true,
                       :top_scores => top_scores
+           }
+  end
+
+
+  def get_top_gold_by_time
+    top_golds = Character.where('updated_at >=  ?', params[:after_time]).order(:gold).reverse_order.limit(10)
+
+    top_golds.map! {
+        |top_gold|
+      {
+          :gold => top_gold.gold,
+          :char_name => top_gold.char_name,
+          :character_id => top_gold.id,
+          :level => top_gold.lv
+      }
+    }
+
+    render :status => 200,
+           :json => { :success => true,
+                      :top_golds => top_golds
+           }
+  end
+
+
+  def get_top_level_by_time
+    top_levels = Character.where('updated_at >=  ?', params[:after_time]).order(:lv).reverse_order.limit(10)
+
+    top_levels.map! {
+        |top_level|
+      {
+          :char_name => top_level.char_name,
+          :character_id => top_level.id,
+          :level => top_level.lv
+      }
+    }
+
+    render :status => 200,
+           :json => { :success => true,
+                      :top_levels => top_levels
            }
   end
 

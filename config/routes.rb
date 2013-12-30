@@ -167,6 +167,8 @@ GameManagement::Application.routes.draw do
           post :set_win_lose_game
           post :submit_score
           get :get_top_score_by_time
+          get :get_top_gold_by_time
+          get :get_top_level_by_time
           get :get_my_score
           get :get_my_rank_by_time
           get :check_charname

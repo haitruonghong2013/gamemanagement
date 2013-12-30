@@ -80,11 +80,27 @@ class Api::V1::ShopController < ApplicationController
 
   def list_items_by_group
     items = Item.joins(:item_type).where('item_types.name = ?', params[:item_type_name])
+    if params[:item_type_name] == 'Skills'
+        items.each do |item|
+          if item.gold.nil? or item.gold.blank?
+            item.gold = 0
+          end
+
+          if item.gem.nil? or item.gem.blank?
+            item.gem = 0
+          end
+
+          item.gold = item.gold*current_user.character.lv
+          item.gem = item.gem*current_user.character.lv
+        end
+    end
+
     render :status => 200,
            :json => {:success => true,
                      :data => items.as_json({:root_path => root_url})
            }
   end
+
 
   def buy_items
     item_ids_array =[]
