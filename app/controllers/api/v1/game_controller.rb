@@ -214,6 +214,33 @@ class Api::V1::GameController  < ApplicationController
       render_json_error("404","User don't have this character!")
     end
   end
+
+  def get_my_gold_rank_by_time
+    if current_user.character
+        rank_gold = current_user.character.gold_ranking(params[:after_time])
+        render :status => 200,
+               :json => { :success => true,
+                          :rank_gold => rank_gold+1,
+                          :gold => current_user.character.gold
+               }
+    else
+      render_json_error("404","User don't have this character!")
+    end
+  end
+
+  def get_my_level_rank_by_time
+    if current_user.character
+      rank_level = current_user.character.level_ranking(params[:after_time])
+      render :status => 200,
+             :json => { :success => true,
+                        :rank_level => rank_level+1,
+                        :level => current_user.character.lv
+             }
+    else
+      render_json_error("404","User don't have this character!")
+    end
+  end
+
   #--------------------------------Character API -------------------
   #include CharacterAPI
   def check_charname

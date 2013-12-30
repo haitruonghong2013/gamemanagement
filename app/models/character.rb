@@ -45,6 +45,22 @@ class Character < ActiveRecord::Base
     end
   end
 
+  def gold_ranking(after_time)
+    if after_time  and after_time.strip != ''
+      Character.count(:conditions => ['gold > ? and created_at >= ?', self.gold, after_time])
+    else
+      Character.count(:conditions => ['gold > ?', self.gold])
+    end
+  end
+
+  def level_ranking(after_time)
+    if after_time  and after_time.strip != ''
+      Character.count(:conditions => ['lv > ? and created_at >= ?', self.lv, after_time])
+    else
+      Character.count(:conditions => ['lv > ?', self.lv])
+    end
+  end
+
 
   def apply_some_default_values
     #Use  Character default attributes

@@ -171,6 +171,8 @@ GameManagement::Application.routes.draw do
           get :get_top_level_by_time
           get :get_my_score
           get :get_my_rank_by_time
+          get :get_my_gold_rank_by_time
+          get :get_my_level_rank_by_time
           get :check_charname
           post :update_character
           post :new_character

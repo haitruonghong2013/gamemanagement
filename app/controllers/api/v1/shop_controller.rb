@@ -113,7 +113,10 @@ class Api::V1::ShopController < ApplicationController
 
     if items and items.size != 0
       if params[:buy_item][:method] == 'gold'
-        total_gold = Item.where('items.id in (?)',item_ids_array).sum(:gold)
+        total_gold_diff_Skills = Item.includes(:item_type).where('items.id in (?) and item_types.name != ?',item_ids_array,'Skills').sum(:gold)
+        total_gold_Skills = Item.includes(:item_type).where('items.id in (?) and item_types.name = ?',item_ids_array,'Skills').sum(:gold)
+        total_gold_Skills = total_gold_Skills*current_user.character.lv
+        total_gold = total_gold_diff_Skills + total_gold_Skills
         if current_user.character.gold >= total_gold
 
           UserItem.transaction do
