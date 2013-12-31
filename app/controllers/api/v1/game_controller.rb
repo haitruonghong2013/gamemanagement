@@ -3,6 +3,7 @@
 #load "api/v1/modules/character_api.rb"
 class Api::V1::GameController  < ApplicationController
   before_filter :authenticate_user!, :except => [:check_version]
+  include UUIDTools
   #caches_action :list_all_user
   #caches_action :get_character,:cache_path => Proc.new { |c| c.params }
 
@@ -113,21 +114,33 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def get_top_score_by_time
-    top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).order(:score).group(:character_id).reverse_order.limit(10).includes(:character)
+    top__char_scores = []
+    #top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).group(:character_id).order('score DESC').limit(10).includes(:character)
+    #Score.find_by_sql()
+    sql = "SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.created_at >= '2013-12-01') Group by character_id ORDER BY max(score) DESC LIMIT 10"
+    records_array = ActiveRecord::Base.connection.execute(sql)
 
-    top_scores.map! {
-        |top_score|
-      {
-          :score => top_score.score,
-          :char_name => (top_score.character ? top_score.character.char_name : ''),
-          :character_id => (top_score.character ? top_score.character.id : ''),
-          :level => (top_score.character ? top_score.character.lv : ''),
-      }
-    }
+    records_array.each do |record|
+      top__char_scores.push({
+                                :score => record[3],
+                                      :char_name => record[0],
+                                      :character_id => UUIDTools::UUID.parse_raw(record[2]),
+                                      :level => record[1]
+                            })
+    end
+    #records_array.map! {
+    #    |top_score|
+    #  {
+    #      :score => top_score.score,
+    #      :char_name => (top_score.character ? top_score.character.char_name : ''),
+    #      :character_id => (top_score.character ? top_score.character.id : ''),
+    #      :level => (top_score.character ? top_score.character.lv : ''),
+    #  }
+    #}
 
     render :status => 200,
            :json => { :success => true,
-                      :top_scores => top_scores
+                      :top_scores => top__char_scores
            }
   end
 
