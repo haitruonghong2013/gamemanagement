@@ -48,6 +48,12 @@ crumb :user_items do
 end
 
 
+crumb :versions do
+  link "Versions", versions_path
+  parent :home
+end
+
+
 
 crumb :statics do
   link "statics", '#'

@@ -6,7 +6,7 @@
         <%= f.select :item_group_id, ItemGroup.all.map { |r| [r.name, r.id] }, include_blank: false %>
     <% end %>
     <%= f.input :name %>
-    <%= f.input :description %>
+    <%= f.input :description,:input_html => { 'rows' => 5, 'cols' => 10 } %>
   </div>
 
     <%= f.button :submit,:class =>'btn-primary' %>
