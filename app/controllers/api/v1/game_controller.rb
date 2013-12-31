@@ -113,7 +113,7 @@ class Api::V1::GameController  < ApplicationController
   end
 
   def get_top_score_by_time
-    top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).order(:score).reverse_order.limit(10).includes(:character)
+    top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).order(:score).group(:character_id).reverse_order.limit(10).includes(:character)
 
     top_scores.map! {
         |top_score|
