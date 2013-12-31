@@ -1,6 +1,8 @@
 class ItemTypesController < ApplicationController
   # GET /item_types
   # GET /item_types.json
+  before_filter :authenticate_user!
+  load_and_authorize_resource
   def index
     @item_types = ItemType.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 

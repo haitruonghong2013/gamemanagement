@@ -2,6 +2,7 @@ class UserItemsController < ApplicationController
   # GET /user_items
   # GET /user_items.json
   before_filter :authenticate_user!
+  load_and_authorize_resource
   helper_method :sort_column, :sort_direction
   def index
     @user_items = UserItem.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )

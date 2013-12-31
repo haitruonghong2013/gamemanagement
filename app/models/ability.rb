@@ -10,6 +10,13 @@ class Ability
          can :manage, User
          can :manage, Character
          can :manage, Score
+         can :manage, Item
+         can :manage, ItemGroup
+         can :manage, ItemType
+         can :manage, CharacterBot
+         can :manage, Race
+         can :manage, Version
+         can :manage, UserItem
 
        #else
        #  can :read, :all

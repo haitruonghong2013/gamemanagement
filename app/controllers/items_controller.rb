@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   before_filter :authenticate_user!
+  load_and_authorize_resource
   helper_method :sort_column, :sort_direction
   def index
     if params[:item_group]

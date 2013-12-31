@@ -2,6 +2,7 @@ class RacesController < ApplicationController
   # GET /races
   # GET /races.json
   before_filter :authenticate_user!
+  load_and_authorize_resource
   def index
     @races = Race.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 

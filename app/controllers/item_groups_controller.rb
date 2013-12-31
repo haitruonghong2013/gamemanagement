@@ -1,6 +1,8 @@
 class ItemGroupsController < ApplicationController
   # GET /item_groups
   # GET /item_groups.json
+  before_filter :authenticate_user!
+  load_and_authorize_resource
   def index
     @item_groups = ItemGroup.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 
