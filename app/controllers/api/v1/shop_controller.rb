@@ -122,7 +122,7 @@ class Api::V1::ShopController < ApplicationController
           UserItem.transaction do
             begin
               items.each do |item|
-                if item.permanent?
+                if item.permanent == true
                   user_item = UserItem.new
                   user_item.name = item.name
                   user_item.description = item.description
@@ -165,7 +165,7 @@ class Api::V1::ShopController < ApplicationController
           UserItem.transaction do
             begin
               items.each do |item|
-                if item.permanent?
+                if item.permanent == true
                   user_item = UserItem.new
                   user_item.name = item.name
                   user_item.description = item.description

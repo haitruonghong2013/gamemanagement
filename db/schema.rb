@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131227081951) do
+ActiveRecord::Schema.define(:version => 20131231080509) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -213,5 +213,13 @@ ActiveRecord::Schema.define(:version => 20131227081951) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  create_table "versions", :force => true do |t|
+    t.string   "name"
+    t.float    "version"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
 end

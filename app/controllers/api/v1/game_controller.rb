@@ -2,7 +2,7 @@
 #load "api/v1/modules/score_api.rb"
 #load "api/v1/modules/character_api.rb"
 class Api::V1::GameController  < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:check_version]
   #caches_action :list_all_user
   #caches_action :get_character,:cache_path => Proc.new { |c| c.params }
 
@@ -390,6 +390,21 @@ class Api::V1::GameController  < ApplicationController
       end
     else
       render_json_error("404","User don't have a character!")
+    end
+  end
+
+  def check_version
+    max_version = Version.maximum(:version)
+    if params[:check_version][:current_version] and max_version == params[:check_version][:current_version]
+      render :status => 200,
+             :json => { :success => true,
+                        :valid => true
+             }
+    else
+      render :status => 200,
+             :json => { :success => true,
+                        :valid => false
+             }
     end
   end
 end

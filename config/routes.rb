@@ -1,4 +1,7 @@
 GameManagement::Application.routes.draw do
+  resources :versions
+
+
   #Rails.application.routes.default_url_options[:host] = 'sdfsdf:3000'
   resources :item_types
 
@@ -180,6 +183,7 @@ GameManagement::Application.routes.draw do
           get :get_character
           post :check_character_change
           get :list_random_character_bots
+          post :check_version
         end
       end
 
