@@ -1,6 +1,6 @@
 module UserAPI
-  def list_all_user
 
+  def list_all_user
     all_users = User.joins(:roles).where('roles.name != ?',:admin)
     respond_to do |format|
       format.json { render json: all_users }
@@ -9,7 +9,7 @@ module UserAPI
 
   def list_user_random
     #expire_list_all_user_cache
-    expire_action(:controller => '/api/v1/game', :action => 'list_all_user',:format=>:json)
+    #expire_action(:controller => '/api/v1/game', :action => 'list_all_user',:format=>:json)
     if current_user.character
       random_characters = Character.joins(:user).where('lv <= ? and lv >= ? and is_login = ?',current_user.character.lv + 5, current_user.character.lv - 5, true).limit(10).order("RAND()")
       if random_characters.nil? or random_characters.size == 0
@@ -25,6 +25,15 @@ module UserAPI
     else
       render_json_error("404","User don't have a character!")
     end
+  end
+
+
+  def list_random_character_bots
+    random_character_bots = CharacterBot.order("RAND()").limit(10)
+    render :status => 200,
+           :json => { :success => true,
+                      :data => random_character_bots.as_json
+           }
   end
 
   def set_win_lose_game

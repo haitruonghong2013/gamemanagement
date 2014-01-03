@@ -1,12 +1,16 @@
+load "api/v1/modules/user_api.rb"
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
+  include UserAPI
   before_filter :authenticate_user!
   load_and_authorize_resource
   helper_method :sort_column, :sort_direction
-  caches_action :index, :cache_path => Proc.new { |c| c.params }
+  #caches_action :index, :cache_path => Proc.new { |c| c.params }
   #caches_action :my_action, :cache_path => Proc.new { |c| c.params.delete_if { |k,v| k.starts_with?('utm_') } }
-  caches_action :show
+  #caches_action :show
+  #cache_sweeper :fragment_sweeper
+
   def index
     if current_user.has_role? :admin
       @users = User.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
@@ -51,8 +55,8 @@ class UsersController < ApplicationController
     #@user.add_role :admin
     respond_to do |format|
       if @user.save
-        expire_action(:controller => 'users', :action => 'index')
-        expire_action(:controller => '/api/v1/game', :action => 'list_all_user',:format=>:json)
+        #expire_action(:controller => 'users', :action => 'index')
+        #expire_action(:controller => '/api/v1/game', :action => 'list_all_user',:format=>:json)
         format.html { redirect_to users_url, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -74,8 +78,9 @@ class UsersController < ApplicationController
     @user.assign_attributes(params[:user])
     respond_to do |format|
       if @user.save
-          expire_action(:controller => '/users', :action => 'index')
-          expire_action(:controller => '/users', :action => 'show')
+          #expire_action(:controller => '/users', :action => 'index')
+          #expire_action(:controller => '/users', :action => 'show')
+          #expire_list_all_user_cache
           format.html { redirect_to users_url, :notice=> 'User was successfully updated.'}
           format.json { head :no_content }
       else

@@ -5,6 +5,9 @@ class ScoresController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
   helper_method :sort_column, :sort_direction
+  cache_sweeper :fragment_sweeper
+  caches_action :index, :cache_path => Proc.new { |c| c.params }
+  #caches_action :show
   def index
     @scores = Score.search(params[:search]).order(sort_column + ' ' + sort_direction).paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 

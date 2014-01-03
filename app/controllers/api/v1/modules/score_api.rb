@@ -1,5 +1,4 @@
 module ScoreAPI
-
   def submit_score
     score = Score.new(params[:score])
     #character = currrent_user.character
@@ -28,20 +27,76 @@ module ScoreAPI
   end
 
   def get_top_score_by_time
-    top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).order(:score).reverse_order.limit(10).includes(:character)
+    top__char_scores = []
+    #top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).group(:character_id).order('score DESC').limit(10).includes(:character)
+    #Score.find_by_sql()
+    created_at = params[:after_time]
+    sql = "SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.created_at >= '#{created_at}') Group by character_id ORDER BY max(score) DESC LIMIT 10"
+    #st = ActiveRecord::Base.connection.raw_connection.prepa(sql)
+    #
+    #records_array = st.execute(params[:after_time])
+    records_array =  ActiveRecord::Base.connection.execute(sql)
 
-    top_scores.map! {
-        |top_score|
+    records_array.each do |record|
+      top__char_scores.push({
+                                :score => record[3],
+                                :char_name => record[0],
+                                :character_id => UUIDTools::UUID.parse_raw(record[2]),
+                                :level => record[1]
+                            })
+    end
+    #records_array.map! {
+    #    |top_score|
+    #  {
+    #      :score => top_score.score,
+    #      :char_name => (top_score.character ? top_score.character.char_name : ''),
+    #      :character_id => (top_score.character ? top_score.character.id : ''),
+    #      :level => (top_score.character ? top_score.character.lv : ''),
+    #  }
+    #}
+
+    render :status => 200,
+           :json => { :success => true,
+                      :top_scores => top__char_scores
+           }
+  end
+
+
+  def get_top_gold_by_time
+    top_golds = Character.where('updated_at >=  ?', params[:after_time]).order(:gold).reverse_order.limit(10)
+
+    top_golds.map! {
+        |top_gold|
       {
-          :score => top_score.score,
-          :char_name => (top_score.character ? top_score.character.char_name : ''),
-          :level => (top_score.character ? top_score.character.lv : ''),
+          :gold => top_gold.gold,
+          :char_name => top_gold.char_name,
+          :character_id => top_gold.id,
+          :level => top_gold.lv
       }
     }
 
     render :status => 200,
            :json => { :success => true,
-                      :top_scores => top_scores
+                      :top_golds => top_golds
+           }
+  end
+
+
+  def get_top_level_by_time
+    top_levels = Character.where('updated_at >=  ?', params[:after_time]).order(:lv).reverse_order.limit(10)
+
+    top_levels.map! {
+        |top_level|
+      {
+          :char_name => top_level.char_name,
+          :character_id => top_level.id,
+          :level => top_level.lv
+      }
+    }
+
+    render :status => 200,
+           :json => { :success => true,
+                      :top_levels => top_levels
            }
   end
 
@@ -77,14 +132,43 @@ module ScoreAPI
     if current_user.character
       max_score = Score.maximum_score(current_user.character.id, params[:after_time])
       if max_score
-        rank_score = max_score.ranking(params[:after_time])
+        #rank_score = max_score.ranking(params[:after_time])
+        created_at = params[:after_time]
+        sql = "SELECT COUNT(*) from (SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.score > #{max_score.score} and scores.created_at >= '#{created_at}') Group by character_id ORDER BY max(score)) as table_A"
+        rank_score =  ActiveRecord::Base.connection.execute(sql)
         render :status => 200,
                :json => { :success => true,
-                          :rank_score => rank_score+1
+                          :rank_score => rank_score.first[0]+1
                }
       else
         render_json_error("404","User don't have a score!")
       end
+    else
+      render_json_error("404","User don't have this character!")
+    end
+  end
+
+  def get_my_gold_rank_by_time
+    if current_user.character
+      rank_gold = current_user.character.gold_ranking(params[:after_time])
+      render :status => 200,
+             :json => { :success => true,
+                        :rank_gold => rank_gold+1,
+                        :gold => current_user.character.gold
+             }
+    else
+      render_json_error("404","User don't have this character!")
+    end
+  end
+
+  def get_my_level_rank_by_time
+    if current_user.character
+      rank_level = current_user.character.level_ranking(params[:after_time])
+      render :status => 200,
+             :json => { :success => true,
+                        :rank_level => rank_level+1,
+                        :level => current_user.character.lv
+             }
     else
       render_json_error("404","User don't have this character!")
     end

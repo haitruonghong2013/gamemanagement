@@ -21,6 +21,11 @@
         </p>
 
         <p>
+          <b>User Character:</b>
+          <%= @user.character ?  @user.character.char_name : '' %>
+        </p>
+
+        <p>
           <b>Email:</b>
           <%= @user.email %>
         </p>
