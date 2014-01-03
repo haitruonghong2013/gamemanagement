@@ -118,7 +118,7 @@ class Api::V1::GameController  < ApplicationController
     #top_scores = Score.where('scores.created_at >=  ?', params[:after_time]).group(:character_id).order('score DESC').limit(10).includes(:character)
     #Score.find_by_sql()
     created_at = params[:after_time]
-    sql = "SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.created_at >= #{created_at}) Group by character_id ORDER BY max(score) DESC LIMIT 10"
+    sql = "SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.created_at >= '#{created_at}') Group by character_id ORDER BY max(score) DESC LIMIT 10"
     #st = ActiveRecord::Base.connection.raw_connection.prepa(sql)
     #
     #records_array = st.execute(params[:after_time])
