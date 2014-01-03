@@ -219,10 +219,13 @@ class Api::V1::GameController  < ApplicationController
     if current_user.character
       max_score = Score.maximum_score(current_user.character.id, params[:after_time])
       if max_score
-        rank_score = max_score.ranking(params[:after_time])
+        #rank_score = max_score.ranking(params[:after_time])
+        created_at = params[:after_time]
+        sql = "SELECT COUNT(*) from (SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.score > #{max_score.score} and scores.created_at >= '#{created_at}') Group by character_id ORDER BY max(score)) as table_A"
+        rank_score =  ActiveRecord::Base.connection.execute(sql)
         render :status => 200,
                :json => { :success => true,
-                          :rank_score => rank_score+1
+                          :rank_score => rank_score.first[0]+1
                }
       else
         render_json_error("404","User don't have a score!")
