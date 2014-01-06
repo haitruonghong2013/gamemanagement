@@ -13,7 +13,9 @@ class Api::V1::GameController  < ApplicationController
   include CharacterAPI
 #--------------------------------Cache actions -------------------
   caches_action :list_all_user
-  caches_action :get_top_score_by_time
+  #caches_action :get_top_score_by_time
+  #caches_action :get_top_score_by_time, :cache_path => Proc.new { |c| c.params }
+  caches_action :get_top_score_by_time, :cache_path =>Proc.new { |c| c.params.delete_if { |k,v| k.starts_with?('auth_token') } }
   cache_sweeper :fragment_sweeper
   #caches_action :get_character,:cache_path => Proc.new { |c| c.params }
 end
