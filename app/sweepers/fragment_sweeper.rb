@@ -44,14 +44,24 @@ class FragmentSweeper < ActionController::Caching::Sweeper
     #
     #if record.is_a?(Score)
     expire_action(:controller => '/scores', :action => 'index')
+
     #check condition for reset cache
+    cache_key = "views/#{request.host_with_port}/api/v1/game/get_top_score_by_time.json*"
     if record.score
-      sql = "SELECT COUNT(*) from (SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.score > #{record.score}) Group by character_id ORDER BY max(score)) as table_A"
-      rank_score =  ActiveRecord::Base.connection.execute(sql)
-      if rank_score.first[0] < 10
-        cache_key = "views/#{request.host_with_port}/api/v1/game/get_top_score_by_time.json"
-        logger.debug "expire_cache_for #{cache_key}"
-        Rails.cache.delete(cache_key)
+      $redis.keys(cache_key).each do |key|
+        after_time = key.partition('=').last
+        if !after_time.blank?
+          sql = "SELECT COUNT(*) from (SELECT characters.char_name, characters.lv, scores.character_id, max(score) FROM scores INNER JOIN characters on characters.id = scores.character_id WHERE (scores.score > #{record.score} and scores.created_at >= '#{after_time}') Group by character_id ORDER BY max(score)) as table_A"
+          logger.debug "execute sql  #{sql}"
+          rank_score =  ActiveRecord::Base.connection.execute(sql)
+          if rank_score.first[0] < 10
+
+            logger.debug "expire_cache_for #{cache_key}"
+            #Rails.cache.delete(cache_key)
+            Rails.cache.delete_matched(cache_key)
+            break
+          end
+        end
       end
     end
     #end
