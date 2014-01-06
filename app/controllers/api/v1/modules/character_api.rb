@@ -151,20 +151,26 @@ module CharacterAPI
 
   def check_version
     max_version = Version.maximum(:version)
-    if params[:check_version][:current_version] and max_version <= params[:check_version][:current_version]
+    if max_version and !max_version.blank?
+      if params[:check_version][:current_version] and max_version <= params[:check_version][:current_version]
       render :status => 200,
              :json => { :success => true,
                         :valid => true,
-                        :download_url =>''
+                        :apk_url =>'',
+                        :jar_url =>''
              }
+
+      else
+        latest_version = Version.where("version = ?",max_version).first
+        render :status => 200,
+               :json => { :success => true,
+                          :valid => false,
+                          :apk_url =>latest_version.apk_file.path ? root_url.sub(/\/$/, '') + latest_version.apk_file.url : '',
+                          :jar_url =>latest_version.jar_file.path ? root_url.sub(/\/$/, '') + latest_version.jar_file.url : ''
+               }
+      end
     else
-      latest_version = Version.where("version = ?",max_version).first
-      render :status => 200,
-             :json => { :success => true,
-                        :valid => false,
-                        :download_url => latest_version.download_url
-             }
+      render_json_error("404","don't find version!")
     end
   end
-
 end
