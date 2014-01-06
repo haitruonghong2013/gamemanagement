@@ -151,15 +151,18 @@ module CharacterAPI
 
   def check_version
     max_version = Version.maximum(:version)
-    if params[:check_version][:current_version] and max_version == params[:check_version][:current_version]
+    if params[:check_version][:current_version] and max_version <= params[:check_version][:current_version]
       render :status => 200,
              :json => { :success => true,
-                        :valid => true
+                        :valid => true,
+                        :download_url =>''
              }
     else
+      latest_version = Version.where("version = ?",max_version).first
       render :status => 200,
              :json => { :success => true,
-                        :valid => false
+                        :valid => false,
+                        :download_url => latest_version.download_url
              }
     end
   end

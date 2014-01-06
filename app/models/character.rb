@@ -47,7 +47,7 @@ class Character < ActiveRecord::Base
 
   def gold_ranking(after_time)
     if after_time  and after_time.strip != ''
-      Character.count(:conditions => ['gold > ? and created_at >= ?', self.gold, after_time])
+      Character.count(:conditions => ['gold > ? and updated_at >= ?', self.gold, after_time])
     else
       Character.count(:conditions => ['gold > ?', self.gold])
     end
@@ -55,7 +55,7 @@ class Character < ActiveRecord::Base
 
   def level_ranking(after_time)
     if after_time  and after_time.strip != ''
-      Character.count(:conditions => ['lv > ? and created_at >= ?', self.lv, after_time])
+      Character.count(:conditions => ['lv > ? and updated_at >= ?', self.lv, after_time])
     else
       Character.count(:conditions => ['lv > ?', self.lv])
     end
