@@ -2,7 +2,7 @@ class VersionsController < ApplicationController
   # GET /versions
   # GET /versions.json
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  #load_and_authorize_resource
   def index
     @versions = Version.paginate(:page => params[:page], :per_page => params[:size]? params[:size]:PAGE_SIZE )
 

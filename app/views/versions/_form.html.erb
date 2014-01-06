@@ -4,7 +4,25 @@
   <div class="form-inputs">
     <%= f.input :name %>
     <%= f.input :version %>
-    <%= f.input :download_url %>
+
+    <div class="control-group string required">
+      <label for="apk_file" class="string required control-label">
+        <!--<abbr title="required">*</abbr>-->
+        Apk file</label>
+      <div class="controls">
+        <%= f.file_field :apk_file %>
+        <%= f.hidden_field :apk_file_cache %>
+      </div>
+    </div>
+    <div class="control-group string required item_image_name">
+      <label for="item_image_name" class="string required control-label">
+        <!--<abbr title="required">*</abbr>-->
+        Jar file</label>
+      <div class="controls">
+        <%= f.file_field :jar_file %>
+        <%= f.hidden_field :jar_file_cache %>
+      </div>
+    </div>
     <%= f.input :description,:input_html => { 'rows' => 5, 'cols' => 10 } %>
 
   </div>

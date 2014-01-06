@@ -10,8 +10,13 @@
   <%= @version.version %>
 </p>
 <p>
-  <b>Download Url:</b>
-  <%= @version.download_url %>
+  <b>Apk file Url:</b>
+  <%= link_to 'Download Apk', @version.apk_file.url %>
+</p>
+
+<p>
+  <b>jar file Url:</b>
+  <%= link_to 'Download Jar', @version.jar_file.url %>
 </p>
 
 <p>
