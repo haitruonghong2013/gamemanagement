@@ -34,13 +34,13 @@
   <ul class="nav nav-list">
     <% if user_signed_in? %>
         <% if current_user.has_role? :admin %>
-            <li>
+            <li class="<%= controller_name == users_path.sub('/','') ? 'open' : '' %>">
               <a href="<%= users_path %>">
                 <i class="icon-user"></i>
                 <span class="menu-text"> User </span>
               </a>
             </li>
-            <li>
+            <li class="<%= (controller_name == characters_path.sub('/','') or controller_name == character_bots_path.sub('/','') or controller_name == races_path.sub('/','') or controller_name == scores_path.sub('/','')) ? 'open' : '' %>">
               <a href="#" class="dropdown-toggle">
                 <i class="icon-file"></i>
                 <span class="menu-text"> Character </span>
@@ -48,35 +48,35 @@
                 <b class="arrow icon-angle-down"></b>
               </a>
 
-              <ul class="submenu">
-                <li>
+              <ul class="submenu" style="<%= (controller_name == characters_path.sub('/','') or controller_name == character_bots_path.sub('/','') or controller_name == races_path.sub('/','') or controller_name == scores_path.sub('/','')) ? 'display: block;' : '' %>">
+                <li class="<%= controller_name == characters_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= characters_path %>">
                     <i class="icon-double-angle-right"></i>
                     Character List
                   </a>
                 </li>
 
-                <li>
+                <li class="<%= controller_name == character_bots_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= character_bots_path %>">
                     <i class="icon-double-angle-right"></i>
                     Character Bots
                   </a>
                 </li>
-                <li>
+                <li class="<%= controller_name == races_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= races_path %>">
                     <i class="icon-double-angle-right"></i>
                     Race
                   </a>
                 </li>
-                <li>
+                <li class="<%= controller_name == scores_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= scores_path %>">
-                    <i class="icon-bar-chart"></i>
-                    <span class="menu-text"> Score </span>
+                    <i class="icon-double-angle-right"></i>
+                    Score
                   </a>
                 </li>
               </ul>
             </li>
-            <li>
+            <li class="<%= (controller_name == item_groups_path.sub('/','') or controller_name == item_types_path.sub('/','') or controller_name == items_path.sub('/','') or controller_name == user_items_path.sub('/','')) ? 'open' : '' %>">
               <a href="#" class="dropdown-toggle">
                 <i class="icon-file"></i>
                 <span class="menu-text"> Items </span>
@@ -84,28 +84,28 @@
                 <b class="arrow icon-angle-down"></b>
               </a>
 
-              <ul class="submenu">
-                <li>
+              <ul class="submenu" style="<%= (controller_name == item_groups_path.sub('/','') or controller_name == item_types_path.sub('/','') or controller_name == items_path.sub('/','') or controller_name == user_items_path.sub('/','')) ? 'display: block;' : '' %>">
+                <li class="<%= controller_name == item_groups_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= item_groups_path %>">
                     <i class="icon-double-angle-right"></i>
                     Item Group
                   </a>
                 </li>
 
-                <li>
+                <li class="<%= controller_name == item_types_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= item_types_path %>">
                     <i class="icon-double-angle-right"></i>
                     Item Type
                   </a>
                 </li>
 
-                <li>
+                <li class="<%= controller_name == items_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= items_path %>">
                     <i class="icon-double-angle-right"></i>
                     Item
                   </a>
                 </li>
-                <li>
+                <li class="<%= controller_name == user_items_path.sub('/','') ? 'active' : '' %>">
                   <a href="<%= user_items_path %>">
                     <i class="icon-double-angle-right"></i>
                     User Items
@@ -113,7 +113,7 @@
                 </li>
               </ul>
             </li>
-
+            <!--request.original_url-->
 
 
          <% elsif current_user.has_role? :saleStaff %>
@@ -122,37 +122,37 @@
 
     <% end %>
 
-    <li>
+    <li class="<%= controller_name == 'posts' ? 'open' : '' %>">
       <a href="<%= game_play_path %>">
         <i class="icon-info"></i>
         <span class="menu-text"> Download Game </span>
       </a>
     </li>
 
-    <li>
+    <li class="<%= controller_name == versions_path.sub('/','') ? 'open' : '' %>">
       <a href="<%= versions_path %>">
         <i class="icon-info"></i>
         <span class="menu-text"> Game Version </span>
       </a>
     </li>
-    <li>
-      <a href="<%= introduction_path %>">
-        <i class="icon-info"></i>
-        <span class="menu-text"> Introduction </span>
-      </a>
-    </li>
-    <li>
-      <a href="<%= about_us_path %>">
-        <i class="icon-info"></i>
-        <span class="menu-text"> About Us </span>
-      </a>
-    </li>
-    <li>
-      <a href="#">
-        <i class="icon-pencil"></i>
-        <span class="menu-text"> Contact Us </span>
-      </a>
-    </li>
+    <!--<li>-->
+      <!--<a href="<%= introduction_path %>">-->
+        <!--<i class="icon-info"></i>-->
+        <!--<span class="menu-text"> Introduction </span>-->
+      <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+      <!--<a href="<%= about_us_path %>">-->
+        <!--<i class="icon-info"></i>-->
+        <!--<span class="menu-text"> About Us </span>-->
+      <!--</a>-->
+    <!--</li>-->
+    <!--<li>-->
+      <!--<a href="#">-->
+        <!--<i class="icon-pencil"></i>-->
+        <!--<span class="menu-text"> Contact Us </span>-->
+      <!--</a>-->
+    <!--</li>-->
 
   </ul>
   <!--/.nav-list-->
