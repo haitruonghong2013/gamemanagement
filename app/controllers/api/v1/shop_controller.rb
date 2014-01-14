@@ -105,7 +105,12 @@ class Api::V1::ShopController < ApplicationController
   def buy_items
     item_ids_array =[]
     params[:buy_item][:item_ids].each do |item_id|
-      item_ids_array.push(UUIDTools::UUID.parse(item_id))
+      if item_id.match('-')
+        item_ids_array.push(UUIDTools::UUID.parse(item_id))
+      else
+        item_ids_array.push(UUIDTools::UUID.parse_hexdigest(item_id))
+      end
+
     end
 
     #UUIDTools::UUID.parse_hexdigest(params[:buy_item][:item_ids][0])
