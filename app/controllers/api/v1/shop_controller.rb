@@ -182,6 +182,8 @@ class Api::V1::ShopController < ApplicationController
                   user_item.pc_atk = item.pc_atk
                   user_item.item_group = item.item_group
                   user_item.item_type = item.item_type
+                  user_item.permanent = item.permanent
+                  user_item.item = item
                   user_item.save
                 end
               end
@@ -243,6 +245,8 @@ class Api::V1::ShopController < ApplicationController
       user_item.pc_atk = item.pc_atk
       user_item.item_group = item.item_group
       user_item.item_type = item.item_type
+      user_item.permanent = item.permanent
+      user_item.item = item
 
 
       UserItem.transaction do
