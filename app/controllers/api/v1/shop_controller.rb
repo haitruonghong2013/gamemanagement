@@ -8,7 +8,7 @@ class Api::V1::ShopController < ApplicationController
     user_items = UserItem.where('user_items.character_id = ?', current_user.character.id)
     render :status => 200,
            :json => {:success => true,
-                     :data => user_items.as_json
+                     :data => user_items.as_json({:root_path => root_url})
            }
   end
 
@@ -137,6 +137,8 @@ class Api::V1::ShopController < ApplicationController
                   user_item.pc_atk = item.pc_atk
                   user_item.item_group = item.item_group
                   user_item.item_type = item.item_type
+                  user_item.permanent = item.permanent
+                  user_item.item = item
                   user_item.save
                 end
               end

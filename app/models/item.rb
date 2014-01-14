@@ -19,6 +19,7 @@ class Item < ActiveRecord::Base
   before_create :apply_some_default_values
   belongs_to :item_group
   belongs_to :item_type
+  has_one :user_item
 
   include ActiveUUID::UUID
 

@@ -113,28 +113,23 @@
                 </li>
               </ul>
             </li>
+            <li class="<%= controller_name == versions_path.sub('/','') ? 'open' : '' %>">
+              <a href="<%= versions_path %>">
+                <i class="icon-info"></i>
+                <span class="menu-text"> Game Version </span>
+              </a>
+            </li>
             <!--request.original_url-->
-
-
-         <% elsif current_user.has_role? :saleStaff %>
-
         <% end %>
-
     <% end %>
 
-    <li class="<%= controller_name == 'posts' ? 'open' : '' %>">
-      <a href="<%= game_play_path %>">
-        <i class="icon-info"></i>
-        <span class="menu-text"> Download Game </span>
-      </a>
-    </li>
+    <!--<li class="<%= controller_name == 'posts' ? 'open' : '' %>">-->
+      <!--<a href="<%= game_play_path %>">-->
+        <!--<i class="icon-info"></i>-->
+        <!--<span class="menu-text"> Download Game </span>-->
+      <!--</a>-->
+    <!--</li>-->
 
-    <li class="<%= controller_name == versions_path.sub('/','') ? 'open' : '' %>">
-      <a href="<%= versions_path %>">
-        <i class="icon-info"></i>
-        <span class="menu-text"> Game Version </span>
-      </a>
-    </li>
     <!--<li>-->
       <!--<a href="<%= introduction_path %>">-->
         <!--<i class="icon-info"></i>-->
