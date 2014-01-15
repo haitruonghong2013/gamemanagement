@@ -16,9 +16,15 @@ class Api::V1::AuthController  < ApplicationController
   def auth_ubox
     found_user = User.where('ubox_id = ?', params[:auth][:_id]).first
     if found_user
+
       render :status => 200,
              :json => { :success => true,
-                        :data => found_user.as_json
+                        :info => "Logged in",
+                        :data => {
+                            :auth_token => found_user.authentication_token,
+                            :user=>found_user.as_json,
+                        }
+
              }
     else
       if check_ubox_auth_token_valid
@@ -36,7 +42,12 @@ class Api::V1::AuthController  < ApplicationController
 
           render :status => 200,
                  :json => { :success => true,
-                            :data => create_user.as_json
+                            :info => "Logged in",
+                            :data => {
+                                :auth_token => create_user.authentication_token,
+                                :user=>create_user.as_json,
+                            }
+
                  }
         else
           render :status => 409,
