@@ -191,6 +191,7 @@ GameManagement::Application.routes.draw do
         collection do
           post :auth_fb
           get :is_login
+          post :auth_ubox
         end
       end
 

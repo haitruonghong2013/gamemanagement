@@ -13,6 +13,46 @@ class Api::V1::AuthController  < ApplicationController
     end
   end
 
+  def auth_ubox
+    found_user = User.where('ubox_id = ?', params[:auth][:_id]).first
+    if found_user
+      render :status => 200,
+             :json => { :success => true,
+                        :data => found_user.as_json
+             }
+    else
+      if check_ubox_auth_token_valid
+        create_user = User.new
+        create_user.email = params[:auth]["email"]
+        create_user.ubox_id  = params[:auth]["_id"]
+        create_user.name = params[:auth]["name"]
+        create_user.username = params[:auth]["name"].delete(' ')
+        create_user.first_name = first_name(params[:auth]["name"])
+        create_user.last_name =  last_name(params[:auth]["name"])
+        create_user.ubox_authentication_token = params[:auth]["authentication_token"]
+        create_user.add_role :normalUser
+
+        if create_user.save(:validate => false)
+
+          render :status => 200,
+                 :json => { :success => true,
+                            :data => create_user.as_json
+                 }
+        else
+          render :status => 409,
+                 :json => {
+                     :success => false,
+                     :info => 'Create user fails!',
+                     :data => create_user.errors
+                 }
+        end
+      else
+        render_json_error(409,'Create user fails!')
+      end
+    end
+  end
+
+
    def auth_fb
      #TODO:check access_token
      found_users = User.where('facebook_id = ?',params[:auth][:facebook_id])
@@ -109,6 +149,12 @@ class Api::V1::AuthController  < ApplicationController
    end
 
   private
+
+  def check_ubox_auth_token_valid
+    #TODO:call webservice to check result
+    return true
+  end
+
   def load_user_ubox
     @payload = params[:auth]
     #@payload = {

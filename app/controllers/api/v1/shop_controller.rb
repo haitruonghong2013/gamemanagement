@@ -89,9 +89,10 @@ class Api::V1::ShopController < ApplicationController
           if item.gem.nil? or item.gem.blank?
             item.gem = 0
           end
-
-          item.gold = item.gold*current_user.character.lv
-          item.gem = item.gem*current_user.character.lv
+          if current_user.character
+            item.gold = item.gold*current_user.character.lv
+            item.gem = item.gem*current_user.character.lv
+          end
         end
     end
 

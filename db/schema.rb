@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140114064743) do
+ActiveRecord::Schema.define(:version => 20140115025706) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20140114064743) do
     t.string   "ubox_authentication_token"
     t.boolean  "is_login"
     t.string   "device_id"
+    t.string   "ubox_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
