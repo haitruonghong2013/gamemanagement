@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140115025706) do
+ActiveRecord::Schema.define(:version => 20140116092617) do
 
   create_table "character_bots", :force => true do |t|
     t.string   "char_name"
@@ -135,6 +135,20 @@ ActiveRecord::Schema.define(:version => 20140115025706) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "score_type"
+  end
+
+  create_table "sms_requests", :force => true do |t|
+    t.string   "access_key"
+    t.string   "command"
+    t.string   "mo_message"
+    t.string   "msisdn"
+    t.string   "request_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "short_code"
+    t.text     "signature"
+    t.uuid     "character_id"
+    t.datetime "request_time"
   end
 
   create_table "user_items", :force => true do |t|

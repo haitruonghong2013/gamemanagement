@@ -54,6 +54,13 @@ crumb :versions do
 end
 
 
+crumb :sms_requests do
+  link "SMS Requests", sms_requests_path
+  parent :home
+end
+
+
+
 
 crumb :statics do
   link "statics", '#'

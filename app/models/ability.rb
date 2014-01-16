@@ -17,6 +17,7 @@ class Ability
          can :manage, Race
          can :manage, Version
          can :manage, UserItem
+         can :manage, SmsRequest
 
        #else
        #  can :read, :all

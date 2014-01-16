@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Access key:</b>
+  <%= @sms_request.access_key %>
+</p>
+
+<p>
+  <b>Command:</b>
+  <%= @sms_request.command %>
+</p>
+
+<p>
+  <b>Mo message:</b>
+  <%= @sms_request.mo_message %>
+</p>
+
+<p>
+  <b>Msisdn:</b>
+  <%= @sms_request.msisdn %>
+</p>
+
+<p>
+  <b>Request:</b>
+  <%= @sms_request.request_id %>
+</p>
+
+<p>
+  <b>Request time:</b>
+  <%= @sms_request.request_time %>
+</p>
+
+<p>
+  <b>Short code:</b>
+  <%= @sms_request.short_code %>
+</p>
+
+<p>
+  <b>Signature:</b>
+  <%= @sms_request.signature %>
+</p>
+
+
+<%= link_to 'Edit', edit_sms_request_path(@sms_request) %> |
+<%= link_to 'Back', sms_requests_path %>

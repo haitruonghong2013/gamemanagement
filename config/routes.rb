@@ -1,34 +1,31 @@
 GameManagement::Application.routes.draw do
+  resources :sms_requests, only: [:index,:destroy]
   resources :versions
-
-
   #Rails.application.routes.default_url_options[:host] = 'sdfsdf:3000'
   resources :item_types
-
-
   resources :user_items
   resources :items
   resources :item_groups
   resources :character_bots
   resources :races
 
-  resources :static_page_configures do
-    collection do
-
-      get :introduction_show
-      get :introduction_edit,:as=>'introduction_edit'
-      post :introduction_update,:as=>'introduction_update'
-
-      get :about_us_show
-      get :about_us_edit,:as=>'about_us_edit'
-      post :about_us_update,:as=>'about_us_update'
-
-      get :package_payment_show
-      get :package_payment_edit,:as=>'package_payment_edit'
-      post :package_payment_update,:as=>'package_payment_update'
-
-    end
-  end
+  #resources :static_page_configures do
+  #  collection do
+  #
+  #    get :introduction_show
+  #    get :introduction_edit,:as=>'introduction_edit'
+  #    post :introduction_update,:as=>'introduction_update'
+  #
+  #    get :about_us_show
+  #    get :about_us_edit,:as=>'about_us_edit'
+  #    post :about_us_update,:as=>'about_us_update'
+  #
+  #    get :package_payment_show
+  #    get :package_payment_edit,:as=>'package_payment_edit'
+  #    post :package_payment_update,:as=>'package_payment_update'
+  #
+  #  end
+  #end
   match '/game_play'=> 'posts#list_game_play'
   match '/introduction'=> 'static_page_configures#introduction_show'
   match '/about_us'=> 'static_page_configures#about_us_show'
@@ -197,6 +194,7 @@ GameManagement::Application.routes.draw do
 
       resources :shop do
         collection do
+          get :sms_charging
           get :list_items_by_group
           post :buy_item
           post :buy_items

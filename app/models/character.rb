@@ -1,6 +1,7 @@
 class Character < ActiveRecord::Base
   before_create :apply_some_default_values
   has_many :user_items
+  has_many :sms_requests
 
   DEFAULT_ATTRS_VALUES = {
       :gem => 0,

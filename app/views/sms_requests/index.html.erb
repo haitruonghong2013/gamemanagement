@@ -1,0 +1,45 @@
+<% breadcrumb :sms_requests %>
+<div class="page-content">
+  <div class="page-header position-relative">
+    <h1>Listing sms_requests</h1>
+  </div><!--/.page-header-->
+
+  <div class="row-fluid">
+    <div class="span12">
+      <table class="table table-striped table-bordered table-hover pretty">
+        <thead>
+  <tr>
+    <th>Access key</th>
+    <th>Command</th>
+    <th>Mo message</th>
+    <th>Msisdn</th>
+    <th>Request</th>
+    <th>Request time</th>
+    <th>Short code</th>
+    <th>Signature</th>
+    <th></th>
+  </tr>
+  </thead>
+   <tbody>
+
+<% @sms_requests.each do |sms_request| %>
+  <tr>
+    <td><%= sms_request.access_key %></td>
+    <td><%= sms_request.command %></td>
+    <td><%= sms_request.mo_message %></td>
+    <td><%= sms_request.msisdn %></td>
+    <td><%= sms_request.request_id %></td>
+    <td><%= sms_request.request_time %></td>
+    <td><%= sms_request.short_code %></td>
+    <td><%= sms_request.signature %></td>
+    <td><%= link_to 'Destroy', sms_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+      <div class="digg_pagination" style="background: transparent;">
+        <%= will_paginate @sms_requests %>
+      </div>
+    </div>
+  </div>
+</div>

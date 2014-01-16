@@ -1,0 +1,18 @@
+<%= simple_form_for(@sms_request) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :access_key %>
+    <%= f.input :command %>
+    <%= f.input :mo_message %>
+    <%= f.input :msisdn %>
+    <%= f.input :request_id %>
+    <%= f.input :request_time %>
+    <%= f.input :short_code %>
+    <%= f.input :signature %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -113,6 +113,12 @@
                 </li>
               </ul>
             </li>
+            <li class="<%= controller_name == sms_requests_path.sub('/','') ? 'open' : '' %>">
+              <a href="<%= sms_requests_path %>">
+                <i class="icon-info"></i>
+                <span class="menu-text"> SMS Requests </span>
+              </a>
+            </li>
             <li class="<%= controller_name == versions_path.sub('/','') ? 'open' : '' %>">
               <a href="<%= versions_path %>">
                 <i class="icon-info"></i>

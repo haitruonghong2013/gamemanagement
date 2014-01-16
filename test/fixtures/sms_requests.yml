@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  access_key: MyString
+  command: MyString
+  mo_message: MyString
+  msisdn: MyString
+  request_id: MyString
+  request_time: 2014-01-16 15:48:32
+  short_code: MyString
+  signature: MyText
+
+two:
+  access_key: MyString
+  command: MyString
+  mo_message: MyString
+  msisdn: MyString
+  request_id: MyString
+  request_time: 2014-01-16 15:48:32
+  short_code: MyString
+  signature: MyText

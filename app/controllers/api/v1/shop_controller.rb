@@ -1,6 +1,95 @@
 class Api::V1::ShopController < ApplicationController
-  before_filter :authenticate_user!
+
+  before_filter :authenticate_user!,:except => [:sms_charging]
   include UUIDTools
+  CHARACTER_ID = 'CHARACTER_ID'
+  def sms_charging
+    #access_key	Đại diện cho sản phẩm của merchant khai báo trong hệ thống 1pay.vn
+    #command 	Mã tin nhắn, là keyword đầu tiên trong tin nhắn của khách hàng , ví dụ tin nhắn có nội dung “DK Game” gửi 8038 thì command sẽ là DK
+    #mo_message 	Nội dung tin nhắn của khách hàng
+    #msisdn 	Số điện thoại của khách hàng, bắt đầu bằng 84, ví dụ 8498238193
+    #request_id 	Id của tin nhắn, ở dạng String
+    #request_time 	Thời gian đầu số nhận được tin nhắn, ở dạng iso, ví dụ: 2013-07-06T22:54:50Z
+    #short_code 	Đầu số nhận tin nhắn, ví dụ tin nhắn có nội dung “DK Game” gửi 8038 thì short_code sẽ là 8038
+    #signature 	Chữ ký, merchant có thể sử dụng signature để kiểm soát an ninh . Signature là một chuỗi string access_key=$access_key&command=$command&mo_message=$mo_message&msisdn=$msisdn&request_id=$request_id&request_time=$request_time&short_code=$short_code”được hmac bằng thuật toán SHA256 tham khảo tại Basic Authentication]
+    #access_key=4353465&command=test&mo_message=MUC LOP LIFE CHARACTER_ID[546547567567]
+    if params[:request_id].blank?
+      render :status => 200,
+             :json => {
+                 :status => 0,
+                 :sms => "Ban da mua that bai",
+                 :type =>"confirm"
+             }
+      return
+    else
+      exist_sms_request = SmsRequest.where('request_id = ?',params[:request_id]).first
+      if exist_sms_request
+        render :status => 200,
+               :json => {
+                   :status => 0,
+                   :sms => "Ban da mua that bai",
+                   :type =>"confirm"
+               }
+        return
+      end
+    end
+
+
+
+    mo_message = params[:mo_message]
+
+    if mo_message and !mo_message.blank? and mo_message.include? CHARACTER_ID and mo_message.scan(/\[([^\]]+)\]/).last and mo_message.scan(/\[([^\]]+)\]/).last.first
+      character_id = mo_message.scan(/\[([^\]]+)\]/).last.first
+      #character = Character.where("id = ?",character_id)
+      begin
+        character = Character.find(character_id)
+
+        sms_request = SmsRequest.new
+        sms_request.access_key = params[:access_key]
+        sms_request.command = params[:command]
+        sms_request.mo_message = mo_message
+        sms_request.msisdn = params[:msisdn]
+        sms_request.request_id = params[:request_id]
+        sms_request.request_time = params[:request_time]
+        sms_request.short_code = params[:short_code]
+        sms_request.signature = params[:signature]
+        sms_request.character = character
+        sms_request.save
+
+        character.life = character.life + 3
+        if character.save!
+          render :status => 200,
+                 :json => {
+                     :status => 1,
+                      :sms => "Ban da mua thanh cong",
+                      :type =>"confirm"
+                 }
+        else
+          render :status => 200,
+                 :json => {
+                     :status => 0,
+                     :sms => "Ban da mua that bai",
+                     :type =>"confirm"
+                 }
+        end
+      rescue ActiveRecord::RecordNotFound => e
+        #render_json_error 417,e.message
+        render :json => {
+            :status => 0,
+            :sms => "Ban da mua that bai",
+            :type =>"confirm"
+        }
+      end
+    else
+      render :status => 200,
+             :json => {
+                 :status => 0,
+                 :sms => "Ban da mua that bai",
+                 :type =>"confirm"
+             }
+    end
+  end
+
 #--------------------------------Item API -------------------
   def list_user_item
     #item_groups = ItemGroup.joins(:item_types).joins(:items).where('items.character_id = ?', params[:character_id])
