@@ -14,27 +14,15 @@ class Api::V1::ShopController < ApplicationController
     #signature 	Chữ ký, merchant có thể sử dụng signature để kiểm soát an ninh . Signature là một chuỗi string access_key=$access_key&command=$command&mo_message=$mo_message&msisdn=$msisdn&request_id=$request_id&request_time=$request_time&short_code=$short_code”được hmac bằng thuật toán SHA256 tham khảo tại Basic Authentication]
     #access_key=4353465&command=test&mo_message=MUC LOP LIFE CHARACTER_ID[546547567567]
     if params[:request_id].blank?
-      render :status => 200,
-             :json => {
-                 :status => 0,
-                 :sms => "Ban da mua that bai",
-                 :type =>"confirm"
-             }
+      render_json_error_hash(200, {:status => 1,:sms => "Ban da mua that bai",:type =>"text"})
       return
     else
       exist_sms_request = SmsRequest.where('request_id = ?',params[:request_id]).first
       if exist_sms_request
-        render :status => 200,
-               :json => {
-                   :status => 0,
-                   :sms => "Ban da mua that bai",
-                   :type =>"confirm"
-               }
+        render_json_error_hash(200, {:status => 1,:sms => "Ban da mua that bai",:type =>"text"})
         return
       end
     end
-
-
 
     mo_message = params[:mo_message]
 
@@ -58,35 +46,16 @@ class Api::V1::ShopController < ApplicationController
 
         character.life = character.life + 3
         if character.save!
-          render :status => 200,
-                 :json => {
-                     :status => 1,
-                      :sms => "Ban da mua thanh cong",
-                      :type =>"confirm"
-                 }
+          render_json_error_hash(200, {:status => 1,:sms => "Ban da mua thanh cong",:type =>"text"})
         else
-          render :status => 200,
-                 :json => {
-                     :status => 0,
-                     :sms => "Ban da mua that bai",
-                     :type =>"confirm"
-                 }
+
         end
       rescue ActiveRecord::RecordNotFound => e
         #render_json_error 417,e.message
-        render :json => {
-            :status => 0,
-            :sms => "Ban da mua that bai",
-            :type =>"confirm"
-        }
+        render_json_error_hash(200, {:status => 1,:sms => "Ban da mua that bai",:type =>"text"})
       end
     else
-      render :status => 200,
-             :json => {
-                 :status => 0,
-                 :sms => "Ban da mua that bai",
-                 :type =>"confirm"
-             }
+      render_json_error_hash(200, {:status => 1,:sms => "Ban da mua that bai",:type =>"text"})
     end
   end
 

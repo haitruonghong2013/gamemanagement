@@ -16,7 +16,6 @@
     <th>Request</th>
     <th>Request time</th>
     <th>Short code</th>
-    <th>Signature</th>
     <th></th>
   </tr>
   </thead>
@@ -31,7 +30,6 @@
     <td><%= sms_request.request_id %></td>
     <td><%= sms_request.request_time %></td>
     <td><%= sms_request.short_code %></td>
-    <td><%= sms_request.signature %></td>
     <td><%= link_to 'Destroy', sms_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
