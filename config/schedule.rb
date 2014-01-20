@@ -25,10 +25,9 @@ set :output, {
     :error    => "#{rails_root}/log/error.log",
     :standard => "#{rails_root}/log/cron.log"
 }
+
 #every 1.minute do
-#  #runner "Post.test_update"
-#  runner "BackgroundJob.push_notification_when"
-#  #command "echo 'you can use raw cron syntax too'"
+#  runner "BackgroundJob.reset_character_life"
 #end
 
 #every 1.minute do

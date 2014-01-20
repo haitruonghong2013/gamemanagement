@@ -2,7 +2,7 @@ class BackgroundJob
   def self.reset_character_life
     puts "reset_character_life run - #{Time.now}"
     puts "----------------------------------------"
-    characters = Character.all
+    characters = Character.where('life < ?',10)
     #Logic push notification happen next 30 minutes
     characters.each do |character|
         character.life = Character::DEFAULT_ATTRS_VALUES[:life]
